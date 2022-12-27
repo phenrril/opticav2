@@ -1,5 +1,8 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <?php include_once "includes/header.php";
 require("../conexion.php");
+
 $id_user = $_SESSION['idUser'];
 $permiso = "nueva_venta";
 $sql = mysqli_query($conexion, "SELECT p.*, d.* FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_user AND p.nombre = '$permiso'");
@@ -73,7 +76,7 @@ if (empty($existe) && $id_user != 1) {
                                     <td><b>Ojo I: &nbsp</b><input name="ojoIl1" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoIl2" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoIl3" type="text" size="4"></td>
                                 </tr>
                                 <tr>
-                                    <td><b>ADD: &nbsp</b><input name="add" type="text" size="4"></td>
+                                    <b>ADD: &nbsp</b><input name="add" type="text" size="4"><input id="grad" type="button" value="agregar grad"></td>
                                 </tr>
                                 </div>
                             </form>
@@ -127,4 +130,31 @@ if (empty($existe) && $id_user != 1) {
     </div>
 
 </div>
+<script >
+    
+    $("#grad").click(function(){
+    
+            $.ajax({
+                    url: "resultado.php",
+                    type: "post",
+                    data: $("#graduaciones").serialize(),
+                    success: function(resultado){
+                            $("#okGrad").html(resultado);
+    
+                    }
+    
+    
+            });
+    
+    
+    
+    
+    
+    
+    });
+    
+    
+    
+    
+    </script>
 <?php include_once "includes/footer.php"; ?>

@@ -9,7 +9,9 @@ $pdf->SetFont('Arial', 'B', 12);
 $id = $_GET['v'];
 $idcliente = $_GET['cl'];
 $config = mysqli_query($conexion, "SELECT * FROM configuracion");
+$gradu= mysqli_query($conexion, "SELECT * FROM graduaciones where id_paciente='213'");
 $datos = mysqli_fetch_assoc($config);
+$datos44 = mysqli_fetch_assoc($gradu);
 $clientes = mysqli_query($conexion, "SELECT * FROM cliente WHERE idcliente = $idcliente");
 $datosC = mysqli_fetch_assoc($clientes);
 $ventas = mysqli_query($conexion, "SELECT d.*, p.codproducto, p.descripcion FROM detalle_venta d INNER JOIN producto p ON d.id_producto = p.codproducto WHERE d.id_venta = $id");
@@ -60,6 +62,15 @@ while ($row = mysqli_fetch_assoc($ventas)) {
     $pdf->Cell(35, 5, number_format($row['cantidad'] * $row['precio'], 2, '.', ','), 0, 1, 'L');
     $contador++;
 }
+$pdf->SetFont('Arial', 'B', 10);
+$pdf->SetTextColor(255, 255, 255);
+$pdf->Cell(196, 5, "Graduaciones", 1, 1, 'C', 1);
+$pdf->SetTextColor(0, 0, 0);
+$pdf->Cell(90, 5, utf8_decode($datos44['addg']), 0, 0, 'L');
+$pdf->Cell(90, 5, utf8_decode($datos44['addg']), 0, 0, 'L');
+$pdf->Cell(90, 5, utf8_decode($datos44['addg']), 0, 0, 'L');
+$pdf->Cell(90, 5, utf8_decode($datos44['addg']), 0, 0, 'L');
+
 $pdf->Output("ventas.pdf", "I");
 
 ?>
