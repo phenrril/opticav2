@@ -48,8 +48,37 @@ if (empty($existe) && $id_user != 1) {
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label><i class="fas fa-user"></i> VENDEDOR</label>
-                            <p style="font-size: 16px; text-transform: uppercase; color: red;"><?php echo $_SESSION['nombre']; ?></p>
+                            <i class="fas fa-user"></i><p style="font-size: 16px; text-transform: uppercase; color: red;"><?php echo $_SESSION['nombre']; ?></p>
+                            <label> Graduaciones:</label>
+                            <p style="font-size: 16px; text-transform: uppercase; color: black;">
+                            <table class="table table-borderless" id="tablaGracuadiones">
+                            <form id="graduaciones">
+                                <div id="okGrad">
+                                <tr>
+                                    <td><b>Graduacion Cerca </b></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Ojo D:</b><input name="ojoD1" id="ojoD1" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoD2" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoD3" type="text" size="4"></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Ojo I: &nbsp</b><input name="ojoI1" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoI2" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoI3" type="text" size="4"></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Graduacion Lejos </b></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Ojo D:</b><input name="ojoDl1" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoDl2" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoDl3" type="text" size="4"></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Ojo I: &nbsp</b><input name="ojoIl1" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoIl2" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoIl3" type="text" size="4"></td>
+                                </tr>
+                                <tr>
+                                    <td><b>ADD: &nbsp</b><input name="add" type="text" size="4"></td>
+                                </tr>
+                                </div>
+                            </form>
+                        </table>    
+                        </p>
                         </div>
                     </div>
                     <div class="col-lg-6">
