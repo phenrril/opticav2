@@ -58,6 +58,7 @@ if (empty($existe) && $id_user != 1) {
                             <form id="graduaciones">
                                 <div id="okGrad">
                                 <tr>
+                                    
                                     <td><b>Graduacion Cerca </b></td>
                                 </tr>
                                 
@@ -77,7 +78,8 @@ if (empty($existe) && $id_user != 1) {
                                     <td><b>Ojo I: &nbsp</b><input id="ojoIl1" name="ojoIl1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl2" name="ojoIl2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl3" name="ojoIl3" type="text" size="4"></td>
                                 </tr>
                                 <tr>
-                                &nbsp&nbsp&nbsp<b>ADD: &nbsp</b><input id="add" name="add" type="text" size="4">&nbsp&nbsp&nbsp<input class="btn btn-primary" name="grad" id="grad" type="button" value="Agregar Graduacion"></td>
+                                    <td><input class="btn btn-primary" name="grad" id="grad" type="button" value="Agregar"></td>
+                                &nbsp&nbsp&nbsp<b>ADD: &nbsp</b><input id="add" name="add" type="text" size="4">&nbsp&nbsp&nbsp<b>Obs: &nbsp</b><input id="add" name="add" type="text" size="11"></td>
                                 </tr>
                                 </div>
                             </form>

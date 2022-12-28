@@ -24,7 +24,7 @@ $idventa= $_POST['add'];
 
 $query = mysqli_query($conexion, ("INSERT INTO graduaciones (od_c_1, od_c_2, od_c_3, oi_c_1, oi_c_2, oi_c_3, od_l_1, od_l_2, od_l_3, oi_l_1, oi_l_2, oi_l_3, addg, id_venta ) VALUES ($ojoD1 , $ojoD2, $ojoD3, $ojoI1, $ojoI2, $ojoI3, $ojolD1, $ojolD2, $ojolD3, $ojolI1, $ojolI2, $ojolI3, $add, $idventa )"));
 if ($query) {    
-    echo "<div class='alert alert-success'>Graduacion Agregada Correctamente</div>";
+    
     echo '<script>var ojoD1 = document.getElementById("ojoD1")</>';
     echo '<script>ojoD1.value = ""</script>';
     echo '<script>var ojoD2 = document.getElementById("ojoD2")</script>';
@@ -51,6 +51,7 @@ if ($query) {
     echo '<script>ojoIl3.value = ""</script>';
     echo '<script>var add1 = document.getElementById("add")</script>';
     echo '<script>add1.value = ""</script>';
+    echo "<div class='alert alert-success'>Graduacion Agregada Correctamente</div>";
 }
 else {
     echo "<script>alert('Error al agregar Graduacion')</>";
