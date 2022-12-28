@@ -52,7 +52,7 @@ if (empty($existe) && $id_user != 1) {
                     <div class="col-lg-6">
                         <div class="form-group">
                             <i class="fas fa-user"></i><p style="font-size: 16px; text-transform: uppercase; color: red;"><?php echo $_SESSION['nombre']; ?></p>
-                            <label> Graduaciones:</label>
+                            <label> <b>Graduaciones:</b></label>
                             <p style="font-size: 16px; text-transform: uppercase; color: black;">
                             <table class="table table-borderless" id="tablaGracuadiones">
                             <form id="graduaciones">
@@ -60,23 +60,24 @@ if (empty($existe) && $id_user != 1) {
                                 <tr>
                                     <td><b>Graduacion Cerca </b></td>
                                 </tr>
+                                
                                 <tr>
-                                    <td><b>Ojo D:</b><input name="ojoD1" id="ojoD1" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoD2" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoD3" type="text" size="4"></td>
+                                    <td><b>Ojo D: </b><input name="ojoD1" id="ojoD1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoD2" name="ojoD2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoD3" name="ojoD3" type="text" size="4"></td>
                                 </tr>
                                 <tr>
-                                    <td><b>Ojo I: &nbsp</b><input name="ojoI1" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoI2" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoI3" type="text" size="4"></td>
+                                    <td><b>Ojo I: &nbsp</b><input id="ojoI1" name="ojoI1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoI2" name="ojoI2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoI3" name="ojoI3" type="text" size="4"></td>
                                 </tr>
                                 <tr>
                                     <td><b>Graduacion Lejos </b></td>
                                 </tr>
                                 <tr>
-                                    <td><b>Ojo D:</b><input name="ojoDl1" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoDl2" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoDl3" type="text" size="4"></td>
+                                    <td><div class="col-xs-3"><b>Ojo D: </b><input  id="ojoDl1" name="ojoDl1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoDl2" name="ojoDl2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoDl3" name="ojoDl3" type="text" size="4"></div></td>
                                 </tr>
                                 <tr>
-                                    <td><b>Ojo I: &nbsp</b><input name="ojoIl1" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoIl2" type="text" size="4">&nbsp&nbsp&nbsp<input name="ojoIl3" type="text" size="4"></td>
+                                    <td><b>Ojo I: &nbsp</b><input id="ojoIl1" name="ojoIl1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl2" name="ojoIl2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl3" name="ojoIl3" type="text" size="4"></td>
                                 </tr>
                                 <tr>
-                                    <b>ADD: &nbsp</b><input name="add" type="text" size="4"><input id="grad" type="button" value="agregar grad"></td>
+                                &nbsp&nbsp&nbsp<b>ADD: &nbsp</b><input id="add" name="add" type="text" size="4">&nbsp&nbsp&nbsp<input class="btn btn-primary" name="grad" id="grad" type="button" value="Agregar Graduacion"></td>
                                 </tr>
                                 </div>
                             </form>
@@ -132,29 +133,16 @@ if (empty($existe) && $id_user != 1) {
 </div>
 <script >
     
-    $("#grad").click(function(){
+    // $("#grad").click(function(){
+    //         $.ajax({
+    //                 url: "resultado.php",
+    //                 type: "POST",
+    //                 data: $("#graduaciones").serialize(),
+    //                 success: function(resultado){
+    //                         $("#okGrad").html(resultado);
+    //                 }
+    //         });
+    //});
     
-            $.ajax({
-                    url: "resultado.php",
-                    type: "post",
-                    data: $("#graduaciones").serialize(),
-                    success: function(resultado){
-                            $("#okGrad").html(resultado);
-    
-                    }
-    
-    
-            });
-    
-    
-    
-    
-    
-    
-    });
-    
-    
-    
-    
-    </script>
+</script>
 <?php include_once "includes/footer.php"; ?>

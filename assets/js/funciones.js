@@ -1,3 +1,39 @@
+document.getElementById('grad').addEventListener('click', function() {
+
+    alert("hola");
+    // var ojoD1 = document.getElementById('ojoD1').value;
+    // // var ojoD2 = document.getElementById('ojoD2').value;
+    // // var ojoD3 = document.getElementById('ojoD3').value;
+    // // var ojoI1 = document.getElementById('ojoI1').value;
+    // // var ojoI2 = document.getElementById('ojoI2').value;
+    // // var ojoI3 = document.getElementById('ojoI3').value;
+    // // var ojolD1 = document.getElementById('ojoDl1').value;
+    // // var ojolD2 = document.getElementById('ojoDl2').value;
+    // // var ojolD3 = document.getElementById('ojoDl3').value;
+    // // var ojolI1 = document.getElementById('ojoIl1').value;
+    // // var ojolI2 = document.getElementById('ojoIl2').value;
+    // // var ojolI3 = document.getElementById('ojoIl3').value;
+    // //var add = document.getElementById('add').value;
+
+    // if ((ojoD1 == "") ) 
+    // {
+    //     alert("Debe ingresar todos los campos");
+    //     return false;
+    // }
+    // else
+    // {$.ajax({
+    //     url: "resultado.php",
+    //     type: "POST",
+    //     data: $("#graduaciones").serialize(),
+    //     success: function(resultado){
+    //             $("#okGrad").html(resultado);
+
+    //             }
+    //         });
+    // }
+})
+
+
 document.addEventListener("DOMContentLoaded", function () {
     $('#tbl').DataTable();
     $(".confirmar").submit(function (e) {
