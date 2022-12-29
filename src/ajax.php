@@ -73,7 +73,6 @@ if (isset($_GET['q'])) {
     $id_cliente = $_GET['id'];
     $id_user = $_SESSION['idUser'];
     $consulta = mysqli_query($conexion, "SELECT total, SUM(total) AS total_pagar FROM detalle_temp WHERE id_usuario = $id_user");
-   
     $result = mysqli_fetch_assoc($consulta);
     $total = $result['total_pagar'];
     $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario) VALUES ('$id_cliente', '$total', '$id_user')");
@@ -108,24 +107,8 @@ if (isset($_GET['q'])) {
             $ojoI3= $row2['oi_c_3'];
             $add1= $row2['addg'];
             $obs = $row2['obs'];
-            /*$ojolD1= 1;
-            $ojolD2= 2;
-            $ojolD3= 3;
-            $ojolI1= 4;
-            $ojolI2= 5;
-            $ojolI3= 6;
-            $ojoD1= 7;
-            $ojoD2= 1;
-            $ojoD3= 2;
-            $ojoI1= 3;
-            $ojoI2= 4;
-            $ojoI3=5;
-            $add1= 6;
-            $obs = "gfgdfgdf";*/
             $id_venta2=$ultimoId;
             
-            
-        
         $insedsd = mysqli_query($conexion, "INSERT INTO graduaciones(od_l_1, od_l_2, od_l_3, oi_l_1, oi_l_2, oi_l_3, od_c_1, od_c_2, od_c_3, oi_c_1, oi_c_2, oi_c_3, addg, id_venta, obs)  VALUES ('$ojolD1', '$ojolD2', '$ojolD3', '$ojolI1', '$ojolI2', '$ojolI3', '$ojoD1' , '$ojoD2', '$ojoD3', '$ojoI1', '$ojoI2', '$ojoI3', '$add1', '$id_venta2', '$obs')" );
         }
         

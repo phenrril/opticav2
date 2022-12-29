@@ -67,7 +67,7 @@ if (empty($existe) && $id_user != 1) {
                                     <td><b>Ojo I: &nbsp</b><input id="ojoIl1" name="ojoIl1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl2" name="ojoIl2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl3" name="ojoIl3" type="text" size="4"></td>
                                 </tr>  
                                 <tr>
-                                    <td>&nbsp&nbsp&nbsp<b>ADD: &nbsp</b><input id="add" name="add" type="text" size="4">&nbsp&nbsp&nbsp<b>Obs: &nbsp</b><input id="obs" name="obs" type="text" size="11"></td>
+                                    <td>&nbsp<b>ADD: &nbsp</b><input id="add" name="add" type="text" size="4">&nbsp&nbsp&nbsp<b>Obs: &nbsp</b><input id="obs" name="obs" type="text" size="10"></td>
                                 </tr>  
                                 <tr>
                                     
@@ -123,8 +123,20 @@ if (empty($existe) && $id_user != 1) {
                 </tbody>
                 <tfoot>
                     <tr class="font-weight-bold">
-                        <td colspan=3>Total Pagar</td>
+                        <td colspan=3>Total a Pagar: </td>
                         <td></td>
+                    </tr>
+                    <tr class="font-weight-bold">
+                        <td colspan=3>Abona: </td>
+                        <td colspan=3><input type="text" size="3"> </td>
+                    </tr>
+                    <tr class="font-weight-bold">
+                        <td colspan=3>Descuento: </td>
+                        <td colspan=3><input type="text" size="3"> %</td>
+                    </tr>
+                    <tr class="font-weight-bold">
+                        <td colspan=3>Resta: </td>
+                        <td colspan=3><input type="text" size="3" disabled></td>
                     </tr>
                 </tfoot>
             </table>
@@ -132,7 +144,8 @@ if (empty($existe) && $id_user != 1) {
         </div>
     </div>
     <div class="col-md-6">
-        <a href="#" class="btn btn-primary" id="btn_generar"><i class="fas fa-save"></i> Generar Venta</a>
+    <a href="#" class="btn btn-primary" id="btn_generar"><i class="fas fa-save"></i> Generar Venta</a>
+    <a href="#" class="btn btn-primary" id="btn_descuento"><i class="fas fa-save"></i> Aplicar Descuento</a>
     </div>
 
 </div>
