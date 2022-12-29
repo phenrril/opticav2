@@ -65,8 +65,8 @@ while ($row = mysqli_fetch_assoc($ventas)) {
 }
 if ($datos44 == ""){
 
-}else{
-
+}
+else{
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->SetTextColor(255, 255, 255);
 $pdf->Cell(196, 5, "Graduaciones", 1, 1, 'C', 1);
