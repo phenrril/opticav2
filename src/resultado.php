@@ -43,17 +43,18 @@ $add1= $_POST['add'];
 if ($add1 == ""){
     $add1 = 0;}
 
-$idventa1= mysqli_query($conexion, "SELECT MAX(id) as total FROM ventas");
-$idventa2 = mysqli_fetch_assoc($idventa1);
-$idventa3 = $idventa2['total'];
-$idventa = $idventa3 + 1;
+//$idventa1= mysqli_query($conexion, "SELECT MAX(id) as total FROM ventas");
+//$idventa2 = mysqli_fetch_assoc($idventa1);
+//$idventa3 = $idventa2['total'];
+//$idventa = $idventa3 + 1;
+$id_user2=$_SESSION['idUser'];
 
 $obs = $_POST['obs'];
 if ($obs == ""){
     $obs = "Sin Observaciones";
 }
 
-$query = mysqli_query($conexion, "INSERT INTO graduaciones(od_l_1, od_l_2, od_l_3, oi_l_1, oi_l_2, oi_l_3, od_c_1, od_c_2, od_c_3, oi_c_1, oi_c_2, oi_c_3, addg, id_venta, obs)  VALUES ('$ojolD1', '$ojolD2', '$ojolD3', '$ojolI1', '$ojolI2', '$ojolI3', '$ojoD1' , '$ojoD2', '$ojoD3', '$ojoI1', '$ojoI2', '$ojoI3', '$add1', '$idventa', '$obs')" );
+$query = mysqli_query($conexion, "INSERT INTO graduaciones_temp(od_l_1, od_l_2, od_l_3, oi_l_1, oi_l_2, oi_l_3, od_c_1, od_c_2, od_c_3, oi_c_1, oi_c_2, oi_c_3, addg, id_usuario, obs)  VALUES ('$ojolD1', '$ojolD2', '$ojolD3', '$ojolI1', '$ojolI2', '$ojolI3', '$ojoD1' , '$ojoD2', '$ojoD3', '$ojoI1', '$ojoI2', '$ojoI3', '$add1', '$id_user2', '$obs')" );
 if ($query) {    
     
     echo '<script>var ojoD1 = document.getElementById("ojoD1")</>';
