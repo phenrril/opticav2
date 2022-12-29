@@ -58,6 +58,18 @@ if (empty($existe) && $id_user != 1) {
                             <form id="graduaciones">
                                 <div id="okGrad">
                                 <tr>
+                                    <td><b>Graduacion Lejos </b></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="col-xs-3"><b>Ojo D: </b><input  id="ojoDl1" name="ojoDl1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoDl2" name="ojoDl2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoDl3" name="ojoDl3" type="text" size="4"></div></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Ojo I: &nbsp</b><input id="ojoIl1" name="ojoIl1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl2" name="ojoIl2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl3" name="ojoIl3" type="text" size="4"></td>
+                                </tr>  
+                                <tr>
+                                    <td>&nbsp&nbsp&nbsp<b>ADD: &nbsp</b><input id="add" name="add" type="text" size="4">&nbsp&nbsp&nbsp<b>Obs: &nbsp</b><input id="obs" name="obs" type="text" size="11"></td>
+                                </tr>  
+                                <tr>
                                     
                                     <td><b>Graduacion Cerca </b></td>
                                 </tr>
@@ -68,18 +80,9 @@ if (empty($existe) && $id_user != 1) {
                                 <tr>
                                     <td><b>Ojo I: &nbsp</b><input id="ojoI1" name="ojoI1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoI2" name="ojoI2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoI3" name="ojoI3" type="text" size="4"></td>
                                 </tr>
-                                <tr>
-                                    <td><b>Graduacion Lejos </b></td>
-                                </tr>
-                                <tr>
-                                    <td><div class="col-xs-3"><b>Ojo D: </b><input  id="ojoDl1" name="ojoDl1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoDl2" name="ojoDl2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoDl3" name="ojoDl3" type="text" size="4"></div></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Ojo I: &nbsp</b><input id="ojoIl1" name="ojoIl1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl2" name="ojoIl2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl3" name="ojoIl3" type="text" size="4"></td>
-                                </tr>
+                                
                                 <tr>
                                     <td><input class="btn btn-primary" name="grad" id="grad" type="button" value="Agregar"></td>
-                                &nbsp&nbsp&nbsp<b>ADD: &nbsp</b><input id="add" name="add" type="text" size="4">&nbsp&nbsp&nbsp<b>Obs: &nbsp</b><input id="add" name="add" type="text" size="11"></td>
                                 </tr>
                                 </div>
                             </form>
@@ -133,18 +136,4 @@ if (empty($existe) && $id_user != 1) {
     </div>
 
 </div>
-<script >
-    
-    // $("#grad").click(function(){
-    //         $.ajax({
-    //                 url: "resultado.php",
-    //                 type: "POST",
-    //                 data: $("#graduaciones").serialize(),
-    //                 success: function(resultado){
-    //                         $("#okGrad").html(resultado);
-    //                 }
-    //         });
-    //});
-    
-</script>
 <?php include_once "includes/footer.php"; ?>

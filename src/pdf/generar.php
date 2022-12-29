@@ -9,10 +9,10 @@ $pdf->SetFont('Arial', 'B', 12);
 $id = $_GET['v'];
 $idcliente = $_GET['cl'];
 $config = mysqli_query($conexion, "SELECT * FROM configuracion");
-$consul = mysqli_query($conexion, "SELECT graduaciones.* FROM graduaciones JOIN ventas ON graduaciones.id_venta = ventas.id WHERE ventas.id = '1'");
-$gradu= mysqli_query($conexion, "SELECT od_l_1, od_l_2 FROM graduaciones where id_venta='21'");
+//$consul = mysqli_query($conexion, "SELECT graduaciones.* FROM graduaciones JOIN ventas ON graduaciones.id_venta = ventas.id WHERE ventas.id = '$id'");
+$gradu= mysqli_query($conexion, "SELECT * FROM graduaciones where id_venta='$id'");
 $datos = mysqli_fetch_assoc($config);
-$datos44 = mysqli_fetch_assoc($consul);
+$datos44 = mysqli_fetch_assoc($gradu);
 $clientes = mysqli_query($conexion, "SELECT * FROM cliente WHERE idcliente = $idcliente");
 $datosC = mysqli_fetch_assoc($clientes);
 $ventas = mysqli_query($conexion, "SELECT d.*, p.codproducto, p.descripcion FROM detalle_venta d INNER JOIN producto p ON d.id_producto = p.codproducto WHERE d.id_venta = $id");
@@ -63,30 +63,63 @@ while ($row = mysqli_fetch_assoc($ventas)) {
     $pdf->Cell(35, 5, number_format($row['cantidad'] * $row['precio'], 2, '.', ','), 0, 1, 'L');
     $contador++;
 }
-$pdf->SetFont('Arial', 'B', 10);
-$pdf->SetTextColor(255, 255, 255);
-$pdf->Cell(196, 5, "Graduaciones", 1, 1, 'C', 1);
-$pdf->Ln(10);
-$pdf->SetTextColor(0, 0, 0);
-$pdf->Cell(90, 5, utf8_decode('Ojo Derecho C'), 0, 0, 'L');
-$pdf->Ln(8);
-$pdf->Cell(90, 5, utf8_decode($datos44['od_l_1']), 0, 0, 'L');
-$pdf->Ln(3);
-$pdf->Cell(90, 5, utf8_decode($datos44['od_l_2']), 0, 0, 'L');
-$pdf->Ln(3);
-$pdf->Cell(90, 5, utf8_decode($datos44['od_l_2']), 0, 0, 'L');
-$pdf->Ln(8);
-$pdf->Cell(50, 5, utf8_decode('Ojo Izquierdo C'), 0, 0, 'L');
-$pdf->Ln(8);
-$pdf->Cell(90, 5, utf8_decode($datos44['od_l_1']), 0, 0, 'L');
-$pdf->Ln(3);
-$pdf->Cell(90, 5, utf8_decode($datos44['od_l_2']), 0, 0, 'L');
-$pdf->Ln(3);
-$pdf->Cell(90, 5, utf8_decode($datos44['od_l_2']), 0, 0, 'L');
-$pdf->Ln(3);
-$pdf->Ln(10);
-$pdf->Cell(90, 5, utf8_decode('Ojo Derecho L'), 0, 0, 'L');
-$pdf->Cell(50, 5, utf8_decode('Ojo Izquierdo L'), 0, 0, 'L');
+// $pdf->SetFont('Arial', 'B', 10);
+// $pdf->SetTextColor(255, 255, 255);
+// $pdf->Cell(196, 5, "Graduaciones", 1, 1, 'C', 1);
+// $pdf->Ln(10);
+// $pdf->SetTextColor(0, 0, 0);
+// $pdf->Cell(90, 5, utf8_decode('Ojo Derecho C'), 0, 0, 'L');
+// $pdf->Ln(8);
+// $pdf->Cell(90, 5, utf8_decode($datos44['od_c_1']), 0, 0, 'L');
+// $pdf->Ln(3);
+// $pdf->Cell(90, 5, utf8_decode($datos44['od_c_2']), 0, 0, 'L');
+// $pdf->Ln(3);
+// $pdf->Cell(90, 5, utf8_decode($datos44['od_c_3']), 0, 0, 'L');
+// $pdf->Ln(8);
+// $pdf->Cell(50, 5, utf8_decode('Ojo Izquierdo C'), 0, 0, 'L');
+// $pdf->Ln(8);
+// $pdf->Cell(90, 5, utf8_decode($datos44['od_c_1']), 0, 0, 'L');
+// $pdf->Ln(3);
+// $pdf->Cell(90, 5, utf8_decode($datos44['od_c_2']), 0, 0, 'L');
+// $pdf->Ln(3);
+// $pdf->Cell(90, 5, utf8_decode($datos44['od_c_3']), 0, 0, 'L');
+// $pdf->Ln(3);
+// $pdf->Ln(10);
+// $pdf->Cell(90, 5, utf8_decode('Ojo Derecho L'), 0, 0, 'L');
+// $pdf->Ln(8);
+// $pdf->Cell(90, 5, utf8_decode($datos44['od_l_1']), 0, 0, 'L');
+// $pdf->Ln(3);
+// $pdf->Cell(90, 5, utf8_decode($datos44['od_l_2']), 0, 0, 'L');
+// $pdf->Ln(3);
+// $pdf->Cell(90, 5, utf8_decode($datos44['od_l_3']), 0, 0, 'L');
+// $pdf->Ln(3);
+// $pdf->Cell(50, 5, utf8_decode('Ojo Izquierdo L'), 0, 0, 'L');
+// $pdf->Ln(8);
+// $pdf->Cell(90, 5, utf8_decode($datos44['od_l_1']), 0, 0, 'L');
+// $pdf->Ln(3);
+// $pdf->Cell(90, 5, utf8_decode($datos44['od_l_2']), 0, 0, 'L');
+// $pdf->Ln(3);
+// $pdf->Cell(90, 5, utf8_decode($datos44['od_l_3']), 0, 0, 'L');
+// $pdf->Ln(3);
+
+// $pdf->SetFont('Arial', 'B', 10);
+// $pdf->SetTextColor(255, 255, 255);
+// $pdf->Cell(196, 5, "Graduaciones", 1, 1, 'C', 1);
+// $pdf->Ln(10);
+// $pdf->SetTextColor(0, 0, 0);
+
+// Definir el encabezado de la tabla
+$header = array('Ojo', 'C', 'L', 'C');
+
+// Crear un array con los datos de la tabla
+$data = array(
+  array('Derecho', $datos44['od_c_1'], $datos44['od_l_1'], $datos44['od_c_1']),
+  array('Izquierdo', $datos44['od_c_1'], $datos44['od_l_1'], $datos44['od_c_1'])
+);
+
+// Dibujar la tabla
+$pdf->BasicTable($header, $data);
+
 
 $pdf->Ln(10);
 $pdf->Cell(90, 5, utf8_decode('ADD'), 0, 0, 'L');
