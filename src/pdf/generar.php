@@ -63,67 +63,53 @@ while ($row = mysqli_fetch_assoc($ventas)) {
     $pdf->Cell(35, 5, number_format($row['cantidad'] * $row['precio'], 2, '.', ','), 0, 1, 'L');
     $contador++;
 }
-// $pdf->SetFont('Arial', 'B', 10);
-// $pdf->SetTextColor(255, 255, 255);
-// $pdf->Cell(196, 5, "Graduaciones", 1, 1, 'C', 1);
-// $pdf->Ln(10);
-// $pdf->SetTextColor(0, 0, 0);
-// $pdf->Cell(90, 5, utf8_decode('Ojo Derecho C'), 0, 0, 'L');
-// $pdf->Ln(8);
-// $pdf->Cell(90, 5, utf8_decode($datos44['od_c_1']), 0, 0, 'L');
-// $pdf->Ln(3);
-// $pdf->Cell(90, 5, utf8_decode($datos44['od_c_2']), 0, 0, 'L');
-// $pdf->Ln(3);
-// $pdf->Cell(90, 5, utf8_decode($datos44['od_c_3']), 0, 0, 'L');
-// $pdf->Ln(8);
-// $pdf->Cell(50, 5, utf8_decode('Ojo Izquierdo C'), 0, 0, 'L');
-// $pdf->Ln(8);
-// $pdf->Cell(90, 5, utf8_decode($datos44['od_c_1']), 0, 0, 'L');
-// $pdf->Ln(3);
-// $pdf->Cell(90, 5, utf8_decode($datos44['od_c_2']), 0, 0, 'L');
-// $pdf->Ln(3);
-// $pdf->Cell(90, 5, utf8_decode($datos44['od_c_3']), 0, 0, 'L');
-// $pdf->Ln(3);
-// $pdf->Ln(10);
-// $pdf->Cell(90, 5, utf8_decode('Ojo Derecho L'), 0, 0, 'L');
-// $pdf->Ln(8);
-// $pdf->Cell(90, 5, utf8_decode($datos44['od_l_1']), 0, 0, 'L');
-// $pdf->Ln(3);
-// $pdf->Cell(90, 5, utf8_decode($datos44['od_l_2']), 0, 0, 'L');
-// $pdf->Ln(3);
-// $pdf->Cell(90, 5, utf8_decode($datos44['od_l_3']), 0, 0, 'L');
-// $pdf->Ln(3);
-// $pdf->Cell(50, 5, utf8_decode('Ojo Izquierdo L'), 0, 0, 'L');
-// $pdf->Ln(8);
-// $pdf->Cell(90, 5, utf8_decode($datos44['od_l_1']), 0, 0, 'L');
-// $pdf->Ln(3);
-// $pdf->Cell(90, 5, utf8_decode($datos44['od_l_2']), 0, 0, 'L');
-// $pdf->Ln(3);
-// $pdf->Cell(90, 5, utf8_decode($datos44['od_l_3']), 0, 0, 'L');
-// $pdf->Ln(3);
+if ($datos44 == ""){
 
-// $pdf->SetFont('Arial', 'B', 10);
-// $pdf->SetTextColor(255, 255, 255);
-// $pdf->Cell(196, 5, "Graduaciones", 1, 1, 'C', 1);
-// $pdf->Ln(10);
-// $pdf->SetTextColor(0, 0, 0);
+}else{
 
-// Definir el encabezado de la tabla
-$header = array('Ojo', 'C', 'L', 'C');
-
-// Crear un array con los datos de la tabla
-$data = array(
-  array('Derecho', $datos44['od_c_1'], $datos44['od_l_1'], $datos44['od_c_1']),
-  array('Izquierdo', $datos44['od_c_1'], $datos44['od_l_1'], $datos44['od_c_1'])
-);
-
-// Dibujar la tabla
-$pdf->BasicTable($header, $data);
-
-
+$pdf->SetFont('Arial', 'B', 10);
+$pdf->SetTextColor(255, 255, 255);
+$pdf->Cell(196, 5, "Graduaciones", 1, 1, 'C', 1);
 $pdf->Ln(10);
-$pdf->Cell(90, 5, utf8_decode('ADD'), 0, 0, 'L');
+$pdf->SetTextColor(0, 0, 0);
 
+// Dibujar dos celdas en la misma fila para Ojo Derecho C y Ojo Derecho L
+$pdf->Cell(45, 5, utf8_decode('Ojo Derecho C'), 1, 0, 'L');
+$pdf->Cell(45, 5, utf8_decode('Ojo Derecho L'), 1, 0, 'L');
+$pdf->Ln(8);
+$pdf->Cell(45, 5, utf8_decode($datos44['od_c_1']), 1, 0, 'L');
+$pdf->Cell(45, 5, utf8_decode($datos44['od_l_1']), 1, 0, 'L');
+$pdf->Ln(6);
+$pdf->Cell(45, 5, utf8_decode($datos44['od_c_2']), 1, 0, 'L');
+$pdf->Cell(45, 5, utf8_decode($datos44['od_l_2']), 1, 0, 'L');
+$pdf->Ln(6);
+$pdf->Cell(45, 5, utf8_decode($datos44['od_c_3']), 1, 0, 'L');
+$pdf->Cell(45, 5, utf8_decode($datos44['od_l_3']), 1, 0, 'L');
+$pdf->Ln(8);
+
+// Dibujar dos celdas en la misma fila para Ojo Izquierdo C y Ojo Izquierdo L
+$pdf->Cell(45, 5, utf8_decode('Ojo Izquierdo C'), 1, 0, 'L');
+$pdf->Cell(45, 5, utf8_decode('Ojo Izquierdo L'), 1, 0, 'L');
+$pdf->Ln(8);
+$pdf->Cell(45, 5, utf8_decode($datos44['oi_c_1']), 1, 0, 'L');
+$pdf->Cell(45, 5, utf8_decode($datos44['oi_l_1']), 1, 0, 'L');
+$pdf->Ln(6);
+$pdf->Cell(45, 5, utf8_decode($datos44['oi_c_2']), 1, 0, 'L');
+$pdf->Cell(45, 5, utf8_decode($datos44['oi_l_2']), 1, 0, 'L');
+$pdf->Ln(6);
+$pdf->Cell(45, 5, utf8_decode($datos44['oi_c_3']), 1, 0, 'L');
+$pdf->Cell(45, 5, utf8_decode($datos44['oi_l_3']), 1, 0, 'L');
+
+$pdf->Ln(8);
+$pdf->Cell(90, 5, utf8_decode('ADD'), 1, 0, 'L');
+$pdf->Ln(6);
+$pdf->Cell(90, 5, utf8_decode($datos44['addg']), 1, 0, 'L');
+$pdf->Ln(8);
+$pdf->Cell(90, 5, utf8_decode('Observaciones:'), 1, 0, 'L');
+$pdf->Ln(6);
+$pdf->Cell(90, 5, utf8_decode($datos44['obs']), 1, 0, 'L');
+}
 $pdf->Output("ventas.pdf", "I");
 
 ?>
+
