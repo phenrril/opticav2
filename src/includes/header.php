@@ -22,10 +22,10 @@ if (empty($_SESSION['active'])) {
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.php">Pos Venta</a>
+        <a class="navbar-brand" href="index.php">Optica</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
 
-        <!-- Navbar-->
+        <!-- Navbar <img src="../assets/img/logo.png">-->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -58,6 +58,10 @@ if (empty($_SESSION['active'])) {
                         <a class="nav-link" href="lista_ventas.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                             Ventas
+                        </a>
+                        <a class="nav-link" href="estadisticas.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
+                            Estadisticas
                         </a>
                         <a class="nav-link" href="productos.php">
                             <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>

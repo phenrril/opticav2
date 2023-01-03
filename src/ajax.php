@@ -42,7 +42,8 @@ if (isset($_GET['q'])) {
         $data['descripcion'] = $row['descripcion'];
         $data['cantidad'] = $row['cantidad'];
         $data['precio_venta'] = $row['precio_venta'];
-        $data['sub_total'] = number_format($row['precio_venta'] * $row['cantidad'], 2, '.', ',');
+        //$data['sub_total'] = number_format($row['precio_venta'] * $row['cantidad'], 2, '.', ',' ); // 
+        $data['sub_total'] = $row['precio_venta'] * $row['cantidad'];
         array_push($datos, $data);
     }
     echo json_encode($datos);

@@ -43,10 +43,6 @@ $add1= $_POST['add'];
 if ($add1 == ""){
     $add1 = 0;}
 
-//$idventa1= mysqli_query($conexion, "SELECT MAX(id) as total FROM ventas");
-//$idventa2 = mysqli_fetch_assoc($idventa1);
-//$idventa3 = $idventa2['total'];
-//$idventa = $idventa3 + 1;
 $id_user2=$_SESSION['idUser'];
 
 $obs = $_POST['obs'];

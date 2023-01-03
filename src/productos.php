@@ -13,10 +13,11 @@ if (empty($existe) && $id_user != 1) {
         $precio = $_POST['precio'];
         $cantidad = $_POST['cantidad'];
         $usuario_id = $_SESSION['idUser'];
+        $precio_bruto = $_POST['precio_bruto'];
         $alert = "";
-        if (empty($codigo) || empty($producto) || empty($precio) || $precio <  0 || empty($cantidad) || $cantidad < 0) {
+        if (empty($codigo) || empty($producto) || empty($precio) || $precio <  0 || empty($cantidad) || $cantidad < 0 || empty($precio_bruto) || $precio_bruto < 0) {
             $alert = '<div class="alert alert-danger" role="alert">
-                Todo los campos son obligatorios
+                Todos los campos son obligatorios
               </div>';
         } else {
             $query = mysqli_query($conexion, "SELECT * FROM producto WHERE codigo = '$codigo'");
@@ -26,7 +27,7 @@ if (empty($existe) && $id_user != 1) {
                         El código ya existe
                     </div>';
             } else {
-				$query_insert = mysqli_query($conexion,"INSERT INTO producto(codigo,descripcion,precio,existencia,usuario_id) values ('$codigo', '$producto','$precio','$cantidad','$usuario_id')");
+				$query_insert = mysqli_query($conexion,"INSERT INTO producto(codigo,descripcion,precio,existencia,usuario_id,precio_bruto) values ('$codigo', '$producto','$precio','$cantidad','$usuario_id', '$precio_bruto')");
                 if ($query_insert) {
                     $alert = '<div class="alert alert-success" role="alert">
                 Producto Registrado
@@ -52,6 +53,7 @@ if (empty($existe) && $id_user != 1) {
                  <th>Precio</th>
                  <th>Stock</th>
                  <th>Estado</th>
+                 <th>Precio Bruto</th>
                  <th></th>
              </tr>
          </thead>
@@ -76,6 +78,7 @@ if (empty($existe) && $id_user != 1) {
                          <td><?php echo $data['precio']; ?></td>
                          <td><?php echo $data['existencia']; ?></td>
                          <td><?php echo $estado ?></td>
+                         <td><?php echo $data['precio_bruto']; ?></td>
                          <td>
                              <?php if ($data['estado'] == 1) { ?>
                                  <a href="agregar_producto.php?id=<?php echo $data['codproducto']; ?>" class="btn btn-primary"><i class='fas fa-audio-description'></i></a>
@@ -117,6 +120,10 @@ if (empty($existe) && $id_user != 1) {
                      <div class="form-group">
                          <label for="precio">Precio</label>
                          <input type="text" placeholder="Ingrese precio" class="form-control" name="precio" id="precio">
+                     </div>
+                     <div class="form-group">
+                         <label for="precio_bruto">Precio Bruto</label>
+                         <input type="text" placeholder="Ingrese precio Bruto" class="form-control" name="precio_bruto" id="precio_bruto">
                      </div>
                      <div class="form-group">
                          <label for="cantidad">Cantidad</label>
