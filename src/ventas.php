@@ -56,7 +56,7 @@ if (empty($existe) && $id_user != 1) {
                             <p style="font-size: 16px; text-transform: uppercase; color: black;">
                             <table class="table table-borderless" id="tablaGracuadiones">
                             <form id="graduaciones">
-                                <div id="okGrad">
+                                <div id="okgrad">
                                 <tr>
                                     <td><b>Graduacion Lejos </b></td>
                                 </tr>
@@ -125,28 +125,54 @@ if (empty($existe) && $id_user != 1) {
                     <tr class="font-weight-bold">
                         <td colspan=3>Total a Pagar: </td>
                         <td></td>
-                    </tr>
+                    </tr>    
+                </tfoot>
+            </table>
+            <table class="table table-hover">
+                <form method="POST" id="form_descuento">
+                    <div id="div_descuento">
                     <tr class="font-weight-bold">
                         <td colspan=3>Abona: </td>
                         <td colspan=3><input type="text" size="3"> </td>
                     </tr>
                     <tr class="font-weight-bold">
                         <td colspan=3>Descuento: </td>
-                        <td colspan=3><input type="text" size="3"> %</td>
+                        <td colspan=3><select id="porc" name="porc">
+                                        <option value="1">Sin descuento</option>
+                                        <option value="0.95">5%</option>
+                                        <option value="0.9">10%</option>
+                                        <option value="0.85">15%</option>
+                                        <option value="0.80">20%</option>
+                                        <option value="0.75">25%</option>
+                                        <option value="0.70">30%</option>
+                                        <option value="0.65">35%</option>
+                                        <option value="0.60">40%</option>
+                                        <option value="0.55">45%</option>
+                                        <option value="0.50">50%</option>
+                                        <option value="0.45">55%</option>
+                                        <option value="0.40">60%</option>
+                                        </select></td>
                     </tr>
                     <tr class="font-weight-bold">
                         <td colspan=3>Resta: </td>
                         <td colspan=3><input type="text" size="3" disabled></td>
-                    </tr>
-                </tfoot>
+                        </tr>
+                </tr>
+                </div>
+                </form>
             </table>
-
         </div>
     </div>
     <div class="col-md-6">
     <a href="#" class="btn btn-primary" id="btn_generar"><i class="fas fa-save"></i> Generar Venta</a>
-    <a href="#" class="btn btn-primary" id="btn_descuento"><i class="fas fa-save"></i> Aplicar Descuento</a>
+    <input type="button" class="btn btn-primary" value="Aplicar Descuento" name="btn_descuento" id="btn_descuento" onclick=descuento()></input>
     </div>
 
 </div>
+
+
+
 <?php include_once "includes/footer.php"; ?>
+
+
+

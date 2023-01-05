@@ -79,6 +79,8 @@ if ($query) {
     echo '<script>ojoIl3.value = ""</script>';
     echo '<script>var add1 = document.getElementById("add")</script>';
     echo '<script>add1.value = ""</script>';
+    echo '<script>var obs = document.getElementById("obs")</script>';
+    echo '<script>obs.value = ""</script>';
     echo "<div class='alert alert-success'>Graduacion Agregada Correctamente</div>";
 }
 else {

@@ -2,9 +2,6 @@
 require_once "../conexion.php";
 session_start();
 
-
-
-
 if (isset($_GET['q'])) {
     $datos = array();
     $nombre = $_GET['q'];
@@ -75,7 +72,10 @@ if (isset($_GET['q'])) {
     $id_user = $_SESSION['idUser'];
     $consulta = mysqli_query($conexion, "SELECT total, SUM(total) AS total_pagar FROM detalle_temp WHERE id_usuario = $id_user");
     $result = mysqli_fetch_assoc($consulta);
-    $total = $result['total_pagar'];
+    $sql3 = mysqli_query($conexion, "SELECT descuento FROM descuento ORDER BY id DESC LIMIT 1;");
+    $fila = mysqli_fetch_array($sql3);
+    $descuento = $fila['descuento'];
+    $total = $result['total_pagar'] * $descuento;
     $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario) VALUES ('$id_cliente', '$total', '$id_user')");
     if ($insertar) {
         $id_maximo = mysqli_query($conexion, "SELECT MAX(id) AS total FROM ventas");

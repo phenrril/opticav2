@@ -1,17 +1,33 @@
 document.addEventListener("DOMContentLoaded", function () {
-    $('#grad').click( function() {
+    $('#grad').click( function() { //grad
     {$.ajax({
-        url: "resultado.php",
+        url: "resultado.php", //resultado
         type: "POST",
-        data: $("#graduaciones").serialize(),
+        data: $("#graduaciones").serialize(), //graduaciones
         success: function(resultado){
-                $("#okGrad").html(resultado);
+                $("#okgrad").html(resultado);  //okgrad
 
                 }
             });
     }
         
     })
+
+    $('#btn_descuento').click( function() { //grad
+        {$.ajax({
+            url: "descuento.php", //resultado
+            type: "POST",
+            data: $("#form_descuento").serialize(), //graduaciones
+            success: function(resultado){
+                    $("#div_descuento").html(resultado);  //okgrad
+    
+                    }
+                });
+        }
+            
+        })
+
+    
 
     $('#tbl').DataTable();
     $(".confirmar").submit(function (e) {
@@ -131,6 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
 })
+
 
 function listar() {
     let html = '';
