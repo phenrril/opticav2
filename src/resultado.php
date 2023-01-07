@@ -80,7 +80,49 @@ if ($query) {
     echo '<script>var add1 = document.getElementById("add")</script>';
     echo '<script>add1.value = ""</script>';
     echo "<div class='alert alert-success'>Graduacion Agregada Correctamente</div>";
-}
+    $query2 = mysqli_query($conexion, "SELECT *from graduaciones_temp " );
+    if ($query2){
+        while ($row2 = mysqli_fetch_assoc($query2)) {
+            echo'        <table class="table table-hover" >
+            <thead class="thead-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Descripción</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Precio Total</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody >
+
+            </tbody>
+            
+               
+        </table>';
+            echo $row2['od_l_1'];
+            echo $row2['od_l_2'];
+            echo  $row2['od_l_3'];
+            echo  $row2['oi_l_1'];
+            echo $row2['oi_l_2'];
+            echo $row2['oi_l_3'];
+            echo $row2['od_c_1'];
+            echo $row2['od_c_2'];
+            echo $row2['od_c_3'];
+            echo $row2['oi_c_1'];
+            echo $row2['oi_c_2'];
+            echo$row2['oi_c_3'];
+            echo $row2['addg'];
+            echo $row2['obs'];
+            echo'
+            <script type="text/javascript">;
+            
+            document.getElementById("borrar_grad").setAttribute("type", "button");
+            </script>';
+echo '<input type ="button"></input>';
+
+    }
+}}
 else {
     echo "<script>alert('Error al agregar Graduacion')</>";
 }

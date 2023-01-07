@@ -56,7 +56,7 @@ if (empty($existe) && $id_user != 1) {
                             <p style="font-size: 16px; text-transform: uppercase; color: black;">
                             <table class="table table-borderless" id="tablaGracuadiones">
                             <form id="graduaciones">
-                                <div id="okGrad">
+                            
                                 <tr>
                                     <td><b>Graduacion Lejos </b></td>
                                 </tr>
@@ -80,16 +80,23 @@ if (empty($existe) && $id_user != 1) {
                                 <tr>
                                     <td><b>Ojo I: &nbsp</b><input id="ojoI1" name="ojoI1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoI2" name="ojoI2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoI3" name="ojoI3" type="text" size="4"></td>
                                 </tr>
-                                
+                               
                                 <tr>
                                     <td><input class="btn btn-primary" name="grad" id="grad" type="button" value="Agregar"></td>
+                                    <td><form type="post"id="borrar_grad"><input class="btn btn-danger"type="hidden"value="borrar_GRAd"id="borrar_grad"></td>
+                                    
                                 </tr>
-                                </div>
+                                <div id="okGrad"></div>
+                                
+                              
                             </form>
-                        </table>    
+                            </form>
+                        </table>   
+                        
                         </p>
                         </div>
                     </div>
+                    
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-header">
@@ -103,8 +110,8 @@ if (empty($existe) && $id_user != 1) {
                         </div>
                     </div>
                 </div>
-
-            </div>
+        
+            
         </div>
         <div class="table-responsive">
             <table class="table table-hover" id="tblDetalle">
@@ -126,18 +133,7 @@ if (empty($existe) && $id_user != 1) {
                         <td colspan=3>Total a Pagar: </td>
                         <td></td>
                     </tr>
-                    <tr class="font-weight-bold">
-                        <td colspan=3>Abona: </td>
-                        <td colspan=3><input type="text" size="3"> </td>
-                    </tr>
-                    <tr class="font-weight-bold">
-                        <td colspan=3>Descuento: </td>
-                        <td colspan=3><input type="text" size="3"> %</td>
-                    </tr>
-                    <tr class="font-weight-bold">
-                        <td colspan=3>Resta: </td>
-                        <td colspan=3><input type="text" size="3" disabled></td>
-                    </tr>
+                    
                 </tfoot>
             </table>
 
@@ -150,3 +146,18 @@ if (empty($existe) && $id_user != 1) {
 
 </div>
 <?php include_once "includes/footer.php"; ?>
+
+<script>
+$('#borrar_grad').click( function() {
+    {$.ajax({
+        url: "borrar_grad.php",
+        type: "POST",
+        data: $("#borrar_grad").serialize(),
+        success: function(resultado){
+                $("#okGrad").html(resultado);
+
+                }
+            });
+    }
+        
+    })</script>
