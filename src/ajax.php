@@ -115,7 +115,7 @@ if (isset($_GET['q'])) {
         
         if ($insertarDet) {
             $eliminar = mysqli_query($conexion, "DELETE FROM detalle_temp WHERE id_usuario = $id_user");
-            $eliminar = mysqli_query($conexion, "DELETE FROM graduaciones_temp WHERE id_usuario = $id_user");
+            $eliminar2 = mysqli_query($conexion, "DELETE FROM graduaciones_temp WHERE id_usuario = $id_user");
             $msg = array('id_cliente' => $id_cliente, 'id_venta' => $ultimoId);
         } 
     }else{
