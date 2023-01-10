@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
         
     })
 
-    $('#btn_descuento').click( function() { //grad
+    $('#btn_canceldto').click( function() { //grad
         {$.ajax({
-            url: "descuento.php", //resultado
+            url: "prueba.php", //resultado
             type: "POST",
             data: $("#form_descuento").serialize(), //graduaciones
             success: function(resultado){
@@ -27,7 +27,85 @@ document.addEventListener("DOMContentLoaded", function () {
             
         })
 
-    
+//     document.querySelector("#btn_descuento").addEventListener("click", function () {
+
+//         // obtenemos todas las filas del tbody
+//         var filas = document.querySelectorAll("#tblDetalle tbody tr");
+
+//         var total = 0;
+
+//         // recorremos cada una de las filas
+//         filas.forEach(function (e) {
+
+//             // obtenemos las columnas de cada fila
+//             var columnas = e.querySelectorAll("td");
+
+//             // obtenemos los valores de la cantidad y importe
+//             var importe = parseFloat(columnas[4].textContent);
+
+//             var descuento = document.getElementById('porc');
+//             var dto = descuento.value;
+
+
+//             total += importe;
+//             total = total * dto;
+
+//             var descuento = document.getElementById('porc');
+//             var dto = descuento.value;
+
+//             $.ajax({
+//                         url: "descuento.php", //resultado
+//                         type: "POST",
+//                         data: $("#form_descuento").serialize(), //graduaciones
+//                         success: function(resultado){
+//                                 $("#div_descuento").html(resultado);  //okgrad
+                
+//                                 }
+//                             });
+
+//         })
+
+//         // mostramos la suma total
+//         var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
+//         filas[1].textContent = total.toFixed(2);
+//     })
+
+//     /// vamos a probar
+
+//     document.querySelector("#btn_canceldto").addEventListener("click", function () {
+
+//         // obtenemos todas las filas del tbody
+//         var filas = document.querySelectorAll("#tblDetalle tbody tr");
+
+//         var total = 0;
+
+//         // recorremos cada una de las filas
+//         filas.forEach(function (e) {
+
+//             // obtenemos las columnas de cada fila
+//             var columnas = e.querySelectorAll("td");
+
+//             // obtenemos los valores de la cantidad y importe
+//             var importe = parseFloat(columnas[4].textContent);
+
+//             var descuento = document.getElementById('porc');
+//             var dto = descuento.value;
+
+
+//             total += importe;
+//             //total = total * dto;
+
+//            // var descuento = document.getElementById('porc');
+//            // var dto = descuento.value;
+//         })
+  
+
+
+// // mostramos la suma total
+// var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
+// filas[1].textContent = total.toFixed(2)
+// })
+      /// termina la prueba
 
     $('#tbl').DataTable();
     $(".confirmar").submit(function (e) {
@@ -274,15 +352,49 @@ function deleteDetalle(id) {
         }
     });
 }
+
+
+
+// function calcular() {
+//     // obtenemos todas las filas del tbody
+//     var filas = document.querySelectorAll("#tblDetalle tbody tr");
+    
+//     var total = 0;
+
+//     // recorremos cada una de las filas
+//     filas.forEach(function (e) {
+
+//         // obtenemos las columnas de cada fila
+//         var columnas = e.querySelectorAll("td");
+
+//         // obtenemos los valores de la cantidad y importe
+//         var importe = parseFloat(columnas[4].textContent);
+
+//         total += importe;
+//     });
+    
+//     // mostramos la suma total
+//     var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
+//     filas[1].textContent = total.toFixed(2);
+// }
+// document.querySelector("#btn_descuento").addEventListener("click", function (total) {
+//     var descuento = document.getElementById('porc');
+//     var dto = descuento.value;
+    
+//     total = total * dto;
+    
+//     // mostramos la suma total
+//     var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
+//     filas[1].textContent = total.toFixed(2);
+// }.bind(null, total));
+
 function calcular() {
+    var total = 0;
     // obtenemos todas las filas del tbody
     var filas = document.querySelectorAll("#tblDetalle tbody tr");
 
-    var total = 0;
-
     // recorremos cada una de las filas
     filas.forEach(function (e) {
-
         // obtenemos las columnas de cada fila
         var columnas = e.querySelectorAll("td");
 
@@ -291,11 +403,34 @@ function calcular() {
 
         total += importe;
     });
-
+    
     // mostramos la suma total
     var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
     filas[1].textContent = total.toFixed(2);
+
+    // pasamos la variable total como argumento a la función del evento click
+    document.querySelector("#btn_descuento").addEventListener("click", function (total) {
+        var descuento = document.getElementById('porc');
+        var dto = descuento.value;
+        total = total * dto;
+    
+        // mostramos la suma total
+        var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
+        filas[1].textContent = total.toFixed(2);
+    }.bind(null, total)); // bind() permite pasar el valor de total como argumento a la función del evento click
+
+    document.querySelector("#btn_canceldto").addEventListener("click", function (total) {
+        //var descuento = document.getElementById('porc');
+        var dto = 1;
+        total = total * dto;
+    
+        // mostramos la suma total
+        var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
+        filas[1].textContent = total.toFixed(2);
+    }.bind(null, total));
 }
+
+
 function generarPDF(cliente, id_venta) {
     url = 'pdf/generar.php?cl=' + cliente + '&v=' + id_venta;
     window.open(url, '_blank');

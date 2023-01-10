@@ -9,9 +9,13 @@ if ($eliminar) {
             <script type="text/javascript">;
             
             document.getElementById("borrar_grad").setAttribute("type", "hidden");
+            
             </script>';
+
+            
 }else {
     echo "<script>alert('Error al borrar Graduacion')</>";
 }
+
 ?>
 

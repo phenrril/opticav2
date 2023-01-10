@@ -49,7 +49,7 @@ $obs = $_POST['obs'];
 if ($obs == ""){
     $obs = "Sin Observaciones";
 }
-
+$tabla_creada = false;
 $query = mysqli_query($conexion, "INSERT INTO graduaciones_temp(od_l_1, od_l_2, od_l_3, oi_l_1, oi_l_2, oi_l_3, od_c_1, od_c_2, od_c_3, oi_c_1, oi_c_2, oi_c_3, addg, id_usuario, obs)  VALUES ('$ojolD1', '$ojolD2', '$ojolD3', '$ojolI1', '$ojolI2', '$ojolI3', '$ojoD1' , '$ojoD2', '$ojoD3', '$ojoI1', '$ojoI2', '$ojoI3', '$add1', '$id_user2', '$obs')" );
 if ($query) {    
     
@@ -85,48 +85,64 @@ if ($query) {
     $query2 = mysqli_query($conexion, "SELECT *from graduaciones_temp " );
     if ($query2){
         while ($row2 = mysqli_fetch_assoc($query2)) {
-            echo'        <table class="table table-hover" >
-            <thead class="thead-dark">
+            if (!$tabla_creada ) {
+                $tabla_creada = true;
+            echo'        
+            <table class="table table-hover" >
+                <thead class="thead-dark">
                 <tr>
-                    <th>Id</th>
-                    <th>Descripción</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Precio Total</th>
-                    <th>Accion</th>
+                    <th>Ojo Der Cerca</th>
+                    <th>Ojo Izq Cerca</th>
+                    <th>ADD</th>
+                    <th>Observaciones</th>
+                    <th>Ojo Der Lejos</th>
+                    <th>Ojo Izq Lejos</th> 
                 </tr>
-            </thead>
-            <tbody >
-
-            </tbody>
-            
-               
-        </table>';
-            echo $row2['od_l_1'];
-            echo $row2['od_l_2'];
-            echo  $row2['od_l_3'];
-            echo  $row2['oi_l_1'];
-            echo $row2['oi_l_2'];
-            echo $row2['oi_l_3'];
-            echo $row2['od_c_1'];
-            echo $row2['od_c_2'];
-            echo $row2['od_c_3'];
-            echo $row2['oi_c_1'];
-            echo $row2['oi_c_2'];
-            echo$row2['oi_c_3'];
-            echo $row2['addg'];
-            echo $row2['obs'];
+                
+                
+                <tr>
+                    <td>' . $row2['od_c_1'] , $row2['od_c_2'] , $row2['od_c_3'] . '</td>
+                    <td>' . $row2['oi_c_1'] , $row2['oi_c_2'] , $row2['oi_c_3'] . '</td>
+                    <td>' . $row2['addg'] . '</td>
+                    <td>' . $row2['obs'] . '</td>
+                    <td>' . $row2['od_l_1'] , $row2['od_l_2'] , $row2['od_l_3'] . '</td>
+                    <td>' . $row2['oi_l_1'] , $row2['oi_l_2'] , $row2['oi_l_3'] . '</td>
+                </tr>
+                </thead>
+                <tbody >
+                </tbody>
+            ';
+            }
+            else{
+                
+                echo '
+                
+                <thead class="thead-dark">
+                <tr>
+                    <td>' . $row2['od_c_1'] , $row2['od_c_2'] , $row2['od_c_3'] . '</td>
+                    <td>' . $row2['oi_c_1'] , $row2['oi_c_2'] , $row2['oi_c_3'] . '</td>
+                    <td>' . $row2['addg'] . '</td>
+                    <td>' . $row2['obs'] . '</td>
+                    <td>' . $row2['od_l_1'] , $row2['od_l_2'] , $row2['od_l_3'] . '</td>
+                    <td>' . $row2['oi_l_1'] , $row2['oi_l_2'] , $row2['oi_l_3'] . '</td>
+                </tr>
+                </thead>
+                ';
+            }
             echo'
             <script type="text/javascript">;
             
             document.getElementById("borrar_grad").setAttribute("type", "button");
             </script>';
-echo '<input type ="button"></input>';
+
 
     }
 }}
 else {
     echo "<script>alert('Error al agregar Graduacion')</>";
 }
+
+
+
 ?>
 

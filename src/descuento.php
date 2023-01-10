@@ -9,11 +9,13 @@ $id_usuario = $_SESSION['idUser'];
     if($query){
         echo "<div class='alert alert-success'>DESCUENTO APLICADO CORRECTAMENTE</div>";
         echo '<script>document.getElementById("btn_descuento").setAttribute("type", "hidden");</script>';
+        echo '<script>document.getElementById("btn_canceldto").setAttribute("type", "button");</script>';
+
     }
     else{
         echo "<div class='alert alert-success'>ERROR AL APLICAR DESCUENTO</div>";
     }
 
-
+   // 
 
 ?>

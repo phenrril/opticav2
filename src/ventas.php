@@ -56,7 +56,7 @@ if (empty($existe) && $id_user != 1) {
                             <p style="font-size: 16px; text-transform: uppercase; color: black;">
                             <table class="table table-borderless" id="tablaGracuadiones">
                             <form id="graduaciones">
-                                <div id="okgrad">
+                                <div>
                                 <tr>
                                     <td><b>Graduacion Lejos </b></td>
                                 </tr>
@@ -82,11 +82,11 @@ if (empty($existe) && $id_user != 1) {
                                 </tr>
                                
                                 <tr>
-                                    <td><input class="btn btn-primary" name="grad" id="grad" type="button" value="Agregar"></td>
-                                    <td><form type="post"id="borrar_grad"><input class="btn btn-danger"type="hidden"value="borrar_GRAd"id="borrar_grad"></td>
+                                    <td><input class="btn btn-primary" name="grad" id="grad" type="button" value="Agregar Graduaciones"></td>
+                                    <td><form type="post"id="borrar_grad"><input class="btn btn-danger" type="hidden" value="Borrar Graduaciones"id="borrar_grad"></form></td>
                                     
                                 </tr>
-                                <div id="okGrad"></div>
+                                .
                                 
                               
                             </form>
@@ -113,6 +113,7 @@ if (empty($existe) && $id_user != 1) {
         
             
         </div>
+        <div id="okgrad"></div>
         <div class="table-responsive">
             <table class="table table-hover" id="tblDetalle">
                 <thead class="thead-dark">
@@ -175,7 +176,8 @@ if (empty($existe) && $id_user != 1) {
     </div>
     <div class="col-md-6">
     <a href="#" class="btn btn-primary" id="btn_generar"><i class="fas fa-save"></i> Generar Venta</a>
-    <input type="button" class="btn btn-primary" value="Aplicar Descuento" name="btn_descuento" id="btn_descuento" onclick=descuento()></input>
+    <input type="button" class="btn btn-primary" value="Aplicar Descuento" name="btn_descuento" id="btn_descuento" onclick=""></input>
+    <input class="btn btn-danger" type="hidden" value="Cancelar Dto"id="btn_canceldto"></input>
     </div>
 
 </div>
@@ -191,10 +193,25 @@ $('#borrar_grad').click( function() {
         type: "POST",
         data: $("#borrar_grad").serialize(),
         success: function(resultado){
-                $("#okGrad").html(resultado);
+                $("#okgrad").html(resultado);
 
                 }
             });
     }
         
-    })</script>
+    })
+
+    $('#btn_descuento').click( function() {
+    {$.ajax({
+        url: "descuento.php",
+        type: "POST",
+        data: $("#form_descuento").serialize(),
+        success: function(resultado){
+                $("#div_descuento").html(resultado);
+
+                }
+            });
+    }
+        
+    })    
+</script>
