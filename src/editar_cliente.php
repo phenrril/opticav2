@@ -10,19 +10,22 @@ if (empty($existe) && $id_user != 1) {
 if (!empty($_POST)) {
     $alert = "";
     if (empty($_POST['nombre']) || empty($_POST['telefono']) || empty($_POST['direccion'])) {
-        $alert = '<div class="alert alert-danger" role="alert">Todo los campos son requeridos</div>';
+        $alert = '<div class="alert alert-danger" role="alert">Complete los campos requeridos</div>';
     } else {
         $idcliente = $_POST['id'];
         $nombre = $_POST['nombre'];
         $telefono = $_POST['telefono'];
         $direccion = $_POST['direccion'];
-            $sql_update = mysqli_query($conexion, "UPDATE cliente SET nombre = '$nombre' , telefono = '$telefono', direccion = '$direccion' WHERE idcliente = $idcliente");
+        $dni = $_POST['dni'];
+        $obrasocial = $_POST['obrasocial'];
+        $medico = $_POST['medico'];
+        $sql_update = mysqli_query($conexion, "UPDATE cliente SET nombre = '$nombre' , telefono = '$telefono', direccion = '$direccion', dni = '$dni', obrasocial = '$obrasocial', medico = '$medico' WHERE idcliente = $idcliente");
 
-            if ($sql_update) {
-                $alert = '<div class="alert alert-success" role="alert">Cliente Actualizado correctamente</div>';
-            } else {
-                $alert = '<div class="alert alert-danger" role="alert">Error al Actualizar el Cliente</div>';
-            }
+        if ($sql_update) {
+            $alert = '<div class="alert alert-success" role="alert">Cliente Actualizado correctamente</div>';
+        } else {
+            $alert = '<div class="alert alert-danger" role="alert">Error al Actualizar el Cliente</div>';
+        }
     }
 }
 // Mostrar Datos
@@ -41,6 +44,9 @@ if ($result_sql == 0) {
         $nombre = $data['nombre'];
         $telefono = $data['telefono'];
         $direccion = $data['direccion'];
+        $dni = $data['dni'];
+        $obrasocial = $data['obrasocial'];
+        $medico = $data['medico'];
     }
 }
 ?>
@@ -68,6 +74,18 @@ if ($result_sql == 0) {
                         <div class="form-group">
                             <label for="direccion">Dirección</label>
                             <input type="text" placeholder="Ingrese Direccion" name="direccion" class="form-control" id="direccion" value="<?php echo $direccion; ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="dni">DNI</label>
+                            <input type="text" placeholder="Ingrese Documento" name="dni" id="dni" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="obrasocial">Obra Social</label>
+                            <input type="text" placeholder="Ingrese Obra Social" name="obrasocial" id="obrasocial" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="medico">Médico</label>
+                            <input type="text" placeholder="Ingrese Medico" name="medico" id="medico" class="form-control">
                         </div>
                         <button type="submit" class="btn btn-primary"><i class="fas fa-user-edit"></i> Editar Cliente</button>
                         <a href="clientes.php" class="btn btn-danger">Atras</a>

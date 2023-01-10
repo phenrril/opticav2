@@ -51,7 +51,7 @@ if (empty($existe) && $id_user != 1) {
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <i class="fas fa-user"></i><p style="font-size: 16px; text-transform: uppercase; color: red;"><?php echo $_SESSION['nombre']; ?></p>
+                            Vendedor <i class="fas fa-user"></i><p style="font-size: 16px; text-transform: uppercase; color: red;"><?php echo $_SESSION['nombre']; ?></p>
                             <label> <b>Graduaciones:</b></label>
                             <p style="font-size: 16px; text-transform: uppercase; color: black;">
                             <table class="table table-borderless" id="tablaGracuadiones">
@@ -86,7 +86,7 @@ if (empty($existe) && $id_user != 1) {
                                     <td><form type="post"id="borrar_grad"><input class="btn btn-danger" type="hidden" value="Borrar Graduaciones"id="borrar_grad"></form></td>
                                     
                                 </tr>
-                                .
+                                
                                 
                               
                             </form>

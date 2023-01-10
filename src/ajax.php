@@ -73,15 +73,15 @@ if (isset($_GET['q'])) {
     $consulta = mysqli_query($conexion, "SELECT total, SUM(total) AS total_pagar FROM detalle_temp WHERE id_usuario = $id_user");
     $result = mysqli_fetch_assoc($consulta);
     
-     $sql3 = mysqli_query($conexion, "SELECT descuento FROM descuento ORDER BY id DESC LIMIT 1;");
+    //  $sql3 = mysqli_query($conexion, "SELECT descuento FROM descuento ORDER BY id DESC LIMIT 1;");
      
-       $fila = mysqli_fetch_array($sql3);
-        $descuento = $fila['descuento'];
+    //    $fila = mysqli_fetch_array($sql3);
+    //     $descuento = $fila['descuento'];
     
     
     
 
-    $total = $result['total_pagar']* $descuento;
+    $total = $result['total_pagar'];//* $descuento;
     $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario) VALUES ('$id_cliente', '$total', '$id_user')");
     if ($insertar) {
         $id_maximo = mysqli_query($conexion, "SELECT MAX(id) AS total FROM ventas");
@@ -94,7 +94,7 @@ if (isset($_GET['q'])) {
             $cantidad = $row['cantidad'];
             $precio = $row['precio_venta'];
            // $descuento=0.9;
-            $precio=$precio*$descuento;
+            $precio=$precio;//*$descuento;
             $insertarDet = mysqli_query($conexion, "INSERT INTO detalle_venta(id_producto, id_venta, cantidad, precio) VALUES ($id_producto, $ultimoId, $cantidad, '$precio')");
             $stockActual = mysqli_query($conexion, "SELECT * FROM producto WHERE codproducto = $id_producto");
             $stockNuevo = mysqli_fetch_assoc($stockActual);

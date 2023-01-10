@@ -101,12 +101,12 @@ if ($query) {
                 
                 
                 <tr>
-                    <td>' . $row2['od_c_1'] , $row2['od_c_2'] , $row2['od_c_3'] . '</td>
-                    <td>' . $row2['oi_c_1'] , $row2['oi_c_2'] , $row2['oi_c_3'] . '</td>
+                    <td>' . $row2['od_c_1'] . ' | ' . $row2['od_c_2'] . ' | ' . $row2['od_c_3'] . '</td>
+                    <td>' . $row2['oi_c_1'] . ' | ' . $row2['oi_c_2'] . ' | ' . $row2['oi_c_3'] . '</td>
                     <td>' . $row2['addg'] . '</td>
                     <td>' . $row2['obs'] . '</td>
-                    <td>' . $row2['od_l_1'] , $row2['od_l_2'] , $row2['od_l_3'] . '</td>
-                    <td>' . $row2['oi_l_1'] , $row2['oi_l_2'] , $row2['oi_l_3'] . '</td>
+                    <td>' . $row2['od_l_1'] . ' | ' . $row2['od_l_2'] . ' | ' . $row2['od_l_3'] . '</td>
+                    <td>' . $row2['oi_l_1'] . ' | ' . $row2['oi_l_2'] . ' | ' . $row2['oi_l_3'] . '</td>
                 </tr>
                 </thead>
                 <tbody >
@@ -119,12 +119,12 @@ if ($query) {
                 
                 <thead class="thead-dark">
                 <tr>
-                    <td>' . $row2['od_c_1'] , $row2['od_c_2'] , $row2['od_c_3'] . '</td>
-                    <td>' . $row2['oi_c_1'] , $row2['oi_c_2'] , $row2['oi_c_3'] . '</td>
-                    <td>' . $row2['addg'] . '</td>
-                    <td>' . $row2['obs'] . '</td>
-                    <td>' . $row2['od_l_1'] , $row2['od_l_2'] , $row2['od_l_3'] . '</td>
-                    <td>' . $row2['oi_l_1'] , $row2['oi_l_2'] , $row2['oi_l_3'] . '</td>
+                <td>' . $row2['od_c_1'] . ' | ' . $row2['od_c_2'] . ' | ' . $row2['od_c_3'] . '</td>
+                <td>' . $row2['oi_c_1'] . ' | ' . $row2['oi_c_2'] . ' | ' . $row2['oi_c_3'] . '</td>
+                <td>' . $row2['addg'] . '</td>
+                <td>' . $row2['obs'] . '</td>
+                <td>' . $row2['od_l_1'] . ' | ' . $row2['od_l_2'] . ' | ' . $row2['od_l_3'] . '</td>
+                <td>' . $row2['oi_l_1'] . ' | ' . $row2['oi_l_2'] . ' | ' . $row2['oi_l_3'] . '</td>
                 </tr>
                 </thead>
                 ';

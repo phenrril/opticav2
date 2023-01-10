@@ -11,14 +11,16 @@ if (!empty($_POST)) {
     $alert = "";
     if (empty($_POST['nombre']) || empty($_POST['telefono']) || empty($_POST['direccion'])) {
         $alert = '<div class="alert alert-danger" role="alert">
-                                    Todo los campos son obligatorio
+                                    Complete los campos obligatorios
                                 </div>';
     } else {
         $nombre = $_POST['nombre'];
         $telefono = $_POST['telefono'];
         $direccion = $_POST['direccion'];
         $usuario_id = $_SESSION['idUser'];
-
+        $dni = $_POST['dni'];
+        $obrasocial = $_POST['obrasocial'];
+        $medico = $_POST['medico'];
         $result = 0;
         $query = mysqli_query($conexion, "SELECT * FROM cliente WHERE nombre = '$nombre'");
         $result = mysqli_fetch_array($query);
@@ -27,7 +29,7 @@ if (!empty($_POST)) {
                                     El cliente ya existe
                                 </div>';
         } else {
-            $query_insert = mysqli_query($conexion, "INSERT INTO cliente(nombre,telefono,direccion, usuario_id) values ('$nombre', '$telefono', '$direccion', '$usuario_id')");
+            $query_insert = mysqli_query($conexion, "INSERT INTO cliente(nombre,telefono,direccion, usuario_id, dni, obrasocial, medico) values ('$nombre', '$telefono', '$direccion', '$usuario_id', '$dni', '$obrasocial', '$medico')");
             if ($query_insert) {
                 $alert = '<div class="alert alert-success" role="alert">
                                     Cliente registrado
@@ -49,9 +51,12 @@ if (!empty($_POST)) {
         <thead class="thead-dark">
             <tr>
                 <th>#</th>
-                <th>Nombre</th>
-                <th>Teléfono</th>
-                <th>Dirección</th>
+                <th>Nombre *</th>
+                <th>Teléfono *</th>
+                <th>Dirección *</th>      
+                <th>DNI</th>
+                <th>Obra Social</th>
+                <th>Medico</th>
                 <th>Estado</th>
                 <th></th>
             </tr>
@@ -74,7 +79,10 @@ if (!empty($_POST)) {
                         <td><?php echo $data['idcliente']; ?></td>
                         <td><?php echo $data['nombre']; ?></td>
                         <td><?php echo $data['telefono']; ?></td>
-                        <td><?php echo $data['direccion']; ?></td>
+                        <td><?php echo $data['direccion']; ?></td>             
+                        <td><?php echo $data['dni']; ?></td>
+                        <td><?php echo $data['obrasocial']; ?></td>
+                        <td><?php echo $data['medico']; ?></td>
                         <td><?php echo $estado; ?></td>
                         <td>
                             <?php if ($data['estado'] == 1) { ?>
@@ -113,6 +121,18 @@ if (!empty($_POST)) {
                     <div class="form-group">
                         <label for="direccion">Dirección</label>
                         <input type="text" placeholder="Ingrese Direccion" name="direccion" id="direccion" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="dni">DNI</label>
+                        <input type="text" placeholder="Ingrese Documento" name="dni" id="dni" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="obrasocial">Obra Social</label>
+                        <input type="text" placeholder="Ingrese Obra Social" name="obrasocial" id="obrasocial" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="medico">Médico</label>
+                        <input type="text" placeholder="Ingrese Medico" name="medico" id="medico" class="form-control">
                     </div>
                     <input type="submit" value="Guardar Cliente" class="btn btn-primary">
                 </form>
