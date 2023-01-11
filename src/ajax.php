@@ -18,7 +18,8 @@ if (isset($_GET['q'])) {
 }else if (isset($_GET['pro'])) {
     $datos = array();
     $nombre = $_GET['pro'];
-    $producto = mysqli_query($conexion, "SELECT * FROM producto WHERE codigo LIKE '%" . $nombre . "%' OR descripcion LIKE '%" . $nombre . "%' AND estado = 1");
+    //$producto = mysqli_query($conexion, "SELECT * FROM producto WHERE codigo LIKE '%" . $nombre . "%' OR descripcion LIKE '%" . $nombre . "%' AND estado = 1");
+    $producto = mysqli_query($conexion, "SELECT * FROM producto WHERE codigo LIKE '%$nombre%'AND estado = 1 and existencia >0 OR descripcion LIKE '%$nombre%' AND estado =1 and existencia >0");
     while ($row = mysqli_fetch_assoc($producto)) {
         $data['id'] = $row['codproducto'];
         $data['label'] = $row['codigo'] . ' - ' .$row['descripcion'];
