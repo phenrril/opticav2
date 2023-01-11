@@ -27,17 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
             
         })
 
-        // $('#guardar_cristal').click( function() {
-        //     {$.ajax({
-        //         url: "colocar_cristal.php",
-        //         type: "POST",
-        //         data: $("#form_cristal").serialize(),
-        //         success: function(resultado){
-        //                 $("#div_cristal").html(resultado);
-        //         }
-        //     });
-        // }})
-
+        
         
 
     $('#tbl').DataTable();
@@ -158,6 +148,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
 })
+document.querySelector("#guardar_cristal").addEventListener("click", function () {
+        {$.ajax({
+            url: "colocar_cristal.php",
+            type: "POST",
+            data: $("#form_cristal").serialize(),
+            success: function(resultado){
+                    $("#div_cristal").html(resultado);
+            }
+        });
+    }})
+
 
 
 function listar() {

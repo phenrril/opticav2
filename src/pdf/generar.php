@@ -35,7 +35,7 @@ $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(22, 5, "ID Venta: ", 0, 0, 'L');
 $pdf->SetFont('Arial', '', 10);
 $pdf->Cell(20, 5, utf8_decode($idventas['id_venta']), 0, 1, 'L');
-if($idventas['idcristal'] == ""){
+if($idventas['idcristal'] == 0){
 }else{
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(22, 5, "ID Cristales: ", 0, 0, 'L');
@@ -93,7 +93,6 @@ $pdf->Ln(5);
 $pdf->SetTextColor(0, 0, 0);
 
 if ($datos44 != ""){
-
   mysqli_data_seek($gradu,0);
   while ($datos44 = mysqli_fetch_assoc($gradu)){
 

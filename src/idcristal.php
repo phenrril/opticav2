@@ -1,7 +1,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <?php include_once "includes/header.php"; ?>
 
-
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group">
@@ -9,10 +8,8 @@
         </div>
     </div>
 </div>
-<form method="post" id="form_cristal">
-
-<div class="row justify-content-center">
-
+            <form method="post" id="form_cristal">
+                <div class="row justify-content-center">
                     <div class="col-md-4 text-center">
                         <div class="card">
                             <div class="card-header">
@@ -37,33 +34,11 @@
                             </div>
                         </div>
                     </div>                  
-</div>
-
-</form> 
-
+                </div>
+            </form> 
 <div class="row justify-content-center">
-
-    <input type="button" class="btn btn-primary" value="Aplicar Descuento" id="guardar_cristal" name="guardar_cristal" onclick=""></input>
-    
+    <input type="button" class="btn btn-primary" value="Aplicar Descuento" id="guardar_cristal" name="guardar_cristal" onclick=""></input> 
 </div>
 <div id="div_cristal"></div>
-
-
-<script>
-    $('#guardar_cristal').click( function() {
-    {$.ajax({
-        url: "colocar_cristal.php",
-        type: "POST",
-        data: $("#form_cristal").serialize(),
-        success: function(resultado){
-                $("#div_cristal").html(resultado);
-
-                }
-            });
-    }
-        
-    })
-</script>
-
 
 <?php include_once "includes/footer.php"; ?>
