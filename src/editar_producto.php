@@ -12,14 +12,17 @@ if (!empty($_POST)) {
   $alert = "";
   if (empty($_POST['codigo']) || empty($_POST['producto']) || empty($_POST['precio'])) {
     $alert = '<div class="alert alert-primary" role="alert">
-              Todo los campos son requeridos
+              Complete los campos requeridos
             </div>';
   } else {
     $codproducto = $_GET['id'];
     $codigo = $_POST['codigo'];
     $producto = $_POST['producto'];
     $precio = $_POST['precio'];
-    $query_update = mysqli_query($conexion, "UPDATE producto SET codigo = '$codigo', descripcion = '$producto', precio= $precio WHERE codproducto = $codproducto");
+    $cantidad = $_POST['cantidad'];
+    $usuario_id = $_SESSION['idUser'];
+    $precio_bruto = $_POST['precio_bruto'];
+    $query_update = mysqli_query($conexion, "UPDATE producto SET codigo = '$codigo', descripcion = '$producto', precio, '  = $precio WHERE codproducto = $codproducto");
     if ($query_update) {
       $alert = '<div class="alert alert-primary" role="alert">
               Producto Modificado

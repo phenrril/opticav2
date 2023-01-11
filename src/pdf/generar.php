@@ -16,6 +16,7 @@ $datos44 = mysqli_fetch_assoc($gradu);
 $clientes = mysqli_query($conexion, "SELECT * FROM cliente WHERE idcliente = $idcliente");
 $datosC = mysqli_fetch_assoc($clientes);
 $ventas = mysqli_query($conexion, "SELECT d.*, p.codproducto, p.descripcion FROM detalle_venta d INNER JOIN producto p ON d.id_producto = p.codproducto WHERE d.id_venta = $id");
+$idventas = mysqli_fetch_assoc($ventas);
 $pdf->Cell(195, 5, utf8_decode($datos['nombre']), 0, 1, 'C'); //
 $pdf->Image("../../assets/img/logo.png", 180, 10, 30, 30, 'PNG');
 $pdf->SetFont('Arial', 'B', 10);
@@ -29,7 +30,18 @@ $pdf->Cell(20, 5, utf8_decode($datos['direccion']), 0, 1, 'L'); //
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(20, 5, "Correo: ", 0, 0, 'L');
 $pdf->SetFont('Arial', '', 10);
-$pdf->Cell(20, 5, utf8_decode($datos['email']), 0, 1, 'L'); //
+$pdf->Cell(20, 5, utf8_decode($datos['email']), 0, 1, 'L');
+$pdf->SetFont('Arial', 'B', 10);
+$pdf->Cell(22, 5, "ID Venta: ", 0, 0, 'L');
+$pdf->SetFont('Arial', '', 10);
+$pdf->Cell(20, 5, utf8_decode($idventas['id_venta']), 0, 1, 'L');
+if($idventas['idcristal'] == ""){
+}else{
+$pdf->SetFont('Arial', 'B', 10);
+$pdf->Cell(22, 5, "ID Cristales: ", 0, 0, 'L');
+$pdf->SetFont('Arial', '', 10);
+$pdf->Cell(20, 5, utf8_decode($idventas['idcristal']), 0, 1, 'L');
+}
 $pdf->Ln();
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->SetFillColor(0, 0, 0);

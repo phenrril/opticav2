@@ -22,7 +22,7 @@ if (empty($_SESSION['active'])) {
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.php">Optica</a>
+        <a class="navbar-brand" href="index.php">Óptica Ojito de Sol</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
 
         <!-- Navbar <img src="../assets/img/logo.png">-->
@@ -46,15 +46,15 @@ if (empty($_SESSION['active'])) {
                             <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                             Nueva venta
                         </a>
-                        <a class="nav-link" href="config.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
-                            Configuración
+                        <a class="nav-link" href="idcristal.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-glasses"></i></div>
+                            Colocar Id Cristal
                         </a>
+                        
                         <a class="nav-link" href="clientes.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Clientes
                         </a>
-
                         <a class="nav-link" href="lista_ventas.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                             Ventas
@@ -66,6 +66,10 @@ if (empty($_SESSION['active'])) {
                         <a class="nav-link" href="productos.php">
                             <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
                             Productos
+                        </a>
+                        <a class="nav-link" href="config.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
+                            Configuración
                         </a>
                         <a class="nav-link" href="usuarios.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
