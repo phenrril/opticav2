@@ -11,28 +11,6 @@ $id = $_GET['v'];
 $idcliente = $_GET['cl'];
 $config = mysqli_query($conexion, "SELECT * FROM configuracion");
 $gradu= mysqli_query($conexion, "SELECT * FROM graduaciones where id_venta='$id'");
-
-//
-$array1 = array();
-$array2 = array();
-$maxId = 0;
-while ($datos44 = mysqli_fetch_assoc($gradu)) {
-  if ($datos44["id"] > $maxId) {
-    $maxId = $datos44["id"];
-  }
-}
-mysqli_data_seek($gradu, 0);
-while ($datos44 = mysqli_fetch_assoc($gradu)) {
-  if ($datos44["id"] >= $maxId) {
-    $array1[] = $datos44;
-  } else {
-    $array2[] = $datos44;
-  }
-}
-$array1 = mysqli_fetch_assoc($gradu);
-$array2 = mysqli_fetch_assoc($gradu);
-
-//
 $datos = mysqli_fetch_assoc($config);
 $datos44 = mysqli_fetch_assoc($gradu);
 $clientes = mysqli_query($conexion, "SELECT * FROM cliente WHERE idcliente = $idcliente");
@@ -92,52 +70,56 @@ $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(165, 5, "Total", 0, 0, 'R');
 $pdf->Cell(35, 5, number_format($total, 2, '.', ','), 0, 1, 'L');
 
-//if ($array1 != ""){
 $pdf->Ln(3);
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->SetTextColor(255, 255, 255);
 $pdf->Cell(196, 5, "Graduaciones", 1, 1, 'C', 1);
-$pdf->Ln(10);
+$pdf->Ln(5);
 $pdf->SetTextColor(0, 0, 0);
+
+if ($datos44 != ""){
+
+  mysqli_data_seek($gradu,0);
+  while ($datos44 = mysqli_fetch_assoc($gradu)){
 
 // Dibujar dos celdas en la misma fila para Ojo Derecho C y Ojo Derecho L
 $pdf->Cell(45, 5, ('Ojo Derecho C'), 1, 0, 'L');
 $pdf->Cell(45, 5, ('Ojo Derecho L'), 1, 0, 'L');
 $pdf->Ln(8);
-$pdf->Cell(45, 5, ($array1['od_c_1']), 1, 0, 'L');
-$pdf->Cell(45, 5, ($array1['od_l_1']), 1, 0, 'L');
-// $pdf->Ln(6);
-// $pdf->Cell(45, 5, ($datos44['od_c_2']), 1, 0, 'L');
-// $pdf->Cell(45, 5, ($datos44['od_l_2']), 1, 0, 'L');
-// $pdf->Ln(6);
-// $pdf->Cell(45, 5, ($datos44['od_c_3']), 1, 0, 'L');
-// $pdf->Cell(45, 5, ($datos44['od_l_3']), 1, 0, 'L');
-// $pdf->Ln(8);
+$pdf->Cell(45, 5, ($datos44['od_c_1']), 1, 0, 'L');
+$pdf->Cell(45, 5, ($datos44['od_l_1']), 1, 0, 'L');
+$pdf->Ln(6);
+$pdf->Cell(45, 5, ($datos44['od_c_2']), 1, 0, 'L');
+$pdf->Cell(45, 5, ($datos44['od_l_2']), 1, 0, 'L');
+$pdf->Ln(6);
+$pdf->Cell(45, 5, ($datos44['od_c_3']), 1, 0, 'L');
+$pdf->Cell(45, 5, ($datos44['od_l_3']), 1, 0, 'L');
+$pdf->Ln(8);
 
-// // Dibujar dos celdas en la misma fila para Ojo Izquierdo C y Ojo Izquierdo L
-// $pdf->Cell(45, 5, ('Ojo Izquierdo C'), 1, 0, 'L');
-// $pdf->Cell(45, 5, ('Ojo Izquierdo L'), 1, 0, 'L');
-// $pdf->Ln(8);
-// $pdf->Cell(45, 5, ($datos44['oi_c_1']), 1, 0, 'L');
-// $pdf->Cell(45, 5, ($datos44['oi_l_1']), 1, 0, 'L');
-// $pdf->Ln(6);
-// $pdf->Cell(45, 5, ($datos44['oi_c_2']), 1, 0, 'L');
-// $pdf->Cell(45, 5, ($datos44['oi_l_2']), 1, 0, 'L');
-// $pdf->Ln(6);
-// $pdf->Cell(45, 5, ($datos44['oi_c_3']), 1, 0, 'L');
-// $pdf->Cell(45, 5, ($datos44['oi_l_3']), 1, 0, 'L');
+// Dibujar dos celdas en la misma fila para Ojo Izquierdo C y Ojo Izquierdo L
+$pdf->Cell(45, 5, ('Ojo Izquierdo C'), 1, 0, 'L');
+$pdf->Cell(45, 5, ('Ojo Izquierdo L'), 1, 0, 'L');
+$pdf->Ln(8);
+$pdf->Cell(45, 5, ($datos44['oi_c_1']), 1, 0, 'L');
+$pdf->Cell(45, 5, ($datos44['oi_l_1']), 1, 0, 'L');
+$pdf->Ln(6);
+$pdf->Cell(45, 5, ($datos44['oi_c_2']), 1, 0, 'L');
+$pdf->Cell(45, 5, ($datos44['oi_l_2']), 1, 0, 'L');
+$pdf->Ln(6);
+$pdf->Cell(45, 5, ($datos44['oi_c_3']), 1, 0, 'L');
+$pdf->Cell(45, 5, ($datos44['oi_l_3']), 1, 0, 'L');
 
-// $pdf->Ln(8);
-// $pdf->Cell(90, 5, ('ADD'), 1, 0, 'L');
-// $pdf->Ln(6);
-// $pdf->Cell(90, 5, ($datos44['addg']), 1, 0, 'L');
-// $pdf->Ln(8);
-// $pdf->Cell(90, 5, ('Observaciones:'), 0, 0, 'L');
-// $pdf->Ln(6);
-// $pdf->Cell(90, 5, ($datos44['obs']), 0, 0, 'L');
-
-//}
-
+$pdf->Ln(8);
+$pdf->Cell(90, 5, ('ADD'), 1, 0, 'L');
+$pdf->Ln(6);
+$pdf->Cell(90, 5, ($datos44['addg']), 1, 0, 'L');
+$pdf->Ln(8);
+$pdf->Cell(90, 5, ('Observaciones:'), 0, 0, 'L');
+$pdf->Ln(6);
+$pdf->Cell(90, 5, ($datos44['obs']), 0, 0, 'L');
+$pdf->Ln(10);
+}
+}
 $pdf->Output("ventas.pdf", "I");
 
 ?>
