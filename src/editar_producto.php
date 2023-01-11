@@ -68,12 +68,18 @@ if (empty($_REQUEST['id'])) {
           <div class="form-group">
             <label for="producto">Producto</label>
             <input type="text" class="form-control" placeholder="Ingrese nombre del producto" name="producto" id="producto" value="<?php echo $data_producto['descripcion']; ?>">
-
           </div>
           <div class="form-group">
             <label for="precio">Precio</label>
             <input type="text" placeholder="Ingrese precio" class="form-control" name="precio" id="precio" value="<?php echo $data_producto['precio']; ?>">
-
+          </div>
+          <div class="form-group">
+            <label for="precio_bruto">Precio Bruto</label>
+            <input type="text" placeholder="Ingrese precio Bruto" class="form-control" name="precio_bruto" id="precio_bruto">
+          </div>
+          <div class="form-group">
+            <label for="cantidad">Stock</label>
+            <input type="number" placeholder="Ingrese Stock" class="form-control" name="cantidad" id="cantidad">
           </div>
           <input type="submit" value="Actualizar Producto" class="btn btn-primary">
           <a href="productos.php" class="btn btn-danger">Atras</a>

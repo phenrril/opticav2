@@ -126,8 +126,8 @@ if (empty($existe) && $id_user != 1) {
                          <input type="text" placeholder="Ingrese precio Bruto" class="form-control" name="precio_bruto" id="precio_bruto">
                      </div>
                      <div class="form-group">
-                         <label for="cantidad">Cantidad</label>
-                         <input type="number" placeholder="Ingrese cantidad" class="form-control" name="cantidad" id="cantidad">
+                         <label for="cantidad">Stock</label>
+                         <input type="number" placeholder="Ingrese Stock" class="form-control" name="cantidad" id="cantidad">
                      </div>
                      <input type="submit" value="Guardar Producto" class="btn btn-primary">
                  </form>

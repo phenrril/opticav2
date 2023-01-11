@@ -49,17 +49,20 @@ $pdf->SetTextColor(255, 255, 255);
 $pdf->Cell(196, 5, "Detalle de Producto", 1, 1, 'C', 1);
 $pdf->SetTextColor(0, 0, 0);
 $pdf->Cell(14, 5, utf8_decode('N°'), 0, 0, 'L');
-$pdf->Cell(90, 5, utf8_decode('Descripción'), 0, 0, 'L');
+$pdf->Cell(62, 5, utf8_decode('Descripción'), 0, 0, 'L');
 $pdf->Cell(25, 5, 'Cantidad', 0, 0, 'L');
-$pdf->Cell(32, 5, 'Precio', 0, 0, 'L');
+$pdf->Cell(22, 5, 'Precio orig', 0, 0, 'L');
+$pdf->Cell(42, 5, 'Precio c/dto', 0, 0, 'L');
 $pdf->Cell(35, 5, 'Sub Total.', 0, 1, 'L');
 $pdf->SetFont('Arial', '', 10);
 $contador = 1;
 while ($row = mysqli_fetch_assoc($ventas)) {
     $pdf->Cell(14, 5, $contador, 0, 0, 'L');
-    $pdf->Cell(90, 5, $row['descripcion'], 0, 0, 'L');
+    $pdf->Cell(62, 5, $row['descripcion'], 0, 0, 'L');
     $pdf->Cell(25, 5, $row['cantidad'], 0, 0, 'L');
-    $pdf->Cell(32, 5, $row['precio'], 0, 0, 'L');
+    $pdf->Cell(22, 5, $row['precio_original'], 0, 0, 'L');
+    $pdf->Cell(42, 5, $row['precio'], 0, 0, 'L');
+    
     $pdf->Cell(35, 5, number_format($row['cantidad'] * $row['precio'], 2, '.', ','), 0, 1, 'L');
     $total += $row['cantidad'] * $row['precio'];
     $contador++;
