@@ -71,17 +71,13 @@ if (isset($_GET['q'])) {
 } else if (isset($_GET['procesarVenta'])) {
     $id_cliente = $_GET['id'];
     $id_user = $_SESSION['idUser'];
+    $abona = $_GET['abona'];
+    $resto = $_GET['resto'];
+    $descuento = $_GET['descuento'];
     $consulta = mysqli_query($conexion, "SELECT total, SUM(total) AS total_pagar FROM detalle_temp WHERE id_usuario = $id_user");
     $result = mysqli_fetch_assoc($consulta);   
-    $result1 = mysqli_query($conexion, "SELECT descuento FROM descuento ORDER BY id DESC LIMIT 1");
-    if (mysqli_num_rows($result1) > 0) {
-    $row = mysqli_fetch_assoc($result1);
-    $descuento = $row['descuento'];
-    } else {
-    $descuento = 1;
-    }
     $total = $result['total_pagar'] * $descuento;
-    $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario) VALUES ('$id_cliente', '$total', '$id_user')");
+    $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario, abona, resto) VALUES ('$id_cliente', '$total', '$id_user', '$abona', '$resto')");
     if ($insertar) {
         $id_maximo = mysqli_query($conexion, "SELECT MAX(id) AS total FROM ventas");
         $resultId = mysqli_fetch_assoc($id_maximo);
@@ -93,7 +89,8 @@ if (isset($_GET['q'])) {
             $cantidad = $row['cantidad'];
             $precio_original = $row['precio_venta'];
             $precio = $precio_original * $descuento;
-            $insertarDet = mysqli_query($conexion, "INSERT INTO detalle_venta(id_producto, id_venta, cantidad, precio, precio_original) VALUES ($id_producto, $ultimoId, $cantidad, '$precio', '$precio_original')");
+            $insertarDet = mysqli_query($conexion, "INSERT INTO detalle_venta(id_producto, id_venta, cantidad, precio, precio_original, abona, resto ) VALUES ($id_producto, $ultimoId, $cantidad, '$precio', '$precio_original', '$abona', '$resto' )");
+            $postpagos = mysqli_query($conexion, "INSERT INTO postpagos(id_venta , abona, resto, precio, precio_original, id_cliente) VALUES ($ultimoId, '$abona', '$resto' , '$precio', '$precio_original', '$id_cliente')");
             $stockActual = mysqli_query($conexion, "SELECT * FROM producto WHERE codproducto = $id_producto");
             $stockNuevo = mysqli_fetch_assoc($stockActual);
             $stockTotal = $stockNuevo['existencia'] - $cantidad;

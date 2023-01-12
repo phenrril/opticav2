@@ -141,7 +141,7 @@ if (empty($existe) && $id_user != 1) {
                     <div id="div_descuento">
                     <tr class="font-weight-bold">
                         <td colspan=3>Abona: </td>
-                        <td colspan=3><input type="text" size="3"> </td>
+                        <td colspan=3><input type="text" size="3" id="abona"> </td>
                     </tr>
                     <tr class="font-weight-bold">
                         <td colspan=3>Descuento: </td>
@@ -163,7 +163,7 @@ if (empty($existe) && $id_user != 1) {
                     </tr>
                     <tr class="font-weight-bold">
                         <td colspan=3>Resta: </td>
-                        <td colspan=3><input type="text" size="3" disabled></td>
+                        <td colspan=3><input type="text" size="3" id="resto" disabled></td>
                         </tr>
                 </tr>
                 </div>
@@ -176,8 +176,9 @@ if (empty($existe) && $id_user != 1) {
     </div>
     <div class="col-md-6">
     <a href="#" class="btn btn-primary" id="btn_generar"><i class="fas fa-save"></i> Generar Venta</a>
-    <input type="button" class="btn btn-primary" value="Aplicar Descuento" name="btn_descuento" id="btn_descuento" onclick=""></input>
-    <input class="btn btn-danger" type="hidden" value="Cancelar Dto"id="btn_canceldto"></input>
+    <!-- <input type="button" class="btn btn-primary" value="Aplicar Descuento" name="btn_descuento" id="btn_descuento" onclick=""></input>
+    <input class="btn btn-danger" type="hidden" value="Cancelar Dto"id="btn_canceldto"></input> -->
+    <input type="button" class="btn btn-primary" value="Simular Venta" name="btn_parcial" id="btn_parcial" ></input>
     </div>
 
 </div>
@@ -201,17 +202,17 @@ $('#borrar_grad').click( function() {
         
     })
 
-    $('#btn_descuento').click( function() {
-    {$.ajax({
-        url: "descuento.php",
-        type: "POST",
-        data: $("#form_descuento").serialize(),
-        success: function(resultado){
-                $("#div_descuento").html(resultado);
+    // $('#btn_descuento').click( function() {
+    // {$.ajax({
+    //     url: "descuento.php",
+    //     type: "POST",
+    //     data: $("#form_descuento").serialize(),
+    //     success: function(resultado){
+    //             $("#div_descuento").html(resultado);
 
-                }
-            });
-    }
+    //             }
+    //         });
+    // }
         
-    })    
+    // })    
 </script>

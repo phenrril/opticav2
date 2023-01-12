@@ -16,7 +16,10 @@ $datos44 = mysqli_fetch_assoc($gradu);
 $clientes = mysqli_query($conexion, "SELECT * FROM cliente WHERE idcliente = $idcliente");
 $datosC = mysqli_fetch_assoc($clientes);
 $ventas = mysqli_query($conexion, "SELECT d.*, p.codproducto, p.descripcion FROM detalle_venta d INNER JOIN producto p ON d.id_producto = p.codproducto WHERE d.id_venta = $id");
-$idventas = mysqli_fetch_assoc($ventas);
+$ventas2= mysqli_query($conexion, "SELECT * FROM detalle_venta where id_venta='$id'");
+$postapagos = mysqli_query($conexion, "SELECT * FROM postpagos where id_venta='$id'");
+$idventas = mysqli_fetch_assoc($ventas2);
+$idpostapagos = mysqli_fetch_assoc($postapagos);
 $pdf->Cell(195, 5, utf8_decode($datos['nombre']), 0, 1, 'C'); //
 $pdf->Image("../../assets/img/logo.png", 180, 10, 30, 30, 'PNG');
 $pdf->SetFont('Arial', 'B', 10);
@@ -36,7 +39,14 @@ $pdf->Cell(22, 5, "ID Venta: ", 0, 0, 'L');
 $pdf->SetFont('Arial', '', 10);
 $pdf->Cell(20, 5, utf8_decode($idventas['id_venta']), 0, 1, 'L');
 if($idventas['idcristal'] == 0){
-}else{
+  $pdf->SetFont('Arial', 'B', 10);
+  $pdf->Cell(22, 5, "ID Cristales: ", 0, 0, 'L');
+  $pdf->SetFont('Arial', '', 10);
+  $pdf->Cell(20, 5, "No asignado", 0, 0, 'L');
+  $pdf->Ln(3);
+}
+else
+{
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(22, 5, "ID Cristales: ", 0, 0, 'L');
 $pdf->SetFont('Arial', '', 10);
@@ -73,8 +83,7 @@ while ($row = mysqli_fetch_assoc($ventas)) {
     $pdf->Cell(62, 5, $row['descripcion'], 0, 0, 'L');
     $pdf->Cell(25, 5, $row['cantidad'], 0, 0, 'L');
     $pdf->Cell(22, 5, $row['precio_original'], 0, 0, 'L');
-    $pdf->Cell(42, 5, $row['precio'], 0, 0, 'L');
-    
+    $pdf->Cell(42, 5, $row['precio'], 0, 0, 'L');    
     $pdf->Cell(35, 5, number_format($row['cantidad'] * $row['precio'], 2, '.', ','), 0, 1, 'L');
     $total += $row['cantidad'] * $row['precio'];
     $contador++;
@@ -84,7 +93,14 @@ $pdf->Ln(3);
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(165, 5, "Total", 0, 0, 'R');
 $pdf->Cell(35, 5, number_format($total, 2, '.', ','), 0, 1, 'L');
-
+$pdf->Ln(3);
+$pdf->SetFont('Arial', 'B', 12);
+$pdf->Cell(165, 5, "Abona", 0, 0, 'R');
+$pdf->Cell(35, 5, number_format(($idpostapagos['abona']), 2, '.', ','), 0, 1, 'L');
+$pdf->Ln(3);
+$pdf->SetFont('Arial', 'B', 12);
+$pdf->Cell(165, 5, "Resto", 0, 0, 'R');
+$pdf->Cell(35, 5, number_format(($idpostapagos['resto']), 2, '.', ','), 0, 1, 'L');
 $pdf->Ln(3);
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->SetTextColor(255, 255, 255);
@@ -123,6 +139,7 @@ $pdf->Cell(15, 5, ($datos44['oi_c_3']), 1, 0, 'C');
 $pdf->Ln(10);
 $pdf->Cell(45, 5, ('Observaciones:'), 0, 0, 'L');
 $pdf->Cell(25, 5, ($datos44['obs']), 0, 0, 'R');
+$pdf->Ln(10);
 }
 }
 $pdf->Output("ventas.pdf", "I");

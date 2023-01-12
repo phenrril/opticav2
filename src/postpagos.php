@@ -1,18 +1,27 @@
 <?php 
 require "../conexion.php";
 session_start();
+
+
 $id_venta = $_POST['idventa'];
-$id_cristal = $_POST['idcristal'];
-if($id_venta == "" || $id_cristal == ""){
+$id_abona = $_POST['idabona'];
+if($id_venta == "" || $id_abona == ""){
     echo "<br><br><br><div class='row justify-content-center'><div class='alert alert-danger w-20'><div class='col-md-12 text-center'>COMPLETE AMBOS CAMPOS</div></div></div>";
     exit;
 }
-$query = mysqli_query($conexion, "SELECT * FROM ventas WHERE id = $id_venta");
+$query = mysqli_query($conexion, "SELECT * FROM postpagos WHERE id_venta = $id_venta");
+
+
 
 if (mysqli_num_rows($query) > 0) {
 $valueventa = mysqli_fetch_assoc($query);
 $id_cliente = $valueventa['id_cliente'];
-$update = mysqli_query($conexion, "UPDATE detalle_venta SET idcristal = $id_cristal WHERE id_venta = $id_venta");
+$abonatabla = $valueventa['abona'];
+$abonatotal = $abonatabla + $id_abona;
+$resto = $valueventa['resto'];
+$precio = $valueventa['precio'];
+$resto = $resto - $id_abona;
+$update = mysqli_query($conexion, "UPDATE postpagos SET abona = '".$abonatotal."', resto = '".$resto."' WHERE id_venta = '".$id_venta."'");
 if($update){
     $result = mysqli_affected_rows($conexion);
     if($result > 0){
@@ -22,7 +31,7 @@ if($update){
                 <div>";    
     }
         else{
-            echo "<br><br><br><div class='row justify-content-center'><div class='alert alert-danger w-30'><div class='col-md-12 text-center'>VENTA INEXISTENTE</div></div></div>";
+            echo "<br><br><br><div class='row justify-content-center'><div class='alert alert-danger w-30'><div class='col-md-12 text-center'>ERROR ACTUALIZANDO VENTA</div></div></div>";
         }
     }
 }

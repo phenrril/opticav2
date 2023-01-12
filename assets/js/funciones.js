@@ -1,34 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
-    $('#grad').click( function() { //grad
-    {$.ajax({
-        url: "resultado.php", //resultado
-        type: "POST",
-        data: $("#graduaciones").serialize(), //graduaciones
-        success: function(resultado){
-                $("#okgrad").html(resultado);  //okgrad
+    $('#grad').click(function () { //grad
+        {
+            $.ajax({
+                url: "resultado.php", //resultado
+                type: "POST",
+                data: $("#graduaciones").serialize(), //graduaciones
+                success: function (resultado) {
+                    $("#okgrad").html(resultado);  //okgrad
 
                 }
             });
-    }
-        
+        }
+
     })
 
-    $('#btn_canceldto').click( function() { //grad
-        {$.ajax({
-            url: "prueba.php", //resultado
-            type: "POST",
-            data: $("#form_descuento").serialize(), //graduaciones
-            success: function(resultado){
-                    $("#div_descuento").html(resultado);  //okgrad
-    
-                    }
-                });
-        }
-            
-        })
+    // $('#btn_canceldto').click(function () { //grad
+    //     {
+    //         $.ajax({
+    //             url: "prueba.php", //resultado
+    //             type: "POST",
+    //             data: $("#form_descuento").serialize(), //graduaciones
+    //             success: function (resultado) {
+    //                 $("#div_descuento").html(resultado);  //okgrad
 
-        
-        
+    //             }
+    //         });
+    //     }
+
+    // })
+
+
+
 
     $('#tbl').DataTable();
     $(".confirmar").submit(function (e) {
@@ -98,12 +100,20 @@ document.addEventListener("DOMContentLoaded", function () {
         if (rows > 2) {
             var action = 'procesarVenta';
             var id = $('#idcliente').val();
+            var abona = $('#abona').val();
+            var resto = $('#resto').val();
+            var descuento = $('#porc').val();
+
+
             $.ajax({
                 url: 'ajax.php',
                 async: true,
                 data: {
                     procesarVenta: action,
-                    id: id
+                    id: id,
+                    abona : abona,
+                    resto : resto,
+                    descuento : descuento
                 },
                 success: function (response) {
                     const res = JSON.parse(response);
@@ -133,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
             });
-        }else{
+        } else {
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -146,18 +156,52 @@ document.addEventListener("DOMContentLoaded", function () {
     if (document.getElementById("detalle_venta")) {
         listar();
     }
-    
+
 })
+
+
+
 document.querySelector("#guardar_cristal").addEventListener("click", function () {
-        {$.ajax({
+    {
+        $.ajax({
             url: "colocar_cristal.php",
             type: "POST",
             data: $("#form_cristal").serialize(),
-            success: function(resultado){
-                    $("#div_cristal").html(resultado);
+            success: function (resultado) {
+                $("#div_cristal").html(resultado);
             }
         });
-    }})
+    }
+})
+document.querySelector("#buscar_venta").addEventListener("click", function () {
+    {
+        $.ajax({
+            url: "postpagos.php",
+            type: "POST",
+            data: $("#form_venta").serialize(),
+            success: function (resultado) {
+                $("#div_venta").html(resultado);
+
+            }
+        });
+    }
+})
+
+
+document.querySelector("#btn_parcial").addEventListener("click", function () {
+    {
+        $.ajax({
+            url: "resta.php",
+            type: "POST",
+            data: $("#form_descuento").serialize(),
+            success: function (resultado) {
+                $("#div_descuento").html(resultado);
+
+            }
+        });
+    }
+})
+
 
 
 
@@ -170,7 +214,7 @@ function listar() {
         data: {
             detalle: detalle
         },
-        success: function (response){
+        success: function (response) {
             response.forEach(row => {
                 html += `<tr>
                 <td>${row['id']}</td>
@@ -184,7 +228,7 @@ function listar() {
             });
             document.querySelector("#detalle_venta").innerHTML = html;
             calcular();
-            
+
         }
     });
 }
@@ -303,31 +347,26 @@ function calcular() {
 
         total += importe;
     });
-    
+
     // mostramos la suma total
     var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
     filas[1].textContent = total.toFixed(2);
 
-    // pasamos la variable total como argumento a la función del evento click
-    document.querySelector("#btn_descuento").addEventListener("click", function (total) {
+    document.querySelector("#btn_parcial").addEventListener("click", function (total) {
         var descuento = document.getElementById('porc');
+        var abona = document.getElementById('abona');
+        var resto = document.getElementById('resto');
         var dto = descuento.value;
+        var total2 = (total * dto) - abona.value;
+        resto.value = total2.toFixed(2);
         total = total * dto;
-    
-        // mostramos la suma total
+        
         var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
         filas[1].textContent = total.toFixed(2);
-    }.bind(null, total)); // bind() permite pasar el valor de total como argumento a la función del evento click
-
-    document.querySelector("#btn_canceldto").addEventListener("click", function (total) {
-        //var descuento = document.getElementById('porc');
-        var dto = 1;
-        total = total * dto;
-    
-        // mostramos la suma total
-        var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
-        filas[1].textContent = total.toFixed(2);
+   
     }.bind(null, total));
+
+    
 }
 
 
@@ -534,44 +573,44 @@ function btnCambiar(e) {
         })
     } else {
         const cambio = 'pass';
-         $.ajax({
-             url: "ajax.php",
-             type: 'POST',
-             data: {
-                 actual: actual,
-                 nueva: nueva,
-                 cambio: cambio
-             },
-             success: function (response) {
-                 console.log(response);
-                 if (response == 'ok') {
-                     Swal.fire({
-                         position: 'top-end',
-                         icon: 'success',
-                         title: 'Contraseña modificado',
-                         showConfirmButton: false,
-                         timer: 2000
-                     })
-                     document.querySelector('frmPass').reset();
-                     $("#nuevo_pass").modal("hide");
-                 } else if (response == 'dif') {
-                     Swal.fire({
-                         position: 'top-end',
-                         icon: 'error',
-                         title: 'La contraseña actual incorrecta',
-                         showConfirmButton: false,
-                         timer: 2000
-                     })
-                 } else {
-                     Swal.fire({
-                         position: 'top-end',
-                         icon: 'error',
-                         title: 'Error al modificar la contraseña',
-                         showConfirmButton: false,
-                         timer: 2000
-                     })
-                 }
-             }
-         });
+        $.ajax({
+            url: "ajax.php",
+            type: 'POST',
+            data: {
+                actual: actual,
+                nueva: nueva,
+                cambio: cambio
+            },
+            success: function (response) {
+                console.log(response);
+                if (response == 'ok') {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Contraseña modificado',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                    document.querySelector('frmPass').reset();
+                    $("#nuevo_pass").modal("hide");
+                } else if (response == 'dif') {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'La contraseña actual incorrecta',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                } else {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Error al modificar la contraseña',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                }
+            }
+        });
     }
 }
