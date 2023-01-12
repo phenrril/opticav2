@@ -64,7 +64,7 @@ $tabla_creada = false;
 $query = mysqli_query($conexion, "INSERT INTO graduaciones_temp(od_l_1, od_l_2, od_l_3, oi_l_1, oi_l_2, oi_l_3, od_c_1, od_c_2, od_c_3, oi_c_1, oi_c_2, oi_c_3, addg, id_usuario, obs)  VALUES ('$ojolD1', '$ojolD2', '$ojolD3', '$ojolI1', '$ojolI2', '$ojolI3', '$ojoD1' , '$ojoD2', '$ojoD3', '$ojoI1', '$ojoI2', '$ojoI3', '$add1', '$id_user2', '$obs')" );
 if ($query) {    
     
-    echo '<script>var ojoD1 = document.getElementById("ojoD1")</>';
+    echo '<script>var ojoD1 = document.getElementById("ojoD1")</script>';
     echo '<script>ojoD1.value = ""</script>';
     echo '<script>var ojoD2 = document.getElementById("ojoD2")</script>';
     echo '<script>ojoD2.value = ""</script>';

@@ -22,10 +22,10 @@ if (empty($_SESSION['active'])) {
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.php">Pos Venta</a>
+        <a class="navbar-brand" href="index.php">Óptica Ojito de Sol</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
 
-        <!-- Navbar-->
+        <!-- Navbar <img src="../assets/img/logo.png">-->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -48,12 +48,9 @@ if (empty($_SESSION['active'])) {
                         </a>
                         <a class="nav-link" href="idcristal.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-glasses"></i></div>
-                            ID Cristal - Post Pagos
+                            Id Cristal / Post Pagos
                         </a>
-                        <a class="nav-link" href="config.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
-                            Configuración
-                        </a>
+                        
                         <a class="nav-link" href="clientes.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Clientes
@@ -70,11 +67,14 @@ if (empty($_SESSION['active'])) {
                             <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
                             Productos
                         </a>
+                        <a class="nav-link" href="config.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
+                            Configuración
+                        </a>
                         <a class="nav-link" href="usuarios.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                             Usuarios
                         </a>
-                        
 
                     </div>
                 </div>

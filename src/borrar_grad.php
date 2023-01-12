@@ -7,7 +7,7 @@ if ($eliminar) {
     //echo "<div class='alert alert-danger'>Graduacion Borrada Correctamente</div>";
     echo
     "<script>Swal.fire({
-        position: 'top-mid',
+        position: 'top-end',
         icon: 'success',
         title: 'Graduacion Borrada Correctamente',
         showConfirmButton: false,
@@ -24,7 +24,7 @@ if ($eliminar) {
     //echo "<script>alert('Error al borrar Graduacion')</>";
     echo
     "<script>Swal.fire({
-        position: 'top-mid',
+        position: 'top-end',
         icon: 'error',
         title: 'Error al borrar Graduacion',
         showConfirmButton: false,

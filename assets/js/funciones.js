@@ -151,6 +151,20 @@ document.addEventListener("DOMContentLoaded", function () {
         listar();
     }
 
+    document.querySelector("#borrar_grad").addEventListener("click", function () {
+        {
+            $.ajax({
+                url: "borrar_grad.php",
+                type: "POST",
+                data: $("#borrar_grad").serialize(),
+                success: function (resultado) {
+                    $("#okgrad").html(resultado);
+    
+                }
+            });
+        }
+    })
+    
 })
 
 
@@ -181,7 +195,6 @@ document.querySelector("#buscar_venta").addEventListener("click", function () {
     }
 })
 
-
 document.querySelector("#btn_parcial").addEventListener("click", function () {
     {
         $.ajax({
@@ -195,10 +208,6 @@ document.querySelector("#btn_parcial").addEventListener("click", function () {
         });
     }
 })
-
-
-
-
 function listar() {
     let html = '';
     let detalle = 'detalle';
@@ -226,6 +235,7 @@ function listar() {
         }
     });
 }
+
 
 function registrarDetalle(e, id, cant, precio) {
     if (document.getElementById('producto').value != '') {

@@ -1,6 +1,5 @@
-<?php include_once "includes/header.php"; 
-echo "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js'></script>;";
-require "../conexion.php";
+<?php include_once "includes/header.php";
+include "../conexion.php";
 $id_user = $_SESSION['idUser'];
 $permiso = "idcristal";
 $sql = mysqli_query($conexion, "SELECT p.*, d.* FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_user AND p.nombre = '$permiso'");
@@ -9,7 +8,6 @@ if (empty($existe) && $id_user != 1) {
     header("Location: permisos.php");
 }
 ?>
-
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group">
