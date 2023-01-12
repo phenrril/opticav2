@@ -58,13 +58,15 @@ $pdf->SetFillColor(0, 0, 0);
 $pdf->SetTextColor(255, 255, 255);
 $pdf->Cell(196, 5, "Datos del cliente", 1, 1, 'C', 1);
 $pdf->SetTextColor(0, 0, 0);
-$pdf->Cell(90, 5,utf8_decode('Nombre'), 0, 0, 'L'); //  
-$pdf->Cell(50, 5, utf8_decode('Teléfono'), 0, 0, 'L'); //
-$pdf->Cell(56, 5, utf8_decode('Dirección'), 0, 1, 'L'); //
+$pdf->Cell(60, 5,utf8_decode('Nombre'), 0, 0, 'L'); //  
+$pdf->Cell(40, 5, utf8_decode('Teléfono'), 0, 0, 'L'); //
+$pdf->Cell(40, 5, utf8_decode('Dirección'), 0, 0, 'L');
+$pdf->Cell(40, 5, utf8_decode('Obra Social'), 0, 1, 'L'); //
 $pdf->SetFont('Arial', '', 10);
-$pdf->Cell(90, 5, utf8_decode($datosC['nombre']), 0, 0, 'L'); //
-$pdf->Cell(50, 5, utf8_decode($datosC['telefono']), 0, 0, 'L'); // utf8_decode
-$pdf->Cell(56, 5, utf8_decode($datosC['direccion']), 0, 1, 'L'); //
+$pdf->Cell(60, 5, utf8_decode($datosC['nombre']), 0, 0, 'L'); //
+$pdf->Cell(40, 5, utf8_decode($datosC['telefono']), 0, 0, 'L'); // utf8_decode
+$pdf->Cell(40, 5, utf8_decode($datosC['direccion']), 0, 0, 'L');
+$pdf->Cell(40, 5, utf8_decode($datosC['obrasocial']), 0, 1, 'L'); //
 $pdf->Ln(3);
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->SetTextColor(255, 255, 255);
@@ -91,23 +93,33 @@ while ($row = mysqli_fetch_assoc($ventas)) {
 
 $pdf->Ln(3);
 $pdf->SetFont('Arial', 'B', 12);
-$pdf->Cell(165, 5, "Total", 0, 0, 'R');
-$pdf->Cell(35, 5, number_format($total, 2, '.', ','), 0, 1, 'L');
+if(($idventas['obrasocial']) == 0){
+
+}else{
+
+$pdf->Cell(165, 5, "Obra Social $", 0, 0, 'R');
+$pdf->Cell(35, 5, number_format(($idventas['obrasocial']), 2, '.', ','), 0, 1, 'L');
 $pdf->Ln(3);
-$pdf->SetFont('Arial', 'B', 12);
-$pdf->Cell(165, 5, "Abona", 0, 0, 'R');
+}
+$pdf->Cell(165, 5, "Abona $", 0, 0, 'R');
 $pdf->Cell(35, 5, number_format(($idpostapagos['abona']), 2, '.', ','), 0, 1, 'L');
 $pdf->Ln(3);
-$pdf->SetFont('Arial', 'B', 12);
-$pdf->Cell(165, 5, "Resto", 0, 0, 'R');
-$pdf->Cell(35, 5, number_format(($idpostapagos['resto']), 2, '.', ','), 0, 1, 'L');
+$pdf->Cell(165, 5, "Total $", 0, 0, 'R');
+$pdf->Cell(35, 5, number_format($total, 2, '.', ','), 0, 1, 'L');
 $pdf->Ln(3);
+if(($idpostapagos['abona']) == $total){
+}else{ 
+$pdf->Cell(165, 5, "Resto $", 0, 0, 'R');
+$pdf->Cell(35, 5, number_format(($idpostapagos['resto']), 2, '.', ','), 0, 1, 'L');
+$pdf->Ln(4);
+}
+if ($datos44 != ""){
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->SetTextColor(255, 255, 255);
 $pdf->Cell(196, 5, "Graduaciones", 1, 1, 'C', 1);
 $pdf->Ln(5);
 $pdf->SetTextColor(0, 0, 0);
-
+}
 if ($datos44 != ""){
   mysqli_data_seek($gradu,0);
   while ($datos44 = mysqli_fetch_assoc($gradu)){

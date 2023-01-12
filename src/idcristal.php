@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group">
-            <h4 class="text-center">ID Cristales</h4><br><br>
+            <h4 class="text-center">ID Cristales</h4><br>
         </div>
     </div>
 </div>
@@ -41,11 +41,11 @@
 </div>
 <div id="div_cristal"></div>
 
-<br><br><br><br>
+<br><br>
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group">
-            <h4 class="text-center">Post Pagos</h4><br><br>
+            <h4 class="text-center">Post Pagos</h4><br>
         </div>
     </div>
 </div>

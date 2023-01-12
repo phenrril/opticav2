@@ -20,23 +20,29 @@ if (empty($existe) && $id_user != 1) {
             <div class="card-body">
                 <form method="post">
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div>
                                 <input type="hidden" id="idcliente" value="1" name="idcliente" required>
-                                <label>Nombre</label>
-                                <input type="text" name="nom_cliente" id="nom_cliente" class="form-control" placeholder="Ingrese nombre del cliente" required>
+                                <label>Nombre Cliente</label>
+                                <input type="text" name="nom_cliente" id="nom_cliente" class="form-control" placeholder="Ingresá el nombre" required>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Teléfono</label>
                                 <input type="number" name="tel_cliente" id="tel_cliente" class="form-control" disabled required>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Dirreción</label>
                                 <input type="text" name="dir_cliente" id="dir_cliente" class="form-control" disabled required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Obra Social</label>
+                                <input type="text" name="obrasocial" id="obrasocial" class="form-control" disabled required>
                             </div>
                         </div>
                     </div>
@@ -104,7 +110,7 @@ if (empty($existe) && $id_user != 1) {
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <input id="producto" class="form-control" type="text" name="producto" placeholder="Ingresa el código o nombre">
+                                    <input id="producto" class="form-control" type="text" name="producto" placeholder="Ingresá el código o nombre">
                                 </div>
                             </div>
                         </div>
@@ -124,10 +130,11 @@ if (empty($existe) && $id_user != 1) {
                         <th>Precio</th>
                         <th>Precio Total</th>
                         <th>Accion</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="detalle_venta">
-
                 </tbody>
                 <tfoot>
                     <tr class="font-weight-bold">
@@ -162,10 +169,13 @@ if (empty($existe) && $id_user != 1) {
                                         </select></td>
                     </tr>
                     <tr class="font-weight-bold">
+                        <td colspan=3>Obra Social: </td>
+                        <td colspan=3><input type="text" size="3" id="obra_social"></td>
+                    </tr>
+                    <tr class="font-weight-bold">
                         <td colspan=3>Resta: </td>
                         <td colspan=3><input type="text" size="3" id="resto" disabled></td>
-                        </tr>
-                </tr>
+                    </tr>
                 </div>
                 </form>
                     </tr>
@@ -176,17 +186,10 @@ if (empty($existe) && $id_user != 1) {
     </div>
     <div class="col-md-6">
     <a href="#" class="btn btn-primary" id="btn_generar"><i class="fas fa-save"></i> Generar Venta</a>
-    <!-- <input type="button" class="btn btn-primary" value="Aplicar Descuento" name="btn_descuento" id="btn_descuento" onclick=""></input>
-    <input class="btn btn-danger" type="hidden" value="Cancelar Dto"id="btn_canceldto"></input> -->
     <input type="button" class="btn btn-primary" value="Simular Venta" name="btn_parcial" id="btn_parcial" ></input>
     </div>
-
 </div>
-
-
-
 <?php include_once "includes/footer.php"; ?>
-
 <script>
 $('#borrar_grad').click( function() {
     {$.ajax({
@@ -201,18 +204,4 @@ $('#borrar_grad').click( function() {
     }
         
     })
-
-    // $('#btn_descuento').click( function() {
-    // {$.ajax({
-    //     url: "descuento.php",
-    //     type: "POST",
-    //     data: $("#form_descuento").serialize(),
-    //     success: function(resultado){
-    //             $("#div_descuento").html(resultado);
-
-    //             }
-    //         });
-    // }
-        
-    // })    
 </script>

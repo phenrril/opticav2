@@ -48,7 +48,7 @@ if (empty($_SESSION['active'])) {
                         </a>
                         <a class="nav-link" href="idcristal.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-glasses"></i></div>
-                            Colocar Id Cristal
+                             Id Cristal / Post Pagos
                         </a>
                         
                         <a class="nav-link" href="clientes.php">

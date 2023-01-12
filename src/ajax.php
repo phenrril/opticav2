@@ -11,6 +11,7 @@ if (isset($_GET['q'])) {
         $data['label'] = $row['nombre'];
         $data['direccion'] = $row['direccion'];
         $data['telefono'] = $row['telefono'];
+        $data['obrasocial'] = $row['obrasocial'];
         array_push($datos, $data);
     }
     echo json_encode($datos);
@@ -72,12 +73,17 @@ if (isset($_GET['q'])) {
     $id_cliente = $_GET['id'];
     $id_user = $_SESSION['idUser'];
     $abona = $_GET['abona'];
-    $resto = $_GET['resto'];
-    $descuento = $_GET['descuento'];
+    $restoant = $_GET['resto'];
+    $descuento = $_GET['descuento'];    
+    $obrasocial = $_GET['obrasocial'];
+    if($obrasocial == ""){
+        $obrasocial = 0;
+    }
     $consulta = mysqli_query($conexion, "SELECT total, SUM(total) AS total_pagar FROM detalle_temp WHERE id_usuario = $id_user");
     $result = mysqli_fetch_assoc($consulta);   
     $total = $result['total_pagar'] * $descuento;
-    $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario, abona, resto) VALUES ('$id_cliente', '$total', '$id_user', '$abona', '$resto')");
+    $resto = $total - $abona - $obrasocial;
+    $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario, abona, resto, obrasocial) VALUES ('$id_cliente', '$total', '$id_user', '$abona', '$resto', '$obrasocial')");
     if ($insertar) {
         $id_maximo = mysqli_query($conexion, "SELECT MAX(id) AS total FROM ventas");
         $resultId = mysqli_fetch_assoc($id_maximo);
@@ -89,7 +95,7 @@ if (isset($_GET['q'])) {
             $cantidad = $row['cantidad'];
             $precio_original = $row['precio_venta'];
             $precio = $precio_original * $descuento;
-            $insertarDet = mysqli_query($conexion, "INSERT INTO detalle_venta(id_producto, id_venta, cantidad, precio, precio_original, abona, resto ) VALUES ($id_producto, $ultimoId, $cantidad, '$precio', '$precio_original', '$abona', '$resto' )");
+            $insertarDet = mysqli_query($conexion, "INSERT INTO detalle_venta(id_producto, id_venta, cantidad, precio, precio_original, abona, resto, obrasocial ) VALUES ($id_producto, $ultimoId, $cantidad, '$precio', '$precio_original', '$abona', '$resto', '$obrasocial')");
             $postpagos = mysqli_query($conexion, "INSERT INTO postpagos(id_venta , abona, resto, precio, precio_original, id_cliente) VALUES ($ultimoId, '$abona', '$resto' , '$precio', '$precio_original', '$id_cliente')");
             $stockActual = mysqli_query($conexion, "SELECT * FROM producto WHERE codproducto = $id_producto");
             $stockNuevo = mysqli_fetch_assoc($stockActual);

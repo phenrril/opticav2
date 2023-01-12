@@ -43,6 +43,17 @@ $add1= $_POST['add'];
 if ($add1 == ""){
     $add1 = 0;}
 
+if($ojolD1 == 0 && $ojolD2 == 0 && $ojolD3 == 0 && $ojolI1 == 0 && $ojolI2 == 0 && $ojolI3 == 0 && $ojoD1 == 0 && $ojoD2 == 0 && $ojoD3 == 0 && $ojoI1 == 0 && $ojoI2 == 0 && $ojoI3 == 0 && $add1 == 0){
+    echo "<script>Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'No se puede guardar un registro vacio',
+        showConfirmButton: false,
+        timer: 2000
+    })</script>;";
+    die();
+}
+
 $id_user2=$_SESSION['idUser'];
 
 $obs = $_POST['obs'];
@@ -81,7 +92,14 @@ if ($query) {
     echo '<script>add1.value = ""</script>';
     echo '<script>var obs = document.getElementById("obs")</script>';
     echo '<script>obs.value = ""</script>';
-    echo "<div class='alert alert-success'>Graduacion Agregada Correctamente</div>";
+    echo "<script>Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Graduacion Agregada Correctamente',
+        showConfirmButton: false,
+        timer: 2000
+    })</script>;";
+
     $query2 = mysqli_query($conexion, "SELECT *from graduaciones_temp " );
     if ($query2){
         while ($row2 = mysqli_fetch_assoc($query2)) {
@@ -139,7 +157,13 @@ if ($query) {
     }
 }}
 else {
-    echo "<script>alert('Error al agregar Graduacion')</>";
+    echo "<script>Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Error al agregar Graduacion',
+        showConfirmButton: false,
+        timer: 2000
+    })</script>;";
 }
 
 

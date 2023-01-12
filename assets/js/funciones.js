@@ -1,37 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
-    $('#grad').click(function () { //grad
+    $('#grad').click(function () { 
         {
             $.ajax({
-                url: "resultado.php", //resultado
+                url: "resultado.php", 
                 type: "POST",
-                data: $("#graduaciones").serialize(), //graduaciones
+                data: $("#graduaciones").serialize(), 
                 success: function (resultado) {
-                    $("#okgrad").html(resultado);  //okgrad
+                    $("#okgrad").html(resultado);  
 
                 }
             });
         }
 
     })
-
-    // $('#btn_canceldto').click(function () { //grad
-    //     {
-    //         $.ajax({
-    //             url: "prueba.php", //resultado
-    //             type: "POST",
-    //             data: $("#form_descuento").serialize(), //graduaciones
-    //             success: function (resultado) {
-    //                 $("#div_descuento").html(resultado);  //okgrad
-
-    //             }
-    //         });
-    //     }
-
-    // })
-
-
-
-
     $('#tbl').DataTable();
     $(".confirmar").submit(function (e) {
         e.preventDefault();
@@ -67,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
             $("#nom_cliente").val(ui.item.label);
             $("#tel_cliente").val(ui.item.telefono);
             $("#dir_cliente").val(ui.item.direccion);
+            $("#obrasocial").val(ui.item.obrasocial);
         }
     })
     $("#producto").autocomplete({
@@ -98,11 +80,22 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         var rows = $('#tblDetalle tr').length;
         if (rows > 2) {
-            var action = 'procesarVenta';
-            var id = $('#idcliente').val();
             var abona = $('#abona').val();
+            if (abona == "" || abona == 0 || abona == null) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'El campo abona no puede estar vacio',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                return;
+            }
+            var action = 'procesarVenta';
+            var id = $('#idcliente').val();            
             var resto = $('#resto').val();
             var descuento = $('#porc').val();
+            var obrasocial = $('#obra_social').val();
 
 
             $.ajax({
@@ -113,7 +106,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     id: id,
                     abona : abona,
                     resto : resto,
-                    descuento : descuento
+                    descuento : descuento,
+                    obrasocial : obrasocial
                 },
                 success: function (response) {
                     const res = JSON.parse(response);
@@ -353,17 +347,30 @@ function calcular() {
     filas[1].textContent = total.toFixed(2);
 
     document.querySelector("#btn_parcial").addEventListener("click", function (total) {
-        var descuento = document.getElementById('porc');
         var abona = document.getElementById('abona');
+        if (!abona.value || abona.value <= 0) {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Ingrese un valor para abonar',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            return;
+        }else{
+        var descuento = document.getElementById('porc');
+        var obrasocial = document.getElementById('obra_social');
+        if(!obrasocial.value || obrasocial.value <= 0){
+            obrasocial.value = 0;
+        }
         var resto = document.getElementById('resto');
         var dto = descuento.value;
-        var total2 = (total * dto) - abona.value;
+        var total2 = (total * dto) - abona.value - obrasocial.value;
         resto.value = total2.toFixed(2);
         total = total * dto;
-        
         var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
         filas[1].textContent = total.toFixed(2);
-   
+        }
     }.bind(null, total));
 
     

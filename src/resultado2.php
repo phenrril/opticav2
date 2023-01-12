@@ -13,33 +13,4 @@ $sql=$conexion->query(" SELECT * FROM ventas  where date(fecha)='$fecha'");
             }
 
 
-
-
-
-
-
-
-
-
-
-
-// $datos = array();
-// $ventas = mysqli_query($conexion, "SELECT * FROM ventas where fecha='$fecha'");
-//     while ($row = mysqli_fetch_assoc($ventas)) {
-//         $data['id'] = $row['codproducto'];
-//         $data['id_cliente'] = $row['codigo'] . ' - ' .$row['descripcion'];
-//         $data['value'] = $row['descripcion'];
-//         $data['precio'] = $row['precio'];
-//         $data['existencia'] = $row['existencia'];
-//         array_push($datos, $data);
-//     }
-//     echo json_encode($datos);
-
-
-
-
-//echo $totalV;
-
-
-
 ?>
