@@ -1,5 +1,14 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<?php include_once "includes/header.php"; ?>
+<?php include_once "includes/header.php"; 
+echo "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js'></script>;";
+require "../conexion.php";
+$id_user = $_SESSION['idUser'];
+$permiso = "idcristal";
+$sql = mysqli_query($conexion, "SELECT p.*, d.* FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_user AND p.nombre = '$permiso'");
+$existe = mysqli_fetch_all($sql);
+if (empty($existe) && $id_user != 1) {
+    header("Location: permisos.php");
+}
+?>
 
 <div class="row">
     <div class="col-lg-12">
@@ -17,7 +26,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <input id="idventa" class="form-control" type="text" name="idventa" placeholder="Ingresá el Id de la venta">
+                                    <input id="idventa" class="form-control" type="number" name="idventa" placeholder="Ingresá el Id de la venta">
                                 </div>
                             </div>
                         </div>
@@ -29,7 +38,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <input id="idcristal" class="form-control" type="text" name="idcristal" placeholder="Ingresá el Id de cristales">
+                                    <input id="idcristal" class="form-control" type="number" name="idcristal" placeholder="Ingresá el Id de cristales">
                                 </div>
                             </div>
                         </div>
@@ -58,7 +67,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <input id="idventa" class="form-control" type="text" name="idventa" placeholder="Ingresá el Id de la venta">
+                                    <input id="idventa" class="form-control" type="number" name="idventa" placeholder="Ingresá el Id de la venta">
                                 </div>
                             </div>
                         </div>
@@ -70,7 +79,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <input id="idabona" class="form-control" type="text" name="idabona" placeholder="Ingresá el monto">
+                                    <input id="idabona" class="form-control" type="number" name="idabona" placeholder="Ingresá el monto">
                                 </div>
                             </div>
                         </div>

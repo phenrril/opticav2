@@ -18,8 +18,18 @@ if($id_venta == "" || $id_abona == ""){
 $query = mysqli_query($conexion, "SELECT * FROM postpagos WHERE id_venta = $id_venta");
 $valueventa = mysqli_fetch_assoc($query);
 
-
+if(mysqli_num_rows($query) == 0){
+    echo "<script>Swal.fire({
+        position: 'top-mid',
+        icon: 'error',
+        title: 'Venta inexistente',
+        showConfirmButton: false,
+        timer: 2000
+    })</script>;";
+    exit;
+}
 if (mysqli_num_rows($query) > 0) {
+    
     if($valueventa['resto'] == 0){
         echo "<script>Swal.fire({
             position: 'top-mid',
@@ -53,9 +63,10 @@ $update = mysqli_query($conexion, "UPDATE postpagos SET abona = '".$abonatotal."
 $update2 = mysqli_query($conexion, "UPDATE ventas SET abona = '".$abonatotal."', resto = '".$resto."' WHERE id = '".$id_venta."'");
 $update3 = mysqli_query($conexion, "UPDATE detalle_venta SET abona = '".$abonatotal."', resto = '".$resto."' WHERE id_venta = '".$id_venta."'");
 
-if($update && $update2 && $update3){
+//if($update && $update2 && $update3)
+if ($update !== false && $update2 !== false && $update3 !== false){
     $result = mysqli_affected_rows($conexion);
-    if($result > 2){
+    if($result > 0){
         echo "<script>Swal.fire({
             position: 'top-mid',
             icon: 'success',
@@ -83,7 +94,7 @@ else{
     echo "<script>Swal.fire({
         position: 'top-mid',
         icon: 'error',
-        title: 'Venta inexistente',
+        title: 'Error actualizando la venta',
         showConfirmButton: false,
         timer: 2000
     })</script>;";    

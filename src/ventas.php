@@ -1,6 +1,6 @@
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <?php include_once "includes/header.php";
+echo "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js'></script>;";
+
 require("../conexion.php");
 
 $id_user = $_SESSION['idUser'];

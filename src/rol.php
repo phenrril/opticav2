@@ -18,9 +18,9 @@ if (isset($_POST['permisos'])) {
     mysqli_query($conexion, "DELETE FROM detalle_permisos WHERE id_usuario = $id_user");
     if ($permisos != "") {
         foreach ($permisos as $permiso) {
-            $sql = mysqli_query($conexion, "INSERT INTO detalle_permisos(id_usuario, id_permiso) VALUES ($id_user,$permiso)");
+            $sql = mysqli_query($conexion, "INSERT INTO detalle_permisos(id_usuario, id_permiso) VALUES ('$id_user','$permiso')");
             if ($sql == 1) {
-                header("Location: rol.php?id=".$id_user."&m=si");
+                header("Location:rol.php?id=".$id_user."&m=si");
             } else {
                 $alert = '<div class="alert alert-primary" role="alert">
                             Error al actualizar permisos
