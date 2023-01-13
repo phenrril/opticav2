@@ -66,6 +66,10 @@ if (empty($_SESSION['active'])) {
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
                             Estadisticas
                         </a>
+                        <a class="nav-link" href="calendario.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>
+                            Calendario
+                        </a>
                         <a class="nav-link" href="productos.php">
                             <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
                             Productos
