@@ -15,6 +15,7 @@ if (empty($existe) && $id_user != 1) {
         </div>
     </div>
 </div>
+
             <form method="post" id="form_cristal">
                 <div class="row justify-content-center">
                     <div class="col-md-4 text-center">
@@ -42,13 +43,14 @@ if (empty($existe) && $id_user != 1) {
                         </div>
                     </div>                  
                 </div>
-            </form> 
+            </form>
+            <br> 
 <div class="row justify-content-center">
     <input type="button" class="btn btn-primary" value="Colocar Id Cristal" id="guardar_cristal" name="guardar_cristal" onclick=""></input> 
 </div>
 <div id="div_cristal"></div>
 
-<br><br>
+<br>
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group">
@@ -83,7 +85,8 @@ if (empty($existe) && $id_user != 1) {
                         </div>
                     </div>                  
                 </div>
-            </form> 
+            </form>
+            <br> 
 <div class="row justify-content-center">
     <input type="button" class="btn btn-primary" value="Buscar Venta" id="buscar_venta" name="buscar_venta" onclick=""></input> 
 </div>

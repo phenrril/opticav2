@@ -188,18 +188,3 @@ if (empty($existe) && $id_user != 1) {
     </div>
 </div>
 <?php include_once "includes/footer.php"; ?>
-<script>
-// $('#borrar_grad').click( function() {
-//     {$.ajax({
-//         url: "borrar_grad.php",
-//         type: "POST",
-//         data: $("#borrar_grad").serialize(),
-//         success: function(resultado){
-//                 $("#okgrad").html(resultado);
-
-//                 }
-//             });
-//     }
-        
-//     })
-</script>

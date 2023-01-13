@@ -165,10 +165,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     })
     
+    
+    
+    
+
 })
-
-
-
 document.querySelector("#guardar_cristal").addEventListener("click", function () {
     {
         $.ajax({
@@ -208,6 +209,20 @@ document.querySelector("#btn_parcial").addEventListener("click", function () {
         });
     }
 })
+// document.querySelector("#agregar").addEventListener("click", function () {
+//     {
+//         $.ajax({
+//             url: "saldos.php",
+//             type: "POST",
+//             data: $("#form_saldos").serialize(),
+//             success: function (resultado) {
+//                 $("#div_saldos").html(resultado);
+
+//             }
+//         });
+//     }
+// })
+
 function listar() {
     let html = '';
     let detalle = 'detalle';

@@ -10,7 +10,7 @@ if($id_venta == "" || $id_cristal == ""){
         title: 'Complete ambos campos',
         showConfirmButton: false,
         timer: 2000
-    })</script>;";
+    })</script>";
     exit;
 }
 $query = mysqli_query($conexion, "SELECT * FROM ventas WHERE id = $id_venta");

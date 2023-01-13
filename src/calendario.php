@@ -15,12 +15,15 @@ if (empty($existe) && $id_user != 1) {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/es.css">
     <title>Usuarios</title>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js%27%3E'></script>
 </head>
 <br>
+
 <div class="container is-fluid">
     <div class="col-xs-12">
-        <h2>Calendario</h2>
-        <br>
+        <h2>Calendario de Ventas, Ingresos y Egresos</h2>
+        <br><br>
+        <div class="card">
         <div>
             <style>
                 th {
@@ -28,22 +31,27 @@ if (empty($existe) && $id_user != 1) {
                     color: white;
                 }
             </style>
+           
+            <br>
+            <br><br>
+
+
             <form action="" method="GET">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label><b>Del Dia</b></label>
                             <input type="date" name="from_date" value="<?php if (isset($_GET['from_date'])) {
-                                echo $_GET['from_date'];
-                                } ?>" class="form-control">
+                                                                            echo $_GET['from_date'];
+                                                                        } ?>" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label><b> Hasta el Dia</b></label>
                             <input type="date" name="to_date" value="<?php if (isset($_GET['to_date'])) {
-                                echo $_GET['to_date'];
-                                } ?>" class="form-control">
+                                                                            echo $_GET['to_date'];
+                                                                        } ?>" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -58,11 +66,11 @@ if (empty($existe) && $id_user != 1) {
             <table class="table table-striped" id="table_id">
                 <thead>
                     <tr class="bg-dark">
-                        <th>Id</th>
-                        <th>ID_cliente</th>
+                        <th>ID Venta</th>
+                        <th>ID Cliente</th>
                         <th>Total</th>
-                        <th>Abona</th>
-                        <th>Resto</th>
+                        <th>Abonó</th>
+                        <th>Restan</th>
                         <th>Fecha</th>
                     </tr>
                 </thead>
@@ -92,8 +100,30 @@ if (empty($existe) && $id_user != 1) {
                             <tr>
                                 <td><?php echo "No se encontraron resultados"; ?></td>
                         <?php
+                        
                         }
                     }
                         ?>
+                        </tr>
+                </tbody>
+            </table>
         </div>
-        </html>
+    </div>
+</div>
+</div>
+  <script>      
+//   document.querySelector("#agregar").addEventListener("click", function () {
+//     {
+//         $.ajax({
+//             url: "saldos.php",
+//             type: "POST",
+//             data: $("#form_saldos").serialize(),
+//             success: function (resultado) {
+//                 $("#div_saldos").html(resultado);
+
+//             }
+//         });
+//     }
+// })
+</script>
+    
