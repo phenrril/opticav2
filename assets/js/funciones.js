@@ -396,6 +396,7 @@ function generarPDF(cliente, id_venta) {
     window.open(url, '_blank');
 }
 if (document.getElementById("sales-chart")) {
+
     const action = "sales";
     $.ajax({
         url: 'chart.php',

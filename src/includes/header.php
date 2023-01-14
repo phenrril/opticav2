@@ -79,6 +79,10 @@ if (empty($_SESSION['active'])) {
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                             Usuarios
                         </a>
+                        <a class="nav-link" href="prueba.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                            pruebas
+                        </a>
                         
 
                     </div>
