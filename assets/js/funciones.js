@@ -11,8 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         }
-
     })
+
+
+
     $('#tbl').DataTable();
     $(".confirmar").submit(function (e) {
         e.preventDefault();
@@ -209,19 +211,6 @@ document.querySelector("#btn_parcial").addEventListener("click", function () {
         });
     }
 })
-// document.querySelector("#agregar").addEventListener("click", function () {
-//     {
-//         $.ajax({
-//             url: "saldos.php",
-//             type: "POST",
-//             data: $("#form_saldos").serialize(),
-//             success: function (resultado) {
-//                 $("#div_saldos").html(resultado);
-
-//             }
-//         });
-//     }
-// })
 
 function listar() {
     let html = '';
@@ -646,3 +635,5 @@ function btnCambiar(e) {
         });
     }
 }
+
+

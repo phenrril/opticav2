@@ -73,6 +73,7 @@ if (isset($_GET['q'])) {
     $id_cliente = $_GET['id'];
     $id_user = $_SESSION['idUser'];
     $abona = $_GET['abona'];
+    $fecha = date("Y-m-d");
     $restoant = $_GET['resto'];
     $descuento = $_GET['descuento'];    
     $obrasocial = $_GET['obrasocial'];
@@ -83,7 +84,7 @@ if (isset($_GET['q'])) {
     $result = mysqli_fetch_assoc($consulta);   
     $total = $result['total_pagar'] * $descuento;
     $resto = $total - $abona - $obrasocial;
-    $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario, abona, resto, obrasocial) VALUES ('$id_cliente', '$total', '$id_user', '$abona', '$resto', '$obrasocial')");
+    $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario, abona, resto, obrasocial, fecha) VALUES ('$id_cliente', '$total', '$id_user', '$abona', '$resto', '$obrasocial', '$fecha')");
     if ($insertar) {
         $id_maximo = mysqli_query($conexion, "SELECT MAX(id) AS total FROM ventas");
         $resultId = mysqli_fetch_assoc($id_maximo);
@@ -140,8 +141,6 @@ if (isset($_POST['action'])) {
     $precio = $_POST['precio'];
     $id_user = $_SESSION['idUser'];
     $total = $precio * $cant;
-    //$descuento2 = 0.90;
-    //$total = $total * $descuento2;
     $verificar = mysqli_query($conexion, "SELECT * FROM detalle_temp WHERE id_producto = $id AND id_usuario = $id_user");
     $result = mysqli_num_rows($verificar);
     $datos = mysqli_fetch_assoc($verificar);

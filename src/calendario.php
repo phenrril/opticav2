@@ -9,19 +9,15 @@ if (empty($existe) && $id_user != 1) {
 } ?>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/es.css">
-    <title>Usuarios</title>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js%27%3E'></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"> 
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js'></script>
 </head>
 <br>
 
 <div class="container is-fluid">
     <div class="col-xs-12">
-        <h2>Calendario de Ventas, Ingresos y Egresos</h2>
+        <h2 align="center">Calendario de Ventas, Ingresos y Egresos</h2>
         <br><br>
         <div class="card">
         <div>
@@ -31,7 +27,55 @@ if (empty($existe) && $id_user != 1) {
                     color: white;
                 }
             </style>
-           
+            <form method="POST" id="form_saldos" name="form_saldos">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 text-center"><br>
+                        <div class="card">
+                            <div class="card-header">
+                                Ingresos y Egresos
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <input id="valor" class="form-control" type="number" name="valor" placeholder="Ingresá el valor">
+                                </div>
+                                
+                                <div class="form-group">
+                                <td colspan=3>Tipo: </td>
+                                        <select id="tipo" name="tipo">
+                                        <option value="ingreso">Ingreso</option>
+                                        <option value="egreso">Egreso</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <td colspan=3>Descripción:  </td>
+                                        <select id="descripcion" name="descripcion">
+                                            <option value="ingreso capital">Ingreso de capital</option>
+                                            <option value="ingresos varios">ingresos varios</option>
+                                            <option value="pago proveedores">pago a proveedores</option>
+                                            <option value="pago cristales">pago de cristales</option>
+                                            <option value="pago de gastos">pago de gastos</option>
+                                            <option value="pago de sueldo">pago de sueldo</option>
+                                            <option value="pago de alquiler">pago de alquiler</option>
+                                            <option value="pago de luz">pago de luz</option>
+                                            <option value="pago de agua">pago de agua</option>
+                                            <option value="pago de gas">pago de gas</option>
+                                            <option value="pago de internet">pago de internet</option>
+                                            <option value="pago de telefono">pago de telefono</option>
+                                            <option value="pago de impuestos">pago de impuestos</option>
+                                            <option value="pago de seguro">pago de seguro</option>
+                                            <option value="pago de publicidad">pago de publicidad</option>
+                                            <option value="otros">otros</option>
+                                        </select>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <input type="button" class="btn btn-primary" value="Agregar Saldo" id="agregar_saldos" name="agregar_saldos"></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </form>
+            <div id="div_saldos"></div>
             <br>
             <br><br>
 
@@ -67,7 +111,7 @@ if (empty($existe) && $id_user != 1) {
                 <thead>
                     <tr class="bg-dark">
                         <th>ID Venta</th>
-                        <th>ID Cliente</th>
+                        <th>Nombre Cliente</th>
                         <th>Total</th>
                         <th>Abonó</th>
                         <th>Restan</th>
@@ -80,14 +124,17 @@ if (empty($existe) && $id_user != 1) {
                     if (isset($_GET['from_date']) && isset($_GET['to_date'])) {
                         $from_date = $_GET['from_date'];
                         $to_date = $_GET['to_date'];
-                        $query = "SELECT * FROM ventas WHERE fecha BETWEEN '$from_date' AND '$to_date'";
+                        //$query = "SELECT * FROM ventas WHERE fecha BETWEEN '$from_date' AND '$to_date'";
+                        $query = "SELECT ventas.*, cliente.nombre FROM ventas
+                        JOIN cliente ON ventas.id_cliente = cliente.idcliente
+                        WHERE ventas.fecha BETWEEN '$from_date' AND '$to_date'";
                         $query_run = mysqli_query($conexion, $query);
                         if (mysqli_num_rows($query_run) > 0) {
                             foreach ($query_run as $fila) {
                     ?>
                                 <tr>
                                     <td><?php echo $fila['id']; ?></td>
-                                    <td><?php echo $fila['id_cliente']; ?></td>
+                                    <td><?php echo $fila['nombre']; ?></td>
                                     <td><?php echo $fila['total']; ?></td>
                                     <td><?php echo $fila['abona']; ?></td>
                                     <td><?php echo $fila['resto']; ?></td>
@@ -111,19 +158,18 @@ if (empty($existe) && $id_user != 1) {
     </div>
 </div>
 </div>
-  <script>      
-//   document.querySelector("#agregar").addEventListener("click", function () {
-//     {
-//         $.ajax({
-//             url: "saldos.php",
-//             type: "POST",
-//             data: $("#form_saldos").serialize(),
-//             success: function (resultado) {
-//                 $("#div_saldos").html(resultado);
-
-//             }
-//         });
-//     }
-// })
+<script>      
+$('#agregar_saldos').click(function () {
+                {   
+                    $.ajax({
+                        url: "saldos.php",
+                        type: "POST",
+                        data: $("#form_saldos").serialize(),
+                        success: function (resultado){
+                        $("#div_saldos").html(resultado);
+                        }
+                    });
+                }
+                })
 </script>
     

@@ -9,6 +9,9 @@ $pdf->SetFont('Arial', 'B', 12);
 $total = 0;
 $id = $_GET['v'];
 $idcliente = $_GET['cl'];
+$fecha = mysqli_query($conexion, "SELECT fecha FROM ventas WHERE id = '$id'"); 
+$fechaactual = mysqli_fetch_assoc($fecha);
+$nuevo_formato = date("d-m-Y", strtotime($fechaactual['fecha']));
 $config = mysqli_query($conexion, "SELECT * FROM configuracion");
 $gradu= mysqli_query($conexion, "SELECT * FROM graduaciones where id_venta='$id'");
 $datos = mysqli_fetch_assoc($config);
@@ -26,6 +29,10 @@ $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(20, 5,  utf8_decode("Teléfono: "), 0, 0, 'L'); //
 $pdf->SetFont('Arial', '', 10);
 $pdf->Cell(20, 5, $datos['telefono'], 0, 1, 'L');
+$pdf->SetFont('Arial', 'B', 10);
+$pdf->Cell(20, 5,  utf8_decode("Fecha: "), 0, 0, 'L');
+$pdf->SetFont('Arial', '', 10);
+$pdf->Cell(20, 5, $nuevo_formato , 0, 1, 'R');
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(20, 5, utf8_decode("Dirección: "), 0, 0, 'L'); //
 $pdf->SetFont('Arial', '', 10);

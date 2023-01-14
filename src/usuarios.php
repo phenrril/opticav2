@@ -80,9 +80,9 @@ if (!empty($_POST)) {
         <thead class="thead-dark">
             <tr>
                 <th>#</th>
-                <th>Usuario</th>
                 <th>Nombre</th>
                 <th>Correo</th>
+                <th>Usuario</th>                
                 <th>Estado</th>
                 <th></th>
             </tr>
