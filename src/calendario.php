@@ -172,4 +172,4 @@ $('#agregar_saldos').click(function () {
                 }
                 })
 </script>
-    
+<?php include_once "includes/footer.php"; ?>

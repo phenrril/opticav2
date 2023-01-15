@@ -18,7 +18,7 @@ $ventas = mysqli_query($conexion, "SELECT * FROM ventas");
 $totalV = mysqli_num_rows($ventas);
 ?>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray">Panel de Estadísticas</h1>
+        <h1 class="h3 mb-0 text-gray" style="color: white;">Panel de Estadísticas</h1>
     </div>
 
     <!-- Content Row -->
@@ -101,7 +101,7 @@ $totalV = mysqli_num_rows($ventas);
         <div class="col-lg-6">
             <div class="au-card m-b-30">
                 <div class="au-card-inner">
-                    <h3 class="title-2 m-b-40">Productos con stock mínimo</h3><br><br>
+                    <h3 class="title-2 m-b-40" style="color: white;">Productos con stock mínimo</h3><br><br>
                     <canvas id="myChart"></canvas>
                 </div>
             </div>
@@ -109,7 +109,7 @@ $totalV = mysqli_num_rows($ventas);
         <div class="col-lg-6">
             <div class="au-card m-b-30">
                 <div class="au-card-inner">
-                    <h3 class="title-2 m-b-40">Productos más vendidos</h3><br><br>
+                    <h3 class="title-2 m-b-40" style="color: white;">Productos más vendidos</h3><br><br>
                     <canvas id="pieChart"></canvas>
                 </div>
             </div>

@@ -1977,6 +1977,22 @@ pre code {
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+#usuario {
+  width: 150px; 
+  height: 30px;
+  margin: 0 auto;
+  
+}
+#clave {
+  width: 150px; 
+  height: 30px;
+  margin: 0 auto;
+}
+#submit {
+  width: 150px; 
+  height: 30px;
+  margin: 0 auto;
+}
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;
@@ -10270,8 +10286,19 @@ input[type="checkbox"]:before{
     left: 0;
     background: white;
     transition: 0.5s;
+
+
     
 }
+
+.animated-bg {
+  background-image: url('rayito.gif');
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: move-bg 10s linear infinite;
+}
+
+
 input:checked[type="checkbox"]:before{
     left: 30px;
 }

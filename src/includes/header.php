@@ -50,11 +50,6 @@ if (empty($_SESSION['active'])) {
                         <a class="nav-link" href="idcristal.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-glasses"></i></div>
                             ID Cristal - Post Pagos
-                        </a>
-                        <a class="nav-link" href="config.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
-                            Configuración
-                        </a>
                         <a class="nav-link" href="clientes.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Clientes
@@ -78,6 +73,11 @@ if (empty($_SESSION['active'])) {
                         <a class="nav-link" href="usuarios.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                             Usuarios
+                        </a>
+                        </a>
+                        <a class="nav-link" href="config.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
+                            Configuración
                         </a>
                         <a class="nav-link" href="prueba.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
