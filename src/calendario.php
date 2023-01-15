@@ -79,7 +79,9 @@ if (empty($existe) && $id_user != 1) {
             <br>
             <br><br>
 
-
+            
+                
+                
             <form action="" method="GET">
                 <div class="row">
                     <div class="col-md-4">
@@ -155,21 +157,39 @@ if (empty($existe) && $id_user != 1) {
                 </tbody>
             </table>
         </div>
+
     </div>
 </div>
 </div>
 <script>      
 $('#agregar_saldos').click(function () {
+    var valor = document.getElementById('valor');
+    if(valor.value == "" || valor.value == 0){   
+    swal.fire
+    ({
+        position: 'top-end',
+        showConfirmButton: false,
+        title: 'Error',
+        text: 'El valor no puede ser 0',
+        icon: 'error'
+    })
+}
+    else{
+    if(confirm('¿Está seguro de agregar el valor? (no se puede cancelar)'))
+    {
                 {   
-                    $.ajax({
+                $.ajax({
                         url: "saldos.php",
                         type: "POST",
                         data: $("#form_saldos").serialize(),
                         success: function (resultado){
                         $("#div_saldos").html(resultado);
-                        }
-                    });
                 }
-                })
+                });
+        }
+    }
+}
+})
+            
 </script>
 <?php include_once "includes/footer.php"; ?>

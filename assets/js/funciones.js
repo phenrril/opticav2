@@ -83,6 +83,11 @@ document.addEventListener("DOMContentLoaded", function () {
         var rows = $('#tblDetalle tr').length;
         if (rows > 2) {
             var abona = $('#abona').val();
+            var action = 'procesarVenta';
+            var id = $('#idcliente').val();            
+            var resto = $('#resto').val();
+            var descuento = $('#porc').val();
+            var obrasocial = $('#obra_social').val();
             if (abona == "" || abona == 0 || abona == null) {
                 Swal.fire({
                     position: 'top-end',
@@ -93,13 +98,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
                 return;
             }
-            var action = 'procesarVenta';
-            var id = $('#idcliente').val();            
-            var resto = $('#resto').val();
-            var descuento = $('#porc').val();
-            var obrasocial = $('#obra_social').val();
-
-
             $.ajax({
                 url: 'ajax.php',
                 async: true,
@@ -134,7 +132,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             timer: 2000
                         })
                     }
+                
                 },
+               
                 error: function (error) {
 
                 }
@@ -198,19 +198,19 @@ document.querySelector("#buscar_venta").addEventListener("click", function () {
     }
 })
 
-document.querySelector("#btn_parcial").addEventListener("click", function () {
-    {
-        $.ajax({
-            url: "resta.php",
-            type: "POST",
-            data: $("#form_descuento").serialize(),
-            success: function (resultado) {
-                $("#div_descuento").html(resultado);
+// document.querySelector("#btn_parcial").addEventListener("click", function () {
+//     {
+//         $.ajax({
+//             url: "resta.php",
+//             type: "POST",
+//             data: $("#form_descuento").serialize(),
+//             success: function (resultado) {
+//                 $("#div_descuento").html(resultado);
 
-            }
-        });
-    }
-})
+//             }
+//         });
+//     }
+// })
 
 function listar() {
     let html = '';
@@ -362,11 +362,11 @@ function calcular() {
 
     document.querySelector("#btn_parcial").addEventListener("click", function (total) {
         var abona = document.getElementById('abona');
-        if (!abona.value || abona.value <= 0) {
+        if (!abona.value || abona.value <= 0 || abona.value > total) {
             Swal.fire({
                 position: 'top-end',
                 icon: 'error',
-                title: 'Ingrese un valor para abonar',
+                title: 'Error en campo abona, revise',
                 showConfirmButton: false,
                 timer: 2000
             });
@@ -374,8 +374,28 @@ function calcular() {
         }else{
         var descuento = document.getElementById('porc');
         var obrasocial = document.getElementById('obra_social');
-        if(!obrasocial.value || obrasocial.value <= 0){
+        if(!obrasocial.value || obrasocial.value <= 0 ){
             obrasocial.value = 0;
+        }
+        if(obrasocial.value > total){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Obra Social es mayor que Total',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            return; 
+        }
+        if(obrasocial.value + abona.value > total){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Obra Social más Abona es mayor que Total',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            return; 
         }
         var resto = document.getElementById('resto');
         var dto = descuento.value;
