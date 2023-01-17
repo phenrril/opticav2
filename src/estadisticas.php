@@ -101,7 +101,7 @@ $totalV = mysqli_num_rows($ventas);
         <div class="col-lg-6">
             <div class="au-card m-b-30">
                 <div class="au-card-inner">
-                    <h3 class="title-2 m-b-40" style="color: white;">Productos con stock mínimo</h3><br><br>
+                    <h3 class="title-2 m-b-40" >Productos con stock mínimo</h3><br><br><br><br>
                     <canvas id="myChart"></canvas>
                 </div>
             </div>
@@ -109,7 +109,7 @@ $totalV = mysqli_num_rows($ventas);
         <div class="col-lg-6">
             <div class="au-card m-b-30">
                 <div class="au-card-inner">
-                    <h3 class="title-2 m-b-40" style="color: white;">Productos más vendidos</h3><br><br>
+                    <h3 class="title-2 m-b-40">Productos más vendidos</h3><br><br><br><br>
                     <canvas id="pieChart"></canvas>
                 </div>
             </div>
@@ -149,7 +149,7 @@ while ($data1 = mysqli_fetch_array($query1)) {
                                 pointStyle: 'circle',
                                 pointRadius: 5,
                                 pointBorderColor: 'transparent',
-                                pointBackgroundColor: 'rgba(220,53,69,0.75)',
+                                pointBackgroundColor: 'rgba(220,53,69,1)',
     }],
     },
                     options:{
@@ -220,11 +220,11 @@ while ($data1 = mysqli_fetch_array($query1)) {
                 label: 'Ventas',
                 data: [<?php foreach($arreglo1 as $a) { echo $a['total'] . ','; } ?>],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 99, 132, 0.9)',
+                    'rgba(54, 162, 235, 0.9)',
+                    'rgba(255, 206, 86, 0.9)',
+                    'rgba(75, 192, 192, 0.9)',
+                    'rgba(153, 102, 255, 0.9)',
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',

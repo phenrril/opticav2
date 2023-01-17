@@ -82,7 +82,7 @@ if (isset($_GET['q'])) {
     }
     $consulta = mysqli_query($conexion, "SELECT total, SUM(total) AS total_pagar FROM detalle_temp WHERE id_usuario = $id_user");
     $result = mysqli_fetch_assoc($consulta);   
-    $total = $result['total_pagar'] * $descuento;
+    $total = ($result['total_pagar'] * $descuento) - $obrasocial; 
     $resto = $total - $abona - $obrasocial;
     $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario, abona, resto, obrasocial, fecha) VALUES ('$id_cliente', '$total', '$id_user', '$abona', '$resto', '$obrasocial', '$fecha')");
     if ($insertar) {

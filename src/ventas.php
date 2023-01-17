@@ -146,7 +146,7 @@ if (empty($existe) && $id_user != 1) {
                     <div id="div_descuento">
                     <tr class="font-weight-bold">
                         <td colspan=3>Abona: </td>
-                        <td colspan=3><input type="text" size="3" id="abona"> </td>
+                        <td colspan=3><input type="number" size="3" id="abona"> </td>
                     </tr>
                     <tr class="font-weight-bold">
                         <td colspan=3>Descuento: </td>
@@ -168,11 +168,12 @@ if (empty($existe) && $id_user != 1) {
                     </tr>
                     <tr class="font-weight-bold">
                         <td colspan=3>Obra Social: </td>
-                        <td colspan=3><input type="text" size="3" id="obra_social"></td>
+                        <td colspan=3><input type="number" size="3" id="obra_social">
+                        <input type="number" size="3" id="total" disabled></td>
                     </tr>
                     <tr class="font-weight-bold">
                         <td colspan=3>Resta: </td>
-                        <td colspan=3><input type="text" size="3" id="resto" disabled></td>
+                        <td colspan=3><input type="number" size="3" id="resto" disabled></td>
                     </tr>
                 </div>
                 </form>
@@ -182,9 +183,22 @@ if (empty($existe) && $id_user != 1) {
             </table>
         </div>
     </div>
-    <div class="col-md-6">
-    <a href="#" class="btn btn-primary" id="btn_generar"><i class="fas fa-save"></i> Generar Venta</a>
-    <input type="button" class="btn btn-primary" value="Simular Venta" name="btn_parcial" id="btn_parcial" ></input>
+    <div class="col-md-6"><br>
+        <form method="POST" id="metodo_pago">
+            <h4 class="text-left">Método de Pago</h4>
+            <label for="male">Efectivo </label>
+            <input type="radio" id="efectivo" name="pago" value="efectivo" checked>
+            <label for="female">&nbsp&nbsp Tarjeta de Crédito </label>
+            <input type="radio" id="tarjcred" name="pago" value="tarjcred">
+            <label for="other">&nbsp&nbsp Tarjeta de Débito </label>
+            <input type="radio" id="tarjdeb" name="pago" value="tarjdeb">
+            <label for="other">&nbsp&nbsp Transferencia </label>
+            <input type="radio" id="transf" name="pago" value="transf">        
+        </form>
+    </div>
+    <div class="col-md-6"><br>
+        <a href="#" class="btn btn-primary" id="btn_generar"><i class="fas fa-save"></i> Generar Venta</a>
+        <input type="button" class="btn btn-primary" value="Simular Venta" name="btn_parcial" id="btn_parcial" ></input>
     </div>
 </div>
 <?php include_once "includes/footer.php"; ?>

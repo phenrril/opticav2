@@ -66,6 +66,10 @@ if (empty($_SESSION['active'])) {
                             <div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>
                             Calendario
                         </a>
+                        <a class="nav-link" href="reporte.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
+                            Reporte Mensual
+                        </a>
                         <a class="nav-link" href="productos.php">
                             <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
                             Productos
@@ -79,10 +83,10 @@ if (empty($_SESSION['active'])) {
                             <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
                             Configuración
                         </a>
-                        <a class="nav-link" href="prueba.php">
+                        <!-- <a class="nav-link" href="prueba.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                             pruebas
-                        </a>
+                        </a> -->
                         
 
                     </div>
