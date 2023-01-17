@@ -415,192 +415,192 @@ function generarPDF(cliente, id_venta) {
     url = 'pdf/generar.php?cl=' + cliente + '&v=' + id_venta;
     window.open(url, '_blank');
 }
-if (document.getElementById("sales-chart")) {
+// if (document.getElementById("sales-chart")) {
 
-    const action = "sales";
-    $.ajax({
-        url: 'chart.php',
-        type: 'POST',
-        data: {
-            action
-        },
-        async: true,
-        success: function (response) {
-            if (response != 0) {
-                var data = JSON.parse(response);
-                var nombre = [];
-                var cantidad = [];
-                for (var i = 0; i < data.length; i++) {
-                    nombre.push(data[i]['descripcion']);
-                    cantidad.push(data[i]['existencia']);
-                }
-                try {
-                    //Sales chart
-                    var ctx = document.getElementById("sales-chart");
-                    if (ctx) {
-                        ctx.height = 150;
-                        var myChart = new Chart(ctx, {
-                            type: 'line',
-                            data: {
-                                labels: nombre,
-                                type: 'line',
-                                defaultFontFamily: 'Poppins',
-                                datasets: [{
-                                    label: "Disponible",
-                                    data: cantidad,
-                                    backgroundColor: 'transparent',
-                                    borderColor: 'rgba(220,53,69,0.75)',
-                                    borderWidth: 3,
-                                    pointStyle: 'circle',
-                                    pointRadius: 5,
-                                    pointBorderColor: 'transparent',
-                                    pointBackgroundColor: 'rgba(220,53,69,0.75)',
-                                }, {
-                                    label: "Cantidad",
-                                    data: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                                    backgroundColor: 'transparent',
-                                    borderColor: 'rgba(40,167,69,0.75)',
-                                    borderWidth: 3,
-                                    pointStyle: 'circle',
-                                    pointRadius: 5,
-                                    pointBorderColor: 'transparent',
-                                    pointBackgroundColor: 'rgba(40,167,69,0.75)',
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                tooltips: {
-                                    mode: 'index',
-                                    titleFontSize: 12,
-                                    titleFontColor: '#000',
-                                    bodyFontColor: '#000',
-                                    backgroundColor: '#fff',
-                                    titleFontFamily: 'Poppins',
-                                    bodyFontFamily: 'Poppins',
-                                    cornerRadius: 3,
-                                    intersect: false,
-                                },
-                                legend: {
-                                    display: false,
-                                    labels: {
-                                        usePointStyle: true,
-                                        fontFamily: 'Poppins',
-                                    },
-                                },
-                                scales: {
-                                    xAxes: [{
-                                        display: true,
-                                        gridLines: {
-                                            display: false,
-                                            drawBorder: false
-                                        },
-                                        scaleLabel: {
-                                            display: false,
-                                            labelString: 'Month'
-                                        },
-                                        ticks: {
-                                            fontFamily: "Poppins"
-                                        }
-                                    }],
-                                    yAxes: [{
-                                        display: true,
-                                        gridLines: {
-                                            display: false,
-                                            drawBorder: false
-                                        },
-                                        scaleLabel: {
-                                            display: true,
-                                            labelString: 'Cantidad',
-                                            fontFamily: "Poppins"
+//     const action = "sales";
+//     $.ajax({
+//         url: 'chart.php',
+//         type: 'POST',
+//         data: {
+//             action
+//         },
+//         async: true,
+//         success: function (response) {
+//             if (response != 0) {
+//                 var data = JSON.parse(response);
+//                 var nombre = [];
+//                 var cantidad = [];
+//                 for (var i = 0; i < data.length; i++) {
+//                     nombre.push(data[i]['descripcion']);
+//                     cantidad.push(data[i]['existencia']);
+//                 }
+//                 try {
+//                     //Sales chart
+//                     var ctx = document.getElementById("sales-chart");
+//                     if (ctx) {
+//                         ctx.height = 150;
+//                         var myChart = new Chart(ctx, {
+//                             type: 'line',
+//                             data: {
+//                                 labels: nombre,
+//                                 type: 'line',
+//                                 defaultFontFamily: 'Poppins',
+//                                 datasets: [{
+//                                     label: "Disponible",
+//                                     data: cantidad,
+//                                     backgroundColor: 'transparent',
+//                                     borderColor: 'rgba(220,53,69,0.75)',
+//                                     borderWidth: 3,
+//                                     pointStyle: 'circle',
+//                                     pointRadius: 5,
+//                                     pointBorderColor: 'transparent',
+//                                     pointBackgroundColor: 'rgba(220,53,69,0.75)',
+//                                 }, {
+//                                     label: "Cantidad",
+//                                     data: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+//                                     backgroundColor: 'transparent',
+//                                     borderColor: 'rgba(40,167,69,0.75)',
+//                                     borderWidth: 3,
+//                                     pointStyle: 'circle',
+//                                     pointRadius: 5,
+//                                     pointBorderColor: 'transparent',
+//                                     pointBackgroundColor: 'rgba(40,167,69,0.75)',
+//                                 }]
+//                             },
+//                             options: {
+//                                 responsive: true,
+//                                 tooltips: {
+//                                     mode: 'index',
+//                                     titleFontSize: 12,
+//                                     titleFontColor: '#000',
+//                                     bodyFontColor: '#000',
+//                                     backgroundColor: '#fff',
+//                                     titleFontFamily: 'Poppins',
+//                                     bodyFontFamily: 'Poppins',
+//                                     cornerRadius: 3,
+//                                     intersect: false,
+//                                 },
+//                                 legend: {
+//                                     display: false,
+//                                     labels: {
+//                                         usePointStyle: true,
+//                                         fontFamily: 'Poppins',
+//                                     },
+//                                 },
+//                                 scales: {
+//                                     xAxes: [{
+//                                         display: true,
+//                                         gridLines: {
+//                                             display: false,
+//                                             drawBorder: false
+//                                         },
+//                                         scaleLabel: {
+//                                             display: false,
+//                                             labelString: 'Month'
+//                                         },
+//                                         ticks: {
+//                                             fontFamily: "Poppins"
+//                                         }
+//                                     }],
+//                                     yAxes: [{
+//                                         display: true,
+//                                         gridLines: {
+//                                             display: false,
+//                                             drawBorder: false
+//                                         },
+//                                         scaleLabel: {
+//                                             display: true,
+//                                             labelString: 'Cantidad',
+//                                             fontFamily: "Poppins"
 
-                                        },
-                                        ticks: {
-                                            fontFamily: "Poppins"
-                                        }
-                                    }]
-                                },
-                                title: {
-                                    display: false,
-                                    text: 'Normal Legend'
-                                }
-                            }
-                        });
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-}
-if (document.getElementById("polarChart")) {
-    const action = "polarChart";
-    $('.alertAddProduct').html('');
-    $.ajax({
-        url: 'chart.php',
-        type: 'POST',
-        async: true,
-        data: {
-            action
-        },
-        success: function (response) {
-            if (response != 0) {
-                var data = JSON.parse(response);
-                var nombre = [];
-                var cantidad = [];
-                for (var i = 0; i < data.length; i++) {
-                    nombre.push(data[i]['descripcion']);
-                    cantidad.push(data[i]['cantidad']);
-                }
-            }
-            try {
+//                                         },
+//                                         ticks: {
+//                                             fontFamily: "Poppins"
+//                                         }
+//                                     }]
+//                                 },
+//                                 title: {
+//                                     display: false,
+//                                     text: 'Normal Legend'
+//                                 }
+//                             }
+//                         });
+//                     }
+//                 } catch (error) {
+//                     console.log(error);
+//                 }
+//             }
+//         },
+//         error: function (error) {
+//             console.log(error);
+//         }
+//     });
+//}
+// if (document.getElementById("polarChart")) {
+//     const action = "polarChart";
+//     $('.alertAddProduct').html('');
+//     $.ajax({
+//         url: 'chart.php',
+//         type: 'POST',
+//         async: true,
+//         data: {
+//             action
+//         },
+//         success: function (response) {
+//             if (response != 0) {
+//                 var data = JSON.parse(response);
+//                 var nombre = [];
+//                 var cantidad = [];
+//                 for (var i = 0; i < data.length; i++) {
+//                     nombre.push(data[i]['descripcion']);
+//                     cantidad.push(data[i]['cantidad']);
+//                 }
+//             }
+//             try {
 
-                // polar chart
-                var ctx = document.getElementById("polarChart");
-                if (ctx) {
-                    ctx.height = 200;
-                    var myChart = new Chart(ctx, {
-                        type: 'polarArea',
-                        data: {
-                            datasets: [{
-                                data: cantidad,
-                                backgroundColor: [
-                                    "rgb(0, 123, 255)",
-                                    "rgb(255, 0, 0)",
-                                    "rgb(0, 255, 0)",
-                                    "rgb(0,0,0)",
-                                    "rgb(0, 0, 255)"
-                                ]
+//                 // polar chart
+//                 var ctx = document.getElementById("polarChart");
+//                 if (ctx) {
+//                     ctx.height = 200;
+//                     var myChart = new Chart(ctx, {
+//                         type: 'polarArea',
+//                         data: {
+//                             datasets: [{
+//                                 data: cantidad,
+//                                 backgroundColor: [
+//                                     "rgb(0, 123, 255)",
+//                                     "rgb(255, 0, 0)",
+//                                     "rgb(0, 255, 0)",
+//                                     "rgb(0,0,0)",
+//                                     "rgb(0, 0, 255)"
+//                                 ]
 
-                            }],
-                            labels: nombre
-                        },
-                        options: {
-                            legend: {
-                                position: 'top',
-                                labels: {
-                                    fontFamily: 'Poppins'
-                                }
+//                             }],
+//                             labels: nombre
+//                         },
+//                         options: {
+//                             legend: {
+//                                 position: 'top',
+//                                 labels: {
+//                                     fontFamily: 'Poppins'
+//                                 }
 
-                            },
-                            responsive: true
-                        }
-                    });
-                }
+//                             },
+//                             responsive: true
+//                         }
+//                     });
+//                 }
 
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        error: function (error) {
-            console.log(error);
+//             } catch (error) {
+//                 console.log(error);
+//             }
+//         },
+//         error: function (error) {
+//             console.log(error);
 
-        }
-    });
-}
+//         }
+//     });
+// }
 function btnCambiar(e) {
     e.preventDefault();
     const actual = document.getElementById('actual').value;
