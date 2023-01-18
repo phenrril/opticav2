@@ -63,6 +63,11 @@ if (empty($existe) && $id_user != 1) {
                                 <div>
                                 <tr>
                                     <td><b>Graduacion Lejos </b></td>
+                                    
+
+                                </tr>
+                                <tr>
+                                    <td><div class="col-xs-3"><b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspEsferico</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b>Cilíndrico</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b>Eje</b></div></td>
                                 </tr>
                                 <tr>
                                     <td><div class="col-xs-3"><b>Ojo D: </b><input  id="ojoDl1" name="ojoDl1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoDl2" name="ojoDl2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoDl3" name="ojoDl3" type="text" size="4"></div></td>
@@ -71,13 +76,15 @@ if (empty($existe) && $id_user != 1) {
                                     <td><b>Ojo I: &nbsp</b><input id="ojoIl1" name="ojoIl1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl2" name="ojoIl2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl3" name="ojoIl3" type="text" size="4"></td>
                                 </tr>  
                                 <tr>
-                                    <td>&nbsp<b>ADD: &nbsp</b><input id="add" name="add" type="text" size="4">&nbsp&nbsp&nbsp<b>Obs: &nbsp</b><input id="obs" name="obs" type="text" size="10"></td>
+                                    <td><br>&nbsp<b>ADD: &nbsp</b><input id="add" name="add" type="text" size="4">&nbsp&nbsp&nbsp<b>Obs: &nbsp</b><input id="obs" name="obs" type="text" size="10"></td>
                                 </tr>  
                                 <tr>
                                     
                                     <td><b>Graduacion Cerca </b></td>
                                 </tr>
-                                
+                                <tr>
+                                    <td><div class="col-xs-3"><b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspEsferico</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b>Cilíndrico</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b>Eje</b></div></td>
+                                </tr>
                                 <tr>
                                     <td><b>Ojo D: </b><input name="ojoD1" id="ojoD1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoD2" name="ojoD2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoD3" name="ojoD3" type="text" size="4"></td>
                                 </tr>
@@ -169,7 +176,7 @@ if (empty($existe) && $id_user != 1) {
                     <tr class="font-weight-bold">
                         <td colspan=3>Obra Social: </td>
                         <td colspan=3><input type="number" size="3" id="obra_social">
-                        <input type="number" size="3" id="total" disabled></td>
+                        <input type="number" size="3" id="total" hidden disabled></td>
                     </tr>
                     <tr class="font-weight-bold">
                         <td colspan=3>Resta: </td>
@@ -187,13 +194,13 @@ if (empty($existe) && $id_user != 1) {
         <form method="POST" id="metodo_pago">
             <h4 class="text-left">Método de Pago</h4>
             <label for="male">Efectivo </label>
-            <input type="radio" id="efectivo" name="pago" value="efectivo" checked>
+            <input type="radio" id="1" name="pago" value="1" checked>
             <label for="female">&nbsp&nbsp Tarjeta de Crédito </label>
-            <input type="radio" id="tarjcred" name="pago" value="tarjcred">
+            <input type="radio" id="2" name="pago" value="2">
             <label for="other">&nbsp&nbsp Tarjeta de Débito </label>
-            <input type="radio" id="tarjdeb" name="pago" value="tarjdeb">
+            <input type="radio" id="3" name="pago" value="3">
             <label for="other">&nbsp&nbsp Transferencia </label>
-            <input type="radio" id="transf" name="pago" value="transf">        
+            <input type="radio" id="4" name="pago" value="4">        
         </form>
     </div>
     <div class="col-md-6"><br>

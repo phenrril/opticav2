@@ -1,7 +1,7 @@
 <?php 
 require "../conexion.php";
 session_start();
-
+$id = $_SESSION['idUser'];
 $valor = $_POST['valor'];
 if($_POST['valor'] == '0' || $_POST['valor'] == 'null'){
     echo "
@@ -22,7 +22,7 @@ $descripcion = $_POST['descripcion'];
 $fecha = date("Y-m-d");
 
 if($tipo == 'ingreso'){
-    $ingresos =  mysqli_query($conexion,"INSERT INTO ingresos (ingresos, descripcion, fecha) VALUES ('$valor', '$descripcion', '$fecha')");
+    $ingresos =  mysqli_query($conexion,"INSERT INTO ingresos (ingresos, descripcion, fecha, id_cliente, id_metodo) VALUES ('$valor', '$descripcion', '$fecha','0','1')");
 }elseif($tipo == 'egreso'){
     $egresos =  mysqli_query($conexion,"INSERT INTO egresos (egresos, descripcion, fecha) VALUES ('$valor', '$descripcion', '$fecha')");
 }

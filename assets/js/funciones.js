@@ -87,6 +87,8 @@ document.addEventListener("DOMContentLoaded", function () {
             var id = $('#idcliente').val();            
             var resto = $('#resto').val();
             var descuento = $('#porc').val();
+            var metodo_pago = $('input[name=pago]:checked').val();
+
             var obrasocial = $('#obra_social').val();
             if (abona == "" || abona == 0 || abona == null) {
                 Swal.fire({
@@ -107,7 +109,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     abona : abona,
                     resto : resto,
                     descuento : descuento,
-                    obrasocial : obrasocial
+                    obrasocial : obrasocial,
+                    metodo_pago : metodo_pago 
+                
                 },
                 success: function (response) {
                     const res = JSON.parse(response);
