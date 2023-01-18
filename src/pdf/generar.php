@@ -132,11 +132,18 @@ if ($datos44 != ""){
   while ($datos44 = mysqli_fetch_assoc($gradu)){
 
 // Dibujar dos celdas en la misma fila para Ojo Derecho C y Ojo Derecho L
+
 $pdf->Cell(60, 5, ('ADD  '), 0, 0, 'R');
 $pdf->Cell(15, 5, ($datos44['addg']), 1, 0, 'C');
 $pdf->Ln(8);
-$pdf->Cell(93, 5, ('LEJOS'), 0, 0, 'L');
-$pdf->Cell(90, 5, ('CERCA'), 0, 0, 'L');
+$pdf->Cell(36, 5, ('LEJOS'), 0, 0, 'L');
+$pdf->Cell(10, 5, utf8_decode('Esférico  '), 0, 0, 'R');
+$pdf->Cell(16, 5, utf8_decode('Cilíndrico'), 0, 0, 'R');
+$pdf->Cell(9, 5, utf8_decode('Eje'), 0, 0, 'R');
+$pdf->Cell(45, 5, ('CERCA'), 0, 0, 'R');
+$pdf->Cell(21, 5, utf8_decode('Esférico  '), 0, 0, 'R');
+$pdf->Cell(16, 5, utf8_decode('Cilíndrico'), 0, 0, 'R');
+$pdf->Cell(9, 5, utf8_decode('Eje'), 0, 0, 'R');
 $pdf->Ln(8);
 $pdf->Cell(30, 5, ('Ojo Derecho L  '), 0, 0, 'L');
 $pdf->Cell(15, 5, ($datos44['od_l_1']), 1, 0, 'C');
@@ -158,7 +165,7 @@ $pdf->Cell(15, 5, ($datos44['oi_c_3']), 1, 0, 'C');
 $pdf->Ln(10);
 $pdf->Cell(45, 5, ('Observaciones:'), 0, 0, 'L');
 $pdf->Cell(25, 5, ($datos44['obs']), 0, 0, 'R');
-$pdf->Ln(10);
+$pdf->Ln(15);
 }
 }
 $pdf->Output("ventas.pdf", "I");
