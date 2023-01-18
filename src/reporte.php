@@ -127,9 +127,9 @@ if (empty($existe) && $id_user != 1) {
                     if (isset($_GET['from_date']) && isset($_GET['to_date'])) {
                         $from_date = $_GET['from_date'];
                         $to_date = $_GET['to_date'];
-                       //$query2 = mysqli_query("SELECT sum(ingresos) as 'subtotal' FROM  WHERE fecha BETWEEN '$from_date' AND '$to_date'");
-                       $query2 = mysqli_query($conexion, "SELECT sum(ingresos) as 'subtotal' FROM ingresos WHERE fecha BETWEEN '$from_date' AND '$to_date'"); 
-                       $subtt = mysqli_fetch_assoc($query2);
+                        //$query2 = mysqli_query("SELECT sum(ingresos) as 'subtotal' FROM  WHERE fecha BETWEEN '$from_date' AND '$to_date'");
+                        $query2 = mysqli_query($conexion, "SELECT sum(ingresos) as 'subtotal' FROM ingresos WHERE fecha BETWEEN '$from_date' AND '$to_date'"); 
+                        $subtt = mysqli_fetch_assoc($query2);
                         $query = "SELECT ingresos.*, cliente.nombre FROM ingresos
                         JOIN cliente ON ingresos.id_cliente = cliente.idcliente
                         WHERE ingresos.fecha BETWEEN '$from_date' AND '$to_date'";
@@ -159,7 +159,10 @@ if (empty($existe) && $id_user != 1) {
                     }
                         ?>
                         </tr>
-                </tbody><td></td><td></td><td></td><td></td><td></td><td><b>Subtotal: <?php echo $subtt['subtotal']; ?></b></td>
+                </tbody><td></td><td></td><td></td><td></td><td></td><td><b>Subtotal: <?php if (isset($subtt)) {
+                                                                                        echo $subtt['subtotal'];
+                                                                                        } else 
+                                                                                        {}; ?></b></td>
             </table>
         </div>
 
