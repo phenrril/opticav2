@@ -3,7 +3,6 @@ if (empty($_SESSION['active'])) {
     header('location: ../');
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,52 +42,17 @@ if (empty($_SESSION['active'])) {
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link" href="ventas.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
-                            Nueva venta
-                        </a>
-                        <a class="nav-link" href="idcristal.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-glasses"></i></div>
-                            ID Cristal - Post Pagos
-                        <a class="nav-link" href="clientes.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            Clientes
-                        </a>
-                        <a class="nav-link" href="lista_ventas.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
-                            Ventas
-                        </a>
-                        <a class="nav-link" href="estadisticas.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
-                            Estadisticas
-                        </a>
-                        <a class="nav-link" href="calendario.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>
-                            Calendario
-                        </a>
-                        <a class="nav-link" href="reporte.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
-                            Reporte Mensual
-                        </a>
-                        <a class="nav-link" href="productos.php">
-                            <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
-                            Productos
-                        </a>
-                        <a class="nav-link" href="usuarios.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            Usuarios
-                        </a>
-                        </a>
-                        <a class="nav-link" href="config.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
-                            Configuración
-                        </a>
-                        <!-- <a class="nav-link" href="prueba.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            pruebas
-                        </a> -->
-                        
-
+                        <a class="nav-link" href="ventas.php"><div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div> Nueva venta</a>
+                        <a class="nav-link" href="idcristal.php"><div class="sb-nav-link-icon"><i class="fas fa-glasses"></i></div> Id cristal- Post pagos</a>
+                        <a class="nav-link" href="clientes.php"><div class="sb-nav-link-icon"><i class="fas fa-users"></i></div> Clientes</a>
+                        <a class="nav-link" href="lista_ventas.php"><div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div> Ventas</a>
+                        <a class="nav-link" href="estadisticas.php"><div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div> Estadisticas</a>
+                        <a class="nav-link" href="calendario.php"><div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div> Calendario</a>
+                        <a class="nav-link" href="reporte.php"><div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div> Reportes</a>
+                        <a class="nav-link" href="productos.php"><div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div> Productos</a>
+                        <a class="nav-link" href="usuarios.php"><div class="sb-nav-link-icon"><i class="fas fa-user"></i></div> Usuarios </a>
+                        <a class="nav-link" href="config.php"><div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div> Configuracion </a>
+                            
                     </div>
                 </div>
             </nav>
