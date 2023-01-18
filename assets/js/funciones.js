@@ -188,6 +188,7 @@ document.querySelector("#guardar_cristal").addEventListener("click", function ()
         });
     }
 })
+
 document.querySelector("#buscar_venta").addEventListener("click", function () {
     {
         $.ajax({

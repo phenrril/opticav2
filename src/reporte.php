@@ -113,11 +113,12 @@ if (empty($existe) && $id_user != 1) {
                 <thead>
                     <tr class="bg-dark">
                         <th>ID</th>
-                        <th>Ingresos</th>
                         <th>Fecha</th>
                         <th>Descripcion</th>
                         <th>Nombre Cliente</th>
                         <th>metodo pago</th>
+                        <th>Ingresos</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -126,22 +127,25 @@ if (empty($existe) && $id_user != 1) {
                     if (isset($_GET['from_date']) && isset($_GET['to_date'])) {
                         $from_date = $_GET['from_date'];
                         $to_date = $_GET['to_date'];
-                        //$query = "SELECT * FROM ventas WHERE fecha BETWEEN '$from_date' AND '$to_date'";
+                       //$query2 = mysqli_query("SELECT sum(ingresos) as 'subtotal' FROM  WHERE fecha BETWEEN '$from_date' AND '$to_date'");
+                       $query2 = mysqli_query($conexion, "SELECT sum(ingresos) as 'subtotal' FROM ingresos WHERE fecha BETWEEN '$from_date' AND '$to_date'"); 
+                       $subtt = mysqli_fetch_assoc($query2);
                         $query = "SELECT ingresos.*, cliente.nombre FROM ingresos
                         JOIN cliente ON ingresos.id_cliente = cliente.idcliente
                         WHERE ingresos.fecha BETWEEN '$from_date' AND '$to_date'";
                         //$query="SELECT * FROM ingresos WHERE fecha BETWEEN '$from_date' AND '$to_date'";
+                        
                         $query_run = mysqli_query($conexion, $query);
                         if (mysqli_num_rows($query_run) > 0) {
                             foreach ($query_run as $fila) {
                     ?>
                                 <tr>
                                     <td><?php echo $fila['id']; ?></td>
-                                    <td><?php echo $fila['ingresos']; ?></td>
                                     <td><?php echo $fila['fecha']; ?></td>
                                     <td><?php echo $fila['descripcion']; ?></td>
                                     <td><?php echo $fila['id_cliente']; ?></td>
                                     <td><?php echo $fila['id_metodo']; ?></td>
+                                    <td><?php echo $fila['ingresos']; ?></td>
                                 </tr>
                             <?php
                             }
@@ -155,7 +159,7 @@ if (empty($existe) && $id_user != 1) {
                     }
                         ?>
                         </tr>
-                </tbody>
+                </tbody><td></td><td></td><td></td><td></td><td></td><td><b>Subtotal: <?php echo $subtt['subtotal']; ?></b></td>
             </table>
         </div>
 

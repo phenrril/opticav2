@@ -22,7 +22,8 @@ if (!empty($_POST)) {
     $cantidad = $_POST['cantidad'];
     $usuario_id = $_SESSION['idUser'];
     $precio_bruto = $_POST['precio_bruto'];
-    $query_update = mysqli_query($conexion, "UPDATE producto SET codigo = '$codigo', descripcion = '$producto', precio, '  = $precio WHERE codproducto = $codproducto");
+    $marca = $_POST['marca'];
+    $query_update = mysqli_query($conexion, "UPDATE producto SET codigo = '$codigo', descripcion = '$producto', precio =' $precio', marca = '$marca' WHERE codproducto = $codproducto");
     if ($query_update) {
       $alert = '<div class="alert alert-primary" role="alert">
               Producto Modificado
@@ -71,6 +72,10 @@ if (empty($_REQUEST['id'])) {
           <div class="form-group">
             <label for="producto">Producto</label>
             <input type="text" class="form-control" placeholder="Ingrese nombre del producto" name="producto" id="producto" value="<?php echo $data_producto['descripcion']; ?>">
+          </div>
+          <div class="form-group">
+            <label for="precio_bruto">Marca</label>
+            <input type="text" placeholder="Ingrese la marca" class="form-control" name="marca" id="marca">
           </div>
           <div class="form-group">
             <label for="precio">Precio</label>

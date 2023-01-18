@@ -14,8 +14,9 @@ if (empty($existe) && $id_user != 1) {
         $cantidad = $_POST['cantidad'];
         $usuario_id = $_SESSION['idUser'];
         $precio_bruto = $_POST['precio_bruto'];
+        $marca =  $_POST['marca'];
         $alert = "";
-        if (empty($codigo) || empty($producto) || empty($precio) || $precio <  0 || empty($cantidad) || $cantidad < 0 || empty($precio_bruto) || $precio_bruto < 0) {
+        if (empty($codigo) || empty($producto)|| empty($marca) || empty($precio) || $precio <  0 || empty($cantidad) || $cantidad < 0 || empty($precio_bruto) || $precio_bruto < 0) {
             $alert = '<div class="alert alert-danger" role="alert">
                 Todos los campos son obligatorios
               </div>';
@@ -27,7 +28,7 @@ if (empty($existe) && $id_user != 1) {
                         El código ya existe
                     </div>';
             } else {
-				$query_insert = mysqli_query($conexion,"INSERT INTO producto(codigo,descripcion,precio,existencia,usuario_id,precio_bruto) values ('$codigo', '$producto','$precio','$cantidad','$usuario_id', '$precio_bruto')");
+				$query_insert = mysqli_query($conexion,"INSERT INTO producto(codigo,descripcion,marca,precio,existencia,usuario_id,precio_bruto) values ('$codigo', '$producto','$marca','$precio','$cantidad','$usuario_id', '$precio_bruto')");
                 if ($query_insert) {
                     $alert = '<div class="alert alert-success" role="alert">
                 Producto Registrado
@@ -50,6 +51,7 @@ if (empty($existe) && $id_user != 1) {
                  <th>#</th>
                  <th>Código</th>
                  <th>Producto</th>
+                 <th>Marca</th>
                  <th>Precio</th>
                  <th>Stock</th>
                  <th>Estado</th>
@@ -75,6 +77,7 @@ if (empty($existe) && $id_user != 1) {
                          <td><?php echo $data['codproducto']; ?></td>
                          <td><?php echo $data['codigo']; ?></td>
                          <td><?php echo $data['descripcion']; ?></td>
+                         <td><?php echo $data['marca']; ?></td>
                          <td><?php echo $data['precio']; ?></td>
                          <td><?php echo $data['existencia']; ?></td>
                          <td><?php echo $estado ?></td>
@@ -118,6 +121,10 @@ if (empty($existe) && $id_user != 1) {
                          <input type="text" placeholder="Ingrese nombre del producto" name="producto" id="producto" class="form-control">
                      </div>
                      <div class="form-group">
+                         <label for="producto">Marca</label>
+                         <input type="text" placeholder="Ingrese la marca" name="marca" id="marca" class="form-control">
+                     </div>
+                     <div class="form-group">
                          <label for="precio">Precio</label>
                          <input type="text" placeholder="Ingrese precio" class="form-control" name="precio" id="precio">
                      </div>
@@ -135,5 +142,72 @@ if (empty($existe) && $id_user != 1) {
          </div>
      </div>
  </div>
-
+ <div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            <h4 class="text-center">Actualizar porcentaje por marca</h4><br>
+        </div>
+    </div>
+</div>
+<div id="prueba"></div>
+<form method="post" id="form_marca">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 text-center">
+                        <div class="card">
+                            <div class="card-header">
+                                Buscar ID Venta
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <input id="idventa" class="form-control" type="text" name="id_marca" placeholder="Ingresá la marca">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="card">
+                            <div class="card-header">
+                                Colocar ID Cristal
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <input id="idcristal" class="form-control" type="number" name="id_porcentaje" placeholder="Ingresá el porcentaje">
+                                </div>
+                            </div>
+                        </div>
+                    </div>                  
+                </div>
+            </form>
+            <br> 
+<div class="row justify-content-center">
+    <input type="button" class="btn btn-primary" value="Actualizar precio" id="btn_marca" name="btn_marca" onclick=""></input> 
+</div>
+<div id="prueba"></div>
  <?php include_once "includes/footer.php"; ?>
+ <script >
+    
+    $("#btn_marca").click(function(){
+    
+            $.ajax({
+                    url: "actualizar_porcentaje.php",
+                    type: "post",
+                    data: $("#form_marca").serialize(),
+                    success: function(resultado){
+                            $("#prueba").html(resultado);
+    
+                    }
+    
+    
+            });
+    
+    
+    
+    
+    
+    
+    });
+    
+    
+    
+    
+    </script>
