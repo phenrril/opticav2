@@ -23,7 +23,7 @@ if (!empty($_POST)) {
     $usuario_id = $_SESSION['idUser'];
     $precio_bruto = $_POST['precio_bruto'];
     $marca = $_POST['marca'];
-    $query_update = mysqli_query($conexion, "UPDATE producto SET codigo = '$codigo', descripcion = '$producto', precio =' $precio', marca = '$marca' WHERE codproducto = $codproducto");
+    $query_update = mysqli_query($conexion, "UPDATE producto SET codigo = '$codigo', descripcion = '$producto', precio =' $precio', marca = '$marca', precio_bruto = '$precio_bruto' WHERE codproducto = $codproducto");
     if ($query_update) {
       $alert = '<div class="alert alert-primary" role="alert">
               Producto Modificado

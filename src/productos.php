@@ -152,10 +152,10 @@ if (empty($existe) && $id_user != 1) {
 <div id="prueba"></div>
 <form method="post" id="form_marca">
                 <div class="row justify-content-center">
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-2 text-center">
                         <div class="card">
                             <div class="card-header">
-                                Buscar ID Venta
+                                Colocar Marca
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
@@ -164,10 +164,10 @@ if (empty($existe) && $id_user != 1) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-2 text-center">
                         <div class="card">
                             <div class="card-header">
-                                Colocar ID Cristal
+                                Colocar Porcentaje
                             </div>
                             <div class="card-body">
                                 <div class="form-group">

@@ -20,11 +20,14 @@ if($_POST['valor'] == '0' || $_POST['valor'] == 'null'){
 $tipo = $_POST['tipo'];
 $descripcion = $_POST['descripcion'];
 $fecha = date("Y-m-d");
+$idcliente = 0;
+$idmetodo = 1;
 
 if($tipo == 'ingreso'){
-    $ingresos =  mysqli_query($conexion,"INSERT INTO ingresos (ingresos, descripcion, fecha, id_cliente, id_metodo) VALUES ('$valor', '$descripcion', '$fecha','0','1')");
+    $ingresos =  mysqli_query($conexion,"INSERT INTO ingresos (ingresos, descripcion, fecha, id_cliente, id_metodo) VALUES ('$valor', '$descripcion', '$fecha', '$idcliente', '$idmetodo' )");
 }elseif($tipo == 'egreso'){
-    $egresos =  mysqli_query($conexion,"INSERT INTO egresos (egresos, descripcion, fecha) VALUES ('$valor', '$descripcion', '$fecha')");
+    $valor = -abs($valor);
+    $egresos =  mysqli_query($conexion,"INSERT INTO egresos (egresos, descripcion, fecha, id_cliente, id_metodo) VALUES ('$valor', '$descripcion', '$fecha', '$idcliente', '$idmetodo')");
 }
 
 switch($tipo){
