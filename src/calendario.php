@@ -95,15 +95,27 @@ if (empty($existe) && $id_user != 1) {
                     <div class="col-md-4">
                         <div class="form-group">
                             <label><b> Hasta el Dia</b></label>
+                            
                             <input type="date" name="to_date" value="<?php if (isset($_GET['to_date'])) {
                                                                             echo $_GET['to_date'];
                                                                         } ?>" class="form-control">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <div class="form-group">
+                            <label><b> Usuario</b></label>
+                            <select name="user" class="form-control">
+                                        <option value="1">Nati</option>
+                                        <option value="8">Sol</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-6">
                             <label><b></b></label> <br>
                             <button type="submit" class="btn btn-primary">Buscar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -124,12 +136,13 @@ if (empty($existe) && $id_user != 1) {
                     <?php
                     $conexion = mysqli_connect("localhost", "root", "", "sis_venta");
                     if (isset($_GET['from_date']) && isset($_GET['to_date'])) {
+                        $user = $_GET['user'];
                         $from_date = $_GET['from_date'];
                         $to_date = $_GET['to_date'];
                         //$query = "SELECT * FROM ventas WHERE fecha BETWEEN '$from_date' AND '$to_date'";
                         $query = "SELECT ventas.*, cliente.nombre FROM ventas
                         JOIN cliente ON ventas.id_cliente = cliente.idcliente
-                        WHERE ventas.fecha BETWEEN '$from_date' AND '$to_date'";
+                        WHERE id_usuario = '$user' and ventas.fecha BETWEEN '$from_date' AND '$to_date'";
                         $query_run = mysqli_query($conexion, $query);
                         if (mysqli_num_rows($query_run) > 0) {
                             foreach ($query_run as $fila) {

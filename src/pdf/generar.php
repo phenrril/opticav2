@@ -23,6 +23,8 @@ $ventas2= mysqli_query($conexion, "SELECT * FROM detalle_venta where id_venta='$
 $postapagos = mysqli_query($conexion, "SELECT * FROM postpagos where id_venta='$id'");
 $idventas = mysqli_fetch_assoc($ventas2);
 $idpostapagos = mysqli_fetch_assoc($postapagos);
+$metodop = mysqli_query($conexion, "SELECT metodos.descripcion from metodos inner join ventas on ventas.id_metodo = metodos.id where ventas.id = '$id'");
+$metodopago = mysqli_fetch_assoc($metodop);
 $pdf->Cell(195, 5, utf8_decode($datos['nombre']), 0, 1, 'C'); //
 $pdf->Image("../../assets/img/logo.png", 180, 10, 30, 30, 'PNG');
 $pdf->SetFont('Arial', 'B', 10);
@@ -98,6 +100,8 @@ while ($row = mysqli_fetch_assoc($ventas)) {
     $contador++;
 }
 
+
+
 $pdf->Ln(3);
 $pdf->SetFont('Arial', 'B', 12);
 if(($idventas['obrasocial']) == 0){
@@ -110,6 +114,9 @@ $pdf->Ln(3);
 }
 $pdf->Cell(165, 5, "Abona $", 0, 0, 'R');
 $pdf->Cell(35, 5, number_format(($idpostapagos['abona']), 2, '.', ','), 0, 1, 'L');
+$pdf->Ln(3);
+$pdf->Cell(165, 5, "Medio de Pago: ", 0, 0, 'R');
+$pdf->Cell(35, 5, ($metodopago['descripcion']),  0, 1, 'L');
 $pdf->Ln(3);
 $pdf->Cell(165, 5, "Total $", 0, 0, 'R');
 $pdf->Cell(35, 5, number_format($total, 2, '.', ','), 0, 1, 'L');

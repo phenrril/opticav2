@@ -89,8 +89,8 @@ if (isset($_GET['q'])) {
         die();
     }
     $resto = $total - $abona - $obrasocial;
-    $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario, abona, resto, obrasocial, fecha) VALUES ('$id_cliente', '$total', '$id_user', '$abona', '$resto', '$obrasocial', '$fecha')");
-    $insertar_metodo = mysqli_query($conexion, "INSERT INTO ingresos(ingresos, fecha, descripcion,id_cliente, id_metodo) VALUES ('$total', '$fecha','$descripcion','$id_cliente','$metodo_pago' )");
+    $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario, abona, resto, obrasocial, fecha, id_metodo) VALUES ('$id_cliente', '$total', '$id_user', '$abona', '$resto', '$obrasocial', '$fecha', '$metodo_pago')");
+    //$insertar_metodo = mysqli_query($conexion, "INSERT INTO ingresos(ingresos, fecha, descripcion,id_cliente, id_metodo) VALUES ('$total', '$fecha','$descripcion','$id_cliente','$metodo_pago' )");
 
     if ($insertar) {
         $id_maximo = mysqli_query($conexion, "SELECT MAX(id) AS total FROM ventas");

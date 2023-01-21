@@ -57,19 +57,16 @@ if (empty($existe) && $id_user != 1) {
             <table class="table table-striped" id="table_id">
                 <thead>
                     <tr class="bg-dark">
-                        <!-- <th>ID</th>
-                        <th>Fecha</th>
-                        <th>Descripcion</th>
-                        <th>Nombre Cliente</th>
-                        <th>metodo pago</th>
-                        <th>Ingresos</th> -->
                         <th>ID USUARIO</th>
                         <th>ID VENTA</th>
                         <th>ID PRODUCTO</th>
                         <th>CANTIDAD</th>
                         <th>FECHA</th>
+                        <th>GNO INGRESOS</th>
+                        <th>GNO EGRESOS</th>
                         <th>PRECIO BRUTO</th>
                         <th>PRECIO NETO</th>
+                        
                         <th>TOTAL VENTA</th>
                         
                     </tr>
@@ -80,22 +77,8 @@ if (empty($existe) && $id_user != 1) {
                     if (isset($_GET['from_date']) && isset($_GET['to_date'])) {
                         $from_date = $_GET['from_date'];
                         $to_date = $_GET['to_date'];
-                        //$query2 = mysqli_query("SELECT sum(ingresos) as 'subtotal' FROM  WHERE fecha BETWEEN '$from_date' AND '$to_date'");
-                        //$query2 = mysqli_query($conexion, "SELECT sum(ingresos) as 'subtotal' FROM ingresos WHERE fecha BETWEEN '$from_date' AND '$to_date'"); 
-                        
-                        //$subtt = mysqli_fetch_assoc($query2);
-                        // $query = "SELECT ingresos.*, cliente.nombre FROM ingresos
-                        // JOIN cliente ON ingresos.id_cliente = cliente.idcliente
-                        // WHERE ingresos.fecha BETWEEN '$from_date' AND '$to_date'";
 
-                        // $query = "SELECT ingresos.*, cliente.nombre as 'nombre_cliente', metodos.descripcion as 'descripcion' FROM ingresos
-                        // JOIN metodos ON ingresos.id_metodo = metodos.id
-                        // JOIN cliente ON ingresos.id_cliente = cliente.idcliente 
-                        // JOIN egresos on ingresos.id_cliente = egresos.id_cliente
-                        // WHERE ingresos.fecha BETWEEN '$from_date' AND '$to_date'";
-
-
-                        $query = "SELECT    detalle_venta.id_producto as 'idprod', 
+                        $query = mysqli_query($conexion, "SELECT    detalle_venta.id_producto as 'idprod', 
                                             detalle_venta.cantidad as 'cantidad',
                                             detalle_venta.id_venta as 'idventa',
                                             ventas.id, ventas.total, ventas.id_usuario, ventas.fecha,
@@ -104,31 +87,86 @@ if (empty($existe) && $id_user != 1) {
                                             producto.precio as 'precioneto' from detalle_venta
                                             join ventas on detalle_venta.id_venta = ventas.id
                                             join producto on detalle_venta.id_producto = producto.codproducto
-                                            WHERE ventas.fecha between '$from_date' AND '$to_date'";            
-                
-                        $totalventa = mysqli_query($conexion, "SELECT sum(total) as 'total' FROM ventas WHERE fecha BETWEEN '$from_date' AND '$to_date'");
-                        $total = mysqli_fetch_assoc($totalventa);
-                        $totalventab =  mysqli_query($conexion, "SELECT sum(producto.precio_bruto) as 'bruto', 
+                                            WHERE ventas.fecha between '$from_date' AND '$to_date'");
+
+                        $query2= mysqli_query($conexion,"SELECT    ingresos.ingresos, ingresos.fecha FROM ingresos
+                                            WHERE ingresos.fecha BETWEEN '$from_date' AND '$to_date'");
+
+                        $query3= mysqli_query($conexion,"SELECT    egresos.egresos, egresos.fecha FROM egresos
+                                            WHERE egresos.fecha BETWEEN '$from_date' AND '$to_date'");
+
+                        $totalventab =  mysqli_query($conexion, "SELECT  
                                                                         detalle_venta.cantidad as 'cantidad',
+                                                                        sum(producto.precio_bruto * cantidad) as 'bruto',
                                                                         detalle_venta.id_venta as 'idventa',
                                                                         ventas.id, ventas.fecha,
                                                                         producto.codproducto as 'id_prod',
                                                                         producto.precio_bruto as 'preciobruto',
-                                                                        sum(producto.precio) as 'precioneto' from detalle_venta
+                                                                        sum(producto.precio * cantidad) as 'precioneto' from detalle_venta
                                                                         join ventas on detalle_venta.id_venta = ventas.id
                                                                         join producto on detalle_venta.id_producto = producto.codproducto
                                                                         WHERE ventas.fecha between '$from_date' AND '$to_date'");
+
+                        $ingtot= mysqli_query($conexion,"SELECT    sum(ingresos.ingresos) as ingresos, ingresos.fecha FROM ingresos
+                                            WHERE ingresos.fecha BETWEEN '$from_date' AND '$to_date'");
+
+                        $egrtot= mysqli_query($conexion,"SELECT    sum(egresos.egresos) as egresos, egresos.fecha FROM egresos
+                                            WHERE egresos.fecha BETWEEN '$from_date' AND '$to_date'");
+
+                        $ingresos = mysqli_fetch_assoc($ingtot);
+                        $toting = $ingresos['ingresos'];
+                        $egresos = mysqli_fetch_assoc($egrtot);
+                        $totegr = $egresos['egresos'];
+
                         $totalb = mysqli_fetch_assoc($totalventab);
                         $totalventabruta = $totalb['bruto'];
                         $totalventaneta = $totalb['precioneto'];
                         $ganancia = $totalventaneta - $totalventabruta;
 
+                        if (mysqli_num_rows($query) > 0 ) {
+                        //if (mysqli_num_rows($query_run) > 0 ) {
+                                if(mysqli_num_rows($query3) > 0 ){
+                                //if(mysqli_num_rows($query_run3) > 0 ){
+                                    foreach ($query3 as $fila2) {
+                                //foreach ($query_run3 as $fila2) {
+                                ?>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><?php echo $fila2['fecha']; ?></td>
+                                    <td></td>
+                                    <td><?php echo $fila2['egresos']; ?></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    
+                                </tr>
+                                <?php
+                                }}
+                                if(mysqli_num_rows($query2) > 0 ){
+                                //if(mysqli_num_rows($query_run2) > 0 ){
+                                    foreach ($query2 as $fila1) {
+                                //foreach ($query_run2 as $fila1) {
+                                    ?>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><?php echo $fila1['fecha']; ?></td>
+                                        <td><?php echo $fila1['ingresos']; ?></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        
+                                    </tr>
 
-                        //$query="SELECT * FROM ingresos WHERE fecha BETWEEN '$from_date' AND '$to_date'";
-                        
-                        $query_run = mysqli_query($conexion, $query);
-                        if (mysqli_num_rows($query_run) > 0) {
-                            foreach ($query_run as $fila) {
+                    <?php        }}
+                                foreach ($query as $fila) {
+                                //foreach ($query_run as $fila) {
                     ?>
                                 <tr>
                                     <td><?php echo $fila['id_usuario']; ?></td>
@@ -136,6 +174,8 @@ if (empty($existe) && $id_user != 1) {
                                     <td><?php echo $fila['id_prod']; ?></td>
                                     <td><?php echo $fila['cantidad']; ?></td>
                                     <td><?php echo $fila['fecha']; ?></td>
+                                    <td></td>
+                                    <td></td>
                                     <td><?php echo $fila['preciobruto']; ?></td>
                                     <td><?php echo $fila['precioneto']; ?></td>
                                     <td><?php echo $fila['total']; ?></td>
@@ -153,15 +193,33 @@ if (empty($existe) && $id_user != 1) {
                         ?>
                         </tr>
                 </tbody><td></td><td></td><td></td><td></td><td></td>
-                <td><b>Total Venta Bruta: $<?php echo $totalventabruta;
+                <td><b>Total Ingresos: $<?php if(isset($toting)){ 
+                                                echo round($toting, 2);}
+                                                else{}
                 echo "<br>";
                 ?>
                 </b></td>
-                <td><b>Total Venta Neta: $<?php echo $totalventaneta;
+                <td><b>Total Egresos: $<?php if(isset($totegr)){ 
+                                                echo round($totegr, 2);}
+                                                else{}
                 echo "<br>";
                 ?>
                 </b></td>
-                <td><b>Ganancia: $<?php echo $ganancia;
+                <td><b>Total Venta Bruta: $<?php if(isset($totalventabruta)){ 
+                                                echo round($totalventabruta, 2);}
+                                                else{}
+                echo "<br>";
+                ?>
+                </b></td>
+                <td><b>Total Venta Neta: $<?php if(isset($totalventaneta)){ 
+                                                echo round($totalventaneta, 2);}
+                                                else{}
+                echo "<br>";
+                ?>
+                </b></td>
+                <td><b>Ganancia: $<?php if(isset($ganancia)){ 
+                                                echo round($ganancia, 2);}
+                                                else{}
                 echo "<br>";
                 ?>
                 </b></td>
