@@ -367,7 +367,7 @@ function calcular() {
 
     document.querySelector("#btn_parcial").addEventListener("click", function (total) {
         var abona = document.getElementById('abona');
-        if (!abona.value || abona.value <= 0 || abona.value > total) {
+        if (!abona.value || abona.value <= 0 || abona.value > total.value) {
             Swal.fire({
                 position: 'top-end',
                 icon: 'error',
@@ -392,7 +392,7 @@ function calcular() {
             });
             return; 
         }
-        if(obrasocial.value + abona.value > total){
+        if((obrasocial.value + abona.value) > total.value){
             Swal.fire({
                 position: 'top-end',
                 icon: 'error',

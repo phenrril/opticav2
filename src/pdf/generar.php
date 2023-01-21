@@ -116,7 +116,7 @@ $pdf->Cell(165, 5, "Abona $", 0, 0, 'R');
 $pdf->Cell(35, 5, number_format(($idpostapagos['abona']), 2, '.', ','), 0, 1, 'L');
 $pdf->Ln(3);
 $pdf->Cell(165, 5, "Medio de Pago: ", 0, 0, 'R');
-$pdf->Cell(35, 5, ($metodopago['descripcion']),  0, 1, 'L');
+$pdf->Cell(35, 5, utf8_decode($metodopago['descripcion']),  0, 1, 'L');
 $pdf->Ln(3);
 $pdf->Cell(165, 5, "Total $", 0, 0, 'R');
 $pdf->Cell(35, 5, number_format($total, 2, '.', ','), 0, 1, 'L');
