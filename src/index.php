@@ -112,7 +112,7 @@ function createNoteElement(id, content) {
 
   element.addEventListener("dblclick", () => {
     const doDelete = confirm(
-      "Esta seguro de borrar la nota"
+      "¿Esta seguro de borrar la nota?"
     );
 
     if (doDelete) {

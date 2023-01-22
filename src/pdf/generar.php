@@ -100,7 +100,7 @@ while ($row = mysqli_fetch_assoc($ventas)) {
     $contador++;
 }
 
-
+$total = $total - $idventas['obrasocial'];
 
 $pdf->Ln(3);
 $pdf->SetFont('Arial', 'B', 12);
