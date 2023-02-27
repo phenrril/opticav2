@@ -1,8 +1,12 @@
 <?php
-    $host = "betaproject.ar";
-    $user = "u375391241_berazategui";
-    $clave = "mmY5kpMU6XZeuBx";
-    $bd = "u375391241_sis_venta";
+    // $host = "betaproject.ar";
+    // $user = "u375391241_berazategui";
+    // $clave = "mmY5kpMU6XZeuBx";
+    // $bd = "u375391241_sis_venta";
+    $host = "localhost";
+    $user = "root";
+    $clave = "";
+    $bd = "sis_venta";
     $conexion = mysqli_connect($host,$user,$clave,$bd);
     if (mysqli_connect_errno()){
         echo "No se pudo conectar a la base de datos";

@@ -56,51 +56,52 @@ if (empty($existe) && $id_user != 1) {
                     <div class="col-lg-6">
                         <div class="form-group">
                             Vendedor <i class="fas fa-user"></i><p style="font-size: 16px; text-transform: uppercase; color: red;"><?php echo $_SESSION['nombre']; ?></p>
-                            <label> <b>Graduaciones:</b></label>
+                            <label> <b>Graduacion Lejos &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                &nbsp&nbsp&nbsp Graduacion Cerca</b> </label>
                             <p style="font-size: 16px; text-transform: uppercase; color: black;">
                             <table class="table table-borderless" id="tablaGracuadiones">
                             <form id="graduaciones">
-                                <div>
-                                <tr>
-                                    <td><b>Graduacion Lejos </b></td>
-                                    
 
-                                </tr>
-                                <tr>
-                                    <td><div class="col-xs-3"><b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspEsferico</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b>Cilíndrico</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b>Eje</b></div></td>
-                                </tr>
-                                <tr>
-                                    <td><div class="col-xs-3"><b>Ojo D: </b><input  id="ojoDl1" name="ojoDl1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoDl2" name="ojoDl2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoDl3" name="ojoDl3" type="text" size="4"></div></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Ojo I: &nbsp</b><input id="ojoIl1" name="ojoIl1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl2" name="ojoIl2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoIl3" name="ojoIl3" type="text" size="4"></td>
-                                </tr>  
-                                <tr>
-                                    <td><br>&nbsp<b>ADD: &nbsp</b><input id="add" name="add" type="text" size="4">&nbsp&nbsp&nbsp<b>Obs: &nbsp</b><input id="obs" name="obs" type="text" size="10"></td>
-                                </tr>  
-                                <tr>
-                                    
-                                    <td><b>Graduacion Cerca </b></td>
-                                </tr>
-                                <tr>
-                                    <td><div class="col-xs-3"><b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspEsferico</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b>Cilíndrico</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b>Eje</b></div></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Ojo D: </b><input name="ojoD1" id="ojoD1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoD2" name="ojoD2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoD3" name="ojoD3" type="text" size="4"></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Ojo I: &nbsp</b><input id="ojoI1" name="ojoI1" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoI2" name="ojoI2" type="text" size="4">&nbsp&nbsp&nbsp<input id="ojoI3" name="ojoI3" type="text" size="4"></td>
-                                </tr>
-                               
+
+                                
+                                
+                                <div class="input-group">    
+                                <span class="input-group-text">Ojo DL</span>
+                                <input type="text" id="ojoDl1" name="ojoDl1" class="form-control" />
+                                <input type="text" id="ojoDl2" name="ojoDl2" class="form-control" />
+                                <input type="text" id="ojoDl3" name="ojoDl3" class="form-control" />
+                                <span class="input-group-text">Ojo DC  </span>
+                                <input type="text" name="ojoD1" id="ojoD1" class="form-control" />
+                                <input type="text" name="ojoD2" id="ojoD2" class="form-control" />
+                                <input type="text" name="ojoD3" id="ojoD3" class="form-control" />
+                                </div><br>
+                                <div class="input-group">
+                                <span class="input-group-text">Ojo Iz L</span>
+                                <input type="text" id="ojoIl1" name="ojoIl1" class="form-control" />
+                                <input type="text" id="ojoIl2" name="ojoIl2" class="form-control" />
+                                <input type="text" id="ojoIl3" name="ojoIl3" class="form-control" />
+                                <span class="input-group-text">Ojo Iz  C</span>
+                                <input type="text" id="ojoI1" name="ojoI1" class="form-control" />
+                                <input type="text" id="ojoI2" name="ojoI2" class="form-control" />
+                                <input type="text" id="ojoI3" name="ojoI3" class="form-control" />
+                                </div><br>
+                                <div class="input-group">
+                                <span class="input-group-text">ADD:</span>
+                                <input type="text" id="add" name="add" class="form-control" />
+                                <span class="input-group-text">Obse:</span>
+                                <input type="text" id="obs" name="obs" class="form-control" />
+                                </div><br>
+                                
                                 <tr>
                                     <td><input class="btn btn-primary" name="grad" id="grad" type="button" value="Agregar Graduaciones"></td>
                                     <td><form type="post"id="borrar_grad"><input class="btn btn-danger" type="hidden" value="Borrar Graduaciones"id="borrar_grad"></form></td>
                                     
                                 </tr>
-                                
-                                
                               
-                            </form>
+                                
+                            
                             </form>
                         </table>   
                         

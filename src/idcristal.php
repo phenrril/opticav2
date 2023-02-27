@@ -11,14 +11,14 @@ if (empty($existe) && $id_user != 1) {
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group">
-            <h4 class="text-center">ID Cristales</h4><br>
+            <h4 class="text-center">ID Cristales</h4>
         </div>
     </div>
 </div>
 
             <form method="post" id="form_cristal">
                 <div class="row justify-content-center">
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-2 text-center">
                         <div class="card">
                             <div class="card-header">
                                 Buscar ID Venta
@@ -30,7 +30,7 @@ if (empty($existe) && $id_user != 1) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-2 text-center">
                         <div class="card">
                             <div class="card-header">
                                 Colocar ID Cristal
@@ -60,7 +60,7 @@ if (empty($existe) && $id_user != 1) {
 </div>
             <form method="post" id="form_venta">
                 <div class="row justify-content-center">
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-2 text-center">
                         <div class="card">
                             <div class="card-header">
                                 Buscar ID Venta
@@ -72,7 +72,7 @@ if (empty($existe) && $id_user != 1) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-2 text-center">
                         <div class="card">
                             <div class="card-header">
                                 Colocar cantidad a Abonar
@@ -91,6 +91,36 @@ if (empty($existe) && $id_user != 1) {
     <input type="button" class="btn btn-primary" value="Buscar Venta" id="buscar_venta" name="buscar_venta" onclick=""></input> 
 </div>
 <div id="div_venta"></div>
+<br>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            <h4 class="text-center">Anular Venta</h4><br>
+        </div>
+    </div>
+</div>
+            <form method="post" id="form_anular">
+                <div class="row justify-content-center">
+                    <div class="col-md-2 text-center">
+                        <div class="card">
+                            <div class="card-header">
+                                Buscar ID Venta
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <input id="idanular" class="form-control" type="number" name="idanular" placeholder="Ingresá el Id de la venta">
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                </div>
+            </form>
+            <br> 
+<div class="row justify-content-center">
+    <input type="button" class="btn btn-primary" value="Anular Venta" id="anular_venta" name="anular_venta" onclick=""></input> 
+</div>
+<div id="div_anular"></div>
 
 
 

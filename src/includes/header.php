@@ -43,7 +43,7 @@ if (empty($_SESSION['active'])) {
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <a class="nav-link" href="ventas.php"><div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div> Nueva venta</a>
-                        <a class="nav-link" href="idcristal.php"><div class="sb-nav-link-icon"><i class="fas fa-glasses"></i></div> Id cristal- Post pagos</a>
+                        <a class="nav-link" href="idcristal.php"><div class="sb-nav-link-icon"><i class="fas fa-glasses"></i></div> Id crist - PP - Anular</a>
                         <a class="nav-link" href="clientes.php"><div class="sb-nav-link-icon"><i class="fas fa-users"></i></div> Clientes</a>
                         <a class="nav-link" href="lista_ventas.php"><div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div> Ventas</a>
                         <a class="nav-link" href="estadisticas.php"><div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div> Estadisticas</a>

@@ -203,19 +203,49 @@ document.querySelector("#buscar_venta").addEventListener("click", function () {
     }
 })
 
-// document.querySelector("#btn_parcial").addEventListener("click", function () {
-//     {
-//         $.ajax({
-//             url: "resta.php",
-//             type: "POST",
-//             data: $("#form_descuento").serialize(),
-//             success: function (resultado) {
-//                 $("#div_descuento").html(resultado);
+document.querySelector("#anular_venta").addEventListener("click", function () {
+    var idventa = $('#idanular').val();
+    if(idventa == ""){
+         Swal.fire({
+            position: 'top-mid',
+            icon: 'error',
+            title: 'Complete Id Venta',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        return;
+    }
 
-//             }
-//         });
-//     }
-// })
+    Swal.fire({
+        position: 'top-mid',
+        icon: 'success',
+        title: '',
+        text: '¿Desea Eliminar la Venta?',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Eliminar!'    
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // La respuesta del usuario es "Aceptar"
+            {
+                $.ajax({
+                    url: "anular.php",
+                    type: "POST",
+                    data: $("#form_anular").serialize(),
+                    success: function (resultado) {
+                        $("#div_anular").html(resultado);
+                    }
+                });
+            }
+        } else if (result.isDenied || result.isDismissed) {
+            // La respuesta del usuario es "Cancelar"
+            Swal.fire('No se ha eliminado la venta', '', 'info')
+        }
+    });
+});
+    
 
 function listar() {
     let html = '';
@@ -407,7 +437,7 @@ function calcular() {
         total = (total * dto) - obrasocial.value;
         var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
         filas[1].textContent = total.toFixed(2);
-        var total2 = (total * dto) - abona.value - obrasocial.value;
+        var total2 = (total - abona.value);
         resto.value = total2.toFixed(2);
         }
     }.bind(null, total));
