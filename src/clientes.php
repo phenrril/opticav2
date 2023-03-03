@@ -91,6 +91,15 @@ if (!empty($_POST)) {
                                     <button class="btn btn-danger" type="submit"><i class='fas fa-trash-alt'></i> </button>
                                 </form>
                             <?php } ?>
+
+
+                            <?php if ($data['estado'] == 0) { ?>
+                                <form action="reactivar_cliente.php?id=<?php echo $data['idcliente']; ?>" method="post">
+                                    <button class="btn btn-success" type="submit"><i class='fas fa-edit'></i> </button>
+                                </form>
+                            <?php } ?>
+                                
+
                         </td>
                     </tr>
             <?php }
