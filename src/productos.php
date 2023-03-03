@@ -92,6 +92,12 @@ if (empty($existe) && $id_user != 1) {
                                      <button class="btn btn-danger" type="submit"><i class='fas fa-trash-alt'></i> </button>
                                  </form>
                              <?php } ?>
+
+                             <?php if ($data['estado'] == 0) { ?>
+                                 <a href="activar_producto.php?id=<?php echo $data['codproducto']; ?>" class="btn btn-success"><i class='fas fa-edit'></i></a>
+                             <?php } ?>
+
+
                          </td>
                      </tr>
              <?php }
