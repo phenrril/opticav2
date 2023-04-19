@@ -80,15 +80,15 @@ if (isset($_GET['q'])) {
     $metodo_pago = $_GET['metodo_pago'];
     $descripcion="venta";
     if($obrasocial == ""){
-        $obrasocial = 0;
+        $obrasocial = 0; 
     }
     $consulta = mysqli_query($conexion, "SELECT total, SUM(total) AS total_pagar FROM detalle_temp WHERE id_usuario = $id_user");
     $result = mysqli_fetch_assoc($consulta);   
-    $total = ($result['total_pagar'] * $descuento) - $obrasocial; 
+    $total = (($result['total_pagar'] - $obrasocial) * $descuento); 
     if ($abona > $total) {
         die();
     }
-    $resto = $total - $abona - $obrasocial;
+    $resto = $total - $abona;
     $insertar = mysqli_query($conexion, "INSERT INTO ventas(id_cliente, total, id_usuario, abona, resto, obrasocial, fecha, id_metodo) VALUES ('$id_cliente', '$total', '$id_user', '$abona', '$resto', '$obrasocial', '$fecha', '$metodo_pago')");
     //$insertar_metodo = mysqli_query($conexion, "INSERT INTO ingresos(ingresos, fecha, descripcion,id_cliente, id_metodo) VALUES ('$total', '$fecha','$descripcion','$id_cliente','$metodo_pago' )");
 
@@ -102,7 +102,7 @@ if (isset($_GET['q'])) {
             $id_producto = $row['id_producto'];
             $cantidad = $row['cantidad'];
             $precio_original = $row['precio_venta'];
-            $precio = $precio_original * $descuento;
+            $precio = ($precio_original - $obrasocial) * $descuento;
             $insertarDet = mysqli_query($conexion, "INSERT INTO detalle_venta(id_producto, id_venta, cantidad, precio, precio_original, abona, resto, obrasocial ) VALUES ($id_producto, $ultimoId, $cantidad, '$precio', '$precio_original', '$abona', '$resto', '$obrasocial')");
             $postpagos = mysqli_query($conexion, "INSERT INTO postpagos(id_venta , abona, resto, precio, precio_original, id_cliente) VALUES ($ultimoId, '$abona', '$resto' , '$precio', '$precio_original', '$id_cliente')");
             $stockActual = mysqli_query($conexion, "SELECT * FROM producto WHERE codproducto = $id_producto");

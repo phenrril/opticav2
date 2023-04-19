@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     registrarDetalle(e, ui.item.id, 1, ui.item.precio);
                 }
             )
-        }
+        } 
     })
     $('#btn_generar').click(function (e) {
         e.preventDefault();
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var metodo_pago = $('input[name=pago]:checked').val();
 
             var obrasocial = $('#obra_social').val();
-            if (abona == "" || abona == 0 || abona == null) {
+            if (abona == "" || abona == null) {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'error',
@@ -397,7 +397,7 @@ function calcular() {
 
     document.querySelector("#btn_parcial").addEventListener("click", function (total) {
         var abona = document.getElementById('abona');
-        if (!abona.value || abona.value <= 0 || abona.value > total.value) {
+        if (!abona.value || abona.value > total.value) {
             Swal.fire({
                 position: 'top-end',
                 icon: 'error',
@@ -434,7 +434,7 @@ function calcular() {
         }
         var resto = document.getElementById('resto');
         var dto = descuento.value;
-        total = (total * dto) - obrasocial.value;
+        total = (total - obrasocial.value) * dto;
         var filas = document.querySelectorAll("#tblDetalle tfoot tr td");
         filas[1].textContent = total.toFixed(2);
         var total2 = (total - abona.value);

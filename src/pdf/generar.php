@@ -100,27 +100,25 @@ while ($row = mysqli_fetch_assoc($ventas)) {
     $contador++;
 }
 
-$total = $total - $idventas['obrasocial'];
+$total = $total;
 
 $pdf->Ln(3);
 $pdf->SetFont('Arial', 'B', 12);
 if(($idventas['obrasocial']) == 0){
 
-}else{
+}else{ 
 
 $pdf->Cell(165, 5, "Obra Social $", 0, 0, 'R');
 $pdf->Cell(35, 5, number_format(($idventas['obrasocial']), 2, '.', ','), 0, 1, 'L');
 $pdf->Ln(3);
 }
-$pdf->Cell(165, 5, "Abona $", 0, 0, 'R');
-$pdf->Cell(35, 5, number_format(($idpostapagos['abona']), 2, '.', ','), 0, 1, 'L');
-$pdf->Ln(3);
-$pdf->Cell(165, 5, "Medio de Pago: ", 0, 0, 'R');
-$pdf->Cell(35, 5, utf8_decode($metodopago['descripcion']),  0, 1, 'L');
-$pdf->Ln(3);
 $pdf->Cell(165, 5, "Total $", 0, 0, 'R');
 $pdf->Cell(35, 5, number_format($total, 2, '.', ','), 0, 1, 'L');
 $pdf->Ln(3);
+$pdf->Cell(161, 5, "Abona ".utf8_decode($metodopago['descripcion']) , 0, 0, 'R');
+$pdf->Cell(35, 5, "$ ".number_format(($idpostapagos['abona'] ), 2, '.', ',') , 0, 1, 'L');
+$pdf->Ln(3);
+
 if(($idpostapagos['abona']) == $total){
 }else{ 
 $pdf->Cell(165, 5, "Resto $", 0, 0, 'R');
