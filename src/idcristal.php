@@ -16,37 +16,37 @@ if (empty($existe) && $id_user != 1) {
     </div>
 </div>
 
-            <form method="post" id="form_cristal">
-                <div class="row justify-content-center">
-                    <div class="col-md-2 text-center">
-                        <div class="card">
-                            <div class="card-header">
-                                Buscar ID Venta
-                            </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <input id="idventa" class="form-control" type="number" name="idventa" placeholder="Ingresá el Id de la venta">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <div class="card">
-                            <div class="card-header">
-                                Colocar ID Cristal
-                            </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <input id="idcristal" class="form-control" type="number" name="idcristal" placeholder="Ingresá el Id de cristales">
-                                </div>
-                            </div>
-                        </div>
-                    </div>                  
+<form method="post" id="form_cristal">
+    <div class="row justify-content-center">
+        <div class="col-md-2 text-center">
+            <div class="card">
+                <div class="card-header">
+                    Buscar ID Venta
                 </div>
-            </form>
-            <br> 
+                <div class="card-body">
+                    <div class="form-group">
+                        <input id="idventa" class="form-control" type="number" name="idventa" placeholder="Ingresá el Id de la venta">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 text-center">
+            <div class="card">
+                <div class="card-header">
+                    Colocar ID Cristal
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input id="idcristal" class="form-control" type="number" name="idcristal" placeholder="Ingresá el Id de cristales">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<br>
 <div class="row justify-content-center">
-    <input type="button" class="btn btn-primary" value="Colocar Id Cristal" id="guardar_cristal" name="guardar_cristal" onclick=""></input> 
+    <input type="button" class="btn btn-primary" value="Colocar Id Cristal" id="guardar_cristal" name="guardar_cristal" onclick=""></input>
 </div>
 <div id="div_cristal"></div>
 
@@ -58,37 +58,54 @@ if (empty($existe) && $id_user != 1) {
         </div>
     </div>
 </div>
-            <form method="post" id="form_venta">
-                <div class="row justify-content-center">
-                    <div class="col-md-2 text-center">
-                        <div class="card">
-                            <div class="card-header">
-                                Buscar ID Venta
-                            </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <input id="idventa" class="form-control" type="number" name="idventa" placeholder="Ingresá el Id de la venta">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <div class="card">
-                            <div class="card-header">
-                                Colocar cantidad a Abonar
-                            </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <input id="idabona" class="form-control" type="number" name="idabona" placeholder="Ingresá el monto">
-                                </div>
-                            </div>
-                        </div>
-                    </div>                  
+<form method="post" id="form_venta">
+    <div class="row justify-content-center">
+        <div class="col-md-2 text-center">
+            <div class="card">
+                <div class="card-header">
+                    Buscar ID Venta
                 </div>
-            </form>
-            <br> 
+                <div class="card-body">
+                    <div class="form-group">
+                        <input id="idventa" class="form-control" type="number" name="idventa" placeholder="Ingresá el Id de la venta">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 text-center">
+            <div class="card">
+                <div class="card-header">
+                    Colocar cantidad a Abonar
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input id="idabona" class="form-control" type="number" name="idabona" placeholder="Ingresá el monto">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 text-center">
+            <div class="card">
+                <div class="card-header">
+                    Colocar medio de Pago
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <select id="idmetodo" name="idmetodo" class="form-control">
+                            <option value="1">Efectivo</option>
+                            <option value="2">Tarjeta de crédito</option>
+                            <option value="3">Tarjeta de débito</option>
+                            <option value="4">Transferencia</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<br>
 <div class="row justify-content-center">
-    <input type="button" class="btn btn-primary" value="Buscar Venta" id="buscar_venta" name="buscar_venta" onclick=""></input> 
+    <input type="button" class="btn btn-primary" value="Buscar Venta" id="buscar_venta" name="buscar_venta" onclick=""></input>
 </div>
 <div id="div_venta"></div>
 <br>
@@ -100,25 +117,25 @@ if (empty($existe) && $id_user != 1) {
         </div>
     </div>
 </div>
-            <form method="post" id="form_anular">
-                <div class="row justify-content-center">
-                    <div class="col-md-2 text-center">
-                        <div class="card">
-                            <div class="card-header">
-                                Buscar ID Venta
-                            </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <input id="idanular" class="form-control" type="number" name="idanular" placeholder="Ingresá el Id de la venta">
-                                </div>
-                            </div>
-                        </div>
-                    </div>        
+<form method="post" id="form_anular">
+    <div class="row justify-content-center">
+        <div class="col-md-2 text-center">
+            <div class="card">
+                <div class="card-header">
+                    Buscar ID Venta
                 </div>
-            </form>
-            <br> 
+                <div class="card-body">
+                    <div class="form-group">
+                        <input id="idanular" class="form-control" type="number" name="idanular" placeholder="Ingresá el Id de la venta">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<br>
 <div class="row justify-content-center">
-    <input type="button" class="btn btn-primary" value="Anular Venta" id="anular_venta" name="anular_venta" onclick=""></input> 
+    <input type="button" class="btn btn-primary" value="Anular Venta" id="anular_venta" name="anular_venta" onclick=""></input>
 </div>
 <div id="div_anular"></div>
 

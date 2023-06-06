@@ -9,6 +9,8 @@ $pdf->SetFont('Arial', 'B', 12);
 $total = 0;
 $id = $_GET['v'];
 $idcliente = $_GET['cl'];
+//$ingresos2 = mysqli_query($conexion, "SELECT * FROM ingresos where id_venta='$id'");
+
 $fecha = mysqli_query($conexion, "SELECT fecha FROM ventas WHERE id = '$id'"); 
 $fechaactual = mysqli_fetch_assoc($fecha);
 $nuevo_formato = date("d-m-Y", strtotime($fechaactual['fecha']));
@@ -25,6 +27,15 @@ $idventas = mysqli_fetch_assoc($ventas2);
 $idpostapagos = mysqli_fetch_assoc($postapagos);
 $metodop = mysqli_query($conexion, "SELECT metodos.descripcion from metodos inner join ventas on ventas.id_metodo = metodos.id where ventas.id = '$id'");
 $metodopago = mysqli_fetch_assoc($metodop);
+
+// if($ingresos > 0){
+//   $metodopospago = mysqli_query($conexion, "SELECT metodos.descripcion from metodos inner join ingresos on ingresos.id_metodo = metodos.id where ingresos.id_venta = '$id'");
+//   $metodopp = mysqli_fetch_assoc($metodopospago);  
+// }
+
+$ingresos2 = mysqli_query($conexion, "SELECT ingresos.ingresos, metodos.descripcion FROM ingresos INNER JOIN metodos ON ingresos.id_metodo = metodos.id WHERE ingresos.id_venta = '$id'");
+$ingresos = mysqli_fetch_assoc($ingresos2);
+
 $pdf->Cell(195, 5, utf8_decode($datos['nombre']), 0, 1, 'C'); //
 $pdf->Image("../../assets/img/logo.png", 180, 10, 30, 30, 'PNG');
 $pdf->SetFont('Arial', 'B', 10);
@@ -112,13 +123,29 @@ $pdf->Cell(165, 5, "Obra Social $", 0, 0, 'R');
 $pdf->Cell(35, 5, number_format(($idventas['obrasocial']), 2, '.', ','), 0, 1, 'L');
 $pdf->Ln(3);
 }
-$pdf->Cell(165, 5, "Total $", 0, 0, 'R');
+$pdf->Cell(165, 5, "Total a Pagar $", 0, 0, 'R');
 $pdf->Cell(35, 5, number_format($total, 2, '.', ','), 0, 1, 'L');
 $pdf->Ln(3);
-$pdf->Cell(161, 5, "Abona ".utf8_decode($metodopago['descripcion']) , 0, 0, 'R');
+
+//.utf8_decode($metodopago['descripcion'])
+
+if($ingresos2){
+  mysqli_data_seek($ingresos2,0);
+  while ($ingresos = mysqli_fetch_assoc($ingresos2)) {
+    $pdf->Cell(161, 5, "Pago ".utf8_decode($ingresos['descripcion']), 0, 0, 'R');
+    $pdf->Cell(35, 5, "$ ".number_format(($ingresos['ingresos']), 2, '.', ','), 0, 1, 'L');
+    $pdf->Ln(3);
+  }
+}
+
+// if($ingresos > 0){
+//   $pdf->Cell(161, 5, "Abona 2 ".utf8_decode($metodopp['descripcion']) , 0, 0, 'R');
+//   $pdf->Cell(35, 5, "$ ".number_format(($ingresos['ingresos'] ), 2, '.', ',') , 0, 1, 'L');
+//   $pdf->Ln(3);  
+// }
+$pdf->Cell(161, 5, "Abona Total" , 0, 0, 'R');
 $pdf->Cell(35, 5, "$ ".number_format(($idpostapagos['abona'] ), 2, '.', ',') , 0, 1, 'L');
 $pdf->Ln(3);
-
 if(($idpostapagos['abona']) == $total){
 }else{ 
 $pdf->Cell(165, 5, "Resto $", 0, 0, 'R');

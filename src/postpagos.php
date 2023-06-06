@@ -5,6 +5,8 @@ session_start();
 
 $id_venta = $_POST['idventa'];
 $id_abona = $_POST['idabona'];
+$id_metodo = $_POST['idmetodo'];
+$fecha = date("Y-m-d");
 if($id_venta == "" || $id_abona == ""){
     echo "<script>Swal.fire({
         position: 'top-mid',
@@ -62,6 +64,7 @@ if($resto < $id_abona){
 $update = mysqli_query($conexion, "UPDATE postpagos SET abona = '".$abonatotal."', resto = '".$resto."' WHERE id_venta = '".$id_venta."'");
 $update2 = mysqli_query($conexion, "UPDATE ventas SET abona = '".$abonatotal."', resto = '".$resto."' WHERE id = '".$id_venta."'");
 $update3 = mysqli_query($conexion, "UPDATE detalle_venta SET abona = '".$abonatotal."', resto = '".$resto."' WHERE id_venta = '".$id_venta."'");
+$update4 = mysqli_query($conexion, "INSERT into ingresos (ingresos, fecha, id_venta, id_cliente, id_metodo) values ('$id_abona','$fecha','$id_venta','$id_cliente','$id_metodo')");
 
 //if($update && $update2 && $update3)
 if ($update !== false && $update2 !== false && $update3 !== false){

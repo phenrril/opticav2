@@ -77,7 +77,8 @@ if (empty($existe) && $id_user != 1) {
                     if (isset($_GET['from_date']) && isset($_GET['to_date'])) {
                         $from_date = $_GET['from_date'];
                         $to_date = $_GET['to_date'];
-
+                        
+                        //detalle de venta y productos
                         $query = mysqli_query($conexion, "SELECT    detalle_venta.id_producto as 'idprod', 
                                             detalle_venta.cantidad as 'cantidad',
                                             detalle_venta.id_venta as 'idventa',
