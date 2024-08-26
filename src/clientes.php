@@ -57,6 +57,7 @@ if (!empty($_POST)) {
                 <th>DNI</th>
                 <th>Obra Social</th>
                 <th>Medico</th>
+                <th>H.Clinica</th>
                 <th>Estado</th>
                 <th></th>
             </tr>
@@ -71,6 +72,7 @@ if (!empty($_POST)) {
                 while ($data = mysqli_fetch_assoc($query)) {
                     if ($data['estado'] == 1) {
                         $estado = '<span class="badge badge-pill badge-success">Activo</span>';
+                        $hc = '<span class="badge badge-pill badge-success">Activo</span>';
                     } else {
                         $estado = '<span class="badge badge-pill badge-danger">Inactivo</span>';
                     }
@@ -83,6 +85,10 @@ if (!empty($_POST)) {
                         <td><?php echo $data['dni']; ?></td>
                         <td><?php echo $data['obrasocial']; ?></td>
                         <td><?php echo $data['medico']; ?></td>
+                        <td>
+                            <?php echo $data['HC']; ?>
+                            <button class="btn btn-info" data-dni="<?php echo $data['dni']; ?>" onclick="abrirHistClinica(this)">Hist. Clinica</button>
+                        </td>
                         <td><?php echo $estado; ?></td>
                         <td>
                             <?php if ($data['estado'] == 1) { ?>
@@ -150,3 +156,56 @@ if (!empty($_POST)) {
     </div>
 </div>
 <?php include_once "includes/footer.php"; ?>
+
+
+<script>
+function abrirHistClinica(button) {
+    var dniCliente = button.getAttribute('data-dni');
+    $.ajax({
+        url: 'historia_clinica.php',
+        type: 'GET',
+        data: { dni: dniCliente },
+        success: function(response) {
+            $('#histClinicaModal').remove();
+
+            var popupContent = '<div class="modal fade" id="histClinicaModal" tabindex="-1" role="dialog" aria-labelledby="histClinicaModalLabel" aria-hidden="true">' +
+                               '<div class="modal-dialog modal-dialog-centered modal-lg" role="document">' +
+                               '<div class="modal-content">' +
+                               '<div class="modal-header">' +
+                               '<h5 class="modal-title" id="histClinicaModalLabel">Historia Clínica</h5>' +
+                               '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+                               '<span aria-hidden="true">&times;</span>' +
+                               '</button>' +
+                               '</div>' +
+                               '<div class="modal-body">' +
+                               '<div class="table-responsive">' +
+                               '<table class="table table-striped">' +
+                               '<thead>' +
+                               '<tr>' +
+                               '<th>Fecha</th>' +
+                               '<th>Ojo Derecho L</th>' +
+                               '<th>Ojo Derecho C</th>' +
+                               '<th>Ojo Izquierdo L</th>' +
+                               '<th>Ojo Izquierdo C</th>' +
+                               '<th>Addg</th>' +
+                               '<th>Armazón</th>' +
+                               '<th>Precio</th>' +
+                               '<th>Observaciones</th>' +
+                               '</tr>' +
+                               '</thead>' +
+                               '<tbody>' + response + '</tbody>' +
+                               '</table>' +
+                               '</div>' +
+                               '</div>' +
+                               '<div class="modal-footer">' +
+                               '<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>' +
+                               '</div>' +
+                               '</div>' +
+                               '</div>' +
+                               '</div>';
+            $('body').append(popupContent);
+            $('#histClinicaModal').modal('show');
+        }
+    });
+}
+</script>

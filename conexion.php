@@ -3,9 +3,14 @@
     // $user = "u375391241_berazategui";
     // $clave = "mmY5kpMU6XZeuBx";
     // $bd = "u375391241_sis_venta";
+    //$host = "localhost";
+    //$user = "root";
+    //$clave = "";
+    //$bd = "sis_venta";
+
     $host = "localhost";
     $user = "root";
-    $clave = "";
+    $clave = "rootpassword";
     $bd = "sis_venta";
     $conexion = mysqli_connect($host,$user,$clave,$bd);
     if (mysqli_connect_errno()){
@@ -15,3 +20,5 @@
     mysqli_select_db($conexion,$bd) or die("No se encuentra la base de datos");
     mysqli_set_charset($conexion,"utf8");
 ?>
+
+
