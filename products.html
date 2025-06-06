@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Productos</title>
+<link rel="stylesheet" href="assets/css/styles.css">
+<script src="assets/js/jquery-3.6.0.min.js"></script>
+<script src="assets/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css">
+</head>
+<body>
+<div class="container mt-4">
+<h1>Productos</h1>
+<table id="tbl" class="table table-striped">
+<thead>
+<tr><th>ID</th><th>Código</th><th>Descripción</th><th>Precio</th><th>Stock</th></tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+<script>
+function loadProducts(){
+ fetch('/api/products').then(r=>r.json()).then(data=>{
+   const tbody = $('#tbl tbody');
+   tbody.empty();
+   data.forEach(p=>{
+     tbody.append(`<tr><td>${p.id}</td><td>${p.codigo}</td><td>${p.descripcion}</td><td>${p.precio}</td><td>${p.stock}</td></tr>`);
+   });
+   $('#tbl').DataTable();
+ });
+}
+$(loadProducts);
+</script>
+</body>
+</html>
