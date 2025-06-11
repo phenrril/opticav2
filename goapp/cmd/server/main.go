@@ -1,34 +1,38 @@
 package main
 
 import (
-	"database/sql"
 	"log"
 	"net/http"
 
 	"opticav2/internal/application"
 	"opticav2/internal/handler"
-	"opticav2/internal/infra/mysql"
+	infraMySQL "opticav2/internal/infra/mysql"
 
-	_ "github.com/go-sql-driver/mysql"
+	gormMySQL "gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 func main() {
-	db, err := sql.Open("mysql", "root:rootpassword@tcp(localhost:3306)/sis_venta")
+	dsn := "root:rootpassword@tcp(localhost:3306)/sis_venta?charset=utf8mb4&parseTime=True&loc=Local"
+	gormDB, err := gorm.Open(gormMySQL.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("failed to connect database: %v", err)
 	}
-	defer db.Close()
 
-	userRepo := mysql.UserRepository{DB: db}
-	productRepo := mysql.ProductRepository{DB: db}
+	userRepo := infraMySQL.UserRepository{DB: gormDB}
+	productRepo := infraMySQL.ProductRepository{DB: gormDB}
 
 	authService := application.AuthService{Repo: userRepo}
 	productService := application.ProductService{Repo: productRepo}
+	userService := application.NewUserService(userRepo) // Instantiated UserService
 
 	authHandler := handler.AuthHandler{Service: &authService}
 	productHandler := handler.ProductHandler{Service: &productService}
+	userHandler := handler.NewUserHandler(userService) // UserHandler is now created
 
 	mux := http.NewServeMux()
+	mux.HandleFunc("/api/users", userHandler.HandleUserRoutes)  // Handles POST for create, GET for list
+	mux.HandleFunc("/api/users/", userHandler.HandleUserRoutes) // Handles GET /id, PUT /id, DELETE /id, PUT /id/activate
 	mux.HandleFunc("/api/login", authHandler.Login)
 	mux.HandleFunc("/api/products", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
@@ -40,6 +44,7 @@ func main() {
 			http.NotFound(w, r)
 		}
 	})
+	log.Println("Serving static files from current working directory (expected to be project root).")
 	mux.Handle("/", http.FileServer(http.Dir(".")))
 
 	log.Println("server listening on :8080")
