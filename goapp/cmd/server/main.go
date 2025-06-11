@@ -21,18 +21,23 @@ func main() {
 
 	userRepo := infraMySQL.UserRepository{DB: gormDB}
 	productRepo := infraMySQL.ProductRepository{DB: gormDB}
+	clientRepo := infraMySQL.NewClientRepository(gormDB) // Instantiated ClientRepository
 
 	authService := application.AuthService{Repo: userRepo}
 	productService := application.ProductService{Repo: productRepo}
-	userService := application.NewUserService(userRepo) // Instantiated UserService
+	userService := application.NewUserService(userRepo)     // Instantiated UserService
+	clientService := application.NewClientService(clientRepo) // Instantiated ClientService
 
 	authHandler := handler.AuthHandler{Service: &authService}
 	productHandler := handler.ProductHandler{Service: &productService}
-	userHandler := handler.NewUserHandler(userService) // UserHandler is now created
+	userHandler := handler.NewUserHandler(userService)         // UserHandler is now created
+	clientHandler := handler.NewClientHandler(clientService)   // ClientHandler is now created
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/api/users", userHandler.HandleUserRoutes)  // Handles POST for create, GET for list
-	mux.HandleFunc("/api/users/", userHandler.HandleUserRoutes) // Handles GET /id, PUT /id, DELETE /id, PUT /id/activate
+	mux.HandleFunc("/api/users", userHandler.HandleUserRoutes)    // Handles POST for create, GET for list
+	mux.HandleFunc("/api/users/", userHandler.HandleUserRoutes)   // Handles GET /id, PUT /id, DELETE /id, PUT /id/activate
+	mux.HandleFunc("/api/clients", clientHandler.HandleClientRoutes)  // Handles POST for create, GET for list
+	mux.HandleFunc("/api/clients/", clientHandler.HandleClientRoutes) // Handles GET /id, PUT /id, DELETE /id, PUT /id/activate
 	mux.HandleFunc("/api/login", authHandler.Login)
 	mux.HandleFunc("/api/products", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
