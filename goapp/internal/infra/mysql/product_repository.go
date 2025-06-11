@@ -1,33 +1,32 @@
 package mysql
 
 import (
-	"database/sql"
 	"opticav2/internal/domain"
+	"gorm.io/gorm"
 )
 
 type ProductRepository struct {
-	DB *sql.DB
+	DB *gorm.DB
 }
 
 func (r ProductRepository) GetAll() ([]domain.Product, error) {
-	rows, err := r.DB.Query("SELECT codproducto, codigo, descripcion, precio, existencia FROM producto")
+	var products []domain.Product
+	// Assuming 'producto' is the table name for products.
+	// And domain.Product struct fields map correctly or have GORM tags.
+	// The original query selected columns: codproducto, codigo, descripcion, precio, existencia
+	// These should map to ID, Code, Description, Price, Stock in domain.Product
+	err := r.DB.Table("producto").Find(&products).Error // Or just r.DB.Find(&products) if table name is `products`
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
-	var list []domain.Product
-	for rows.Next() {
-		var p domain.Product
-		if err := rows.Scan(&p.ID, &p.Code, &p.Description, &p.Price, &p.Stock); err != nil {
-			return nil, err
-		}
-		list = append(list, p)
-	}
-	return list, nil
+	return products, nil
 }
 
 func (r ProductRepository) Create(p domain.Product) error {
-	_, err := r.DB.Exec("INSERT INTO producto(codigo, descripcion, precio, existencia) VALUES(?,?,?,?)",
-		p.Code, p.Description, p.Price, p.Stock)
+	// Assuming 'producto' is the table name.
+	// The original query inserted into columns: codigo, descripcion, precio, existencia
+	// These should map to Code, Description, Price, Stock in domain.Product
+	// GORM will automatically handle the primary key (ID / codproducto) if it's auto-incrementing
+	err := r.DB.Table("producto").Create(&p).Error // Or just r.DB.Create(&p)
 	return err
 }
