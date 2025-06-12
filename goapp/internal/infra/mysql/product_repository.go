@@ -1,33 +1,78 @@
 package mysql
 
 import (
-	"database/sql"
+	"errors"
 	"opticav2/internal/domain"
+	"gorm.io/gorm"
 )
 
 type ProductRepository struct {
-	DB *sql.DB
+	DB *gorm.DB
 }
 
-func (r ProductRepository) GetAll() ([]domain.Product, error) {
-	rows, err := r.DB.Query("SELECT codproducto, codigo, descripcion, precio, existencia FROM producto")
+func NewProductRepository(db *gorm.DB) domain.ProductRepository {
+	return &ProductRepository{DB: db}
+}
+
+func (r *ProductRepository) Create(product *domain.Product) error {
+	return r.DB.Table("producto").Create(product).Error
+}
+
+func (r *ProductRepository) FindByCode(code string) (*domain.Product, error) {
+	var product domain.Product
+	err := r.DB.Table("producto").Where("codigo = ?", code).First(&product).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, domain.ErrProductNotFound
+		}
+		return nil, err
+	}
+	return &product, nil
+}
+
+func (r *ProductRepository) GetByID(id uint) (*domain.Product, error) {
+	var product domain.Product
+	err := r.DB.Table("producto").First(&product, id).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, domain.ErrProductNotFound
+		}
+		return nil, err
+	}
+	return &product, nil
+}
+
+func (r *ProductRepository) GetAll() ([]domain.Product, error) {
+	var products []domain.Product
+	err := r.DB.Table("producto").Find(&products).Error
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
-	var list []domain.Product
-	for rows.Next() {
-		var p domain.Product
-		if err := rows.Scan(&p.ID, &p.Code, &p.Description, &p.Price, &p.Stock); err != nil {
-			return nil, err
-		}
-		list = append(list, p)
-	}
-	return list, nil
+	return products, nil
 }
 
-func (r ProductRepository) Create(p domain.Product) error {
-	_, err := r.DB.Exec("INSERT INTO producto(codigo, descripcion, precio, existencia) VALUES(?,?,?,?)",
-		p.Code, p.Description, p.Price, p.Stock)
-	return err
+func (r *ProductRepository) Update(product *domain.Product) error {
+	return r.DB.Table("producto").Save(product).Error
+}
+
+func (r *ProductRepository) GetLowStockProducts(threshold int, limit int) ([]domain.Product, error) {
+	var products []domain.Product
+	err := r.DB.Table("producto").
+		Where("existencia <= ? AND estado = 1", threshold).
+		Order("existencia ASC").
+		Limit(limit).
+		Find(&products).Error
+	if err != nil {
+		return nil, err
+	}
+	return products, nil
+}
+
+func (r *ProductRepository) Count() (int64, error) {
+	var count int64
+	err := r.DB.Model(&domain.Product{}).Table("producto").Where("estado = 1").Count(&count).Error
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
 }
