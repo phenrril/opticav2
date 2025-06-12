@@ -1,12 +1,15 @@
 package domain
 
 type User struct {
-	ID       int    `json:"id" gorm:"column:idusuario;primaryKey"`
-	Name     string `json:"nombre" gorm:"column:nombre"`
-	Email    string `json:"correo" gorm:"column:correo;uniqueIndex"` // Assuming unique constraint
-	Username string `json:"usuario" gorm:"column:usuario;uniqueIndex"` // Assuming unique constraint
-	Password string `json:"-" gorm:"column:clave"`
-	Status   int    `json:"estado" gorm:"column:estado"`
+
+	ID          uint          `json:"id" gorm:"column:idusuario;primaryKey"` // Changed to uint
+	Name        string        `json:"nombre" gorm:"column:nombre"`
+	Email       string        `json:"correo" gorm:"column:correo;uniqueIndex"` // Assuming unique constraint
+	Username    string        `json:"usuario" gorm:"column:usuario;uniqueIndex"` // Assuming unique constraint
+	Password    string        `json:"-" gorm:"column:clave"`
+	Status      int           `json:"estado" gorm:"column:estado"`
+	Permissions []*Permission `json:"permissions,omitempty" gorm:"many2many:detalle_permisos;foreignKey:ID;joinForeignKey:id_usuario;References:ID;joinReferences:id_permiso"`
+
 }
 
 // Request struct for creating a user
@@ -30,8 +33,12 @@ type UserRepository interface {
 	Create(user *User) error                               // New for full user struct
 	FindByEmail(email string) (*User, error)               // New
 	FindByUsername(username string) (*User, error)         // New
-	GetByID(id int) (*User, error)                         // New
+
+	GetByID(id uint) (*User, error)                        // Changed id to uint
 	GetAll() ([]User, error)                               // New (or update signature if exists)
 	Update(user *User) error                               // New
 	// Delete/Deactivate is an update to Status field, so Update method can cover it.
+	FindPermissionsForUser(userID uint) ([]*Permission, error)
+	SetUserPermissions(userID uint, permissions []*Permission) error
+
 }

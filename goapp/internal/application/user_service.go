@@ -8,11 +8,14 @@ import (
 )
 
 type UserService struct {
-	UserRepo domain.UserRepository
+
+	UserRepo       domain.UserRepository
+	PermissionRepo domain.PermissionRepository // Added PermissionRepo
 }
 
-func NewUserService(userRepo domain.UserRepository) *UserService {
-	return &UserService{UserRepo: userRepo}
+func NewUserService(userRepo domain.UserRepository, permissionRepo domain.PermissionRepository) *UserService {
+	return &UserService{UserRepo: userRepo, PermissionRepo: permissionRepo} // Updated constructor
+
 }
 
 func (s *UserService) md5Hash(text string) string {
@@ -66,7 +69,10 @@ func (s *UserService) CreateUser(req domain.UserCreateRequest) (*domain.User, er
 	return user, nil
 }
 
-func (s *UserService) GetUser(id int) (*domain.User, error) {
+
+// GetUser retrieves a user by ID. ID type changed to uint.
+func (s *UserService) GetUser(id uint) (*domain.User, error) {
+
 	return s.UserRepo.GetByID(id)
 }
 
@@ -74,10 +80,14 @@ func (s *UserService) ListUsers() ([]domain.User, error) {
 	return s.UserRepo.GetAll()
 }
 
-func (s *UserService) UpdateUser(id int, req domain.UserUpdateRequest) (*domain.User, error) {
+
+// UpdateUser updates a user's details. ID type changed to uint.
+func (s *UserService) UpdateUser(id uint, req domain.UserUpdateRequest) (*domain.User, error) {
 	user, err := s.UserRepo.GetByID(id)
 	if err != nil {
-		return nil, errors.New("user not found")
+		// Consider returning domain.ErrUserNotFound or similar specific error
+		return nil, errors.New("user not found for update")
+r
 	}
 
 	// Check for email conflicts if email is being changed
@@ -112,20 +122,74 @@ func (s *UserService) UpdateUser(id int, req domain.UserUpdateRequest) (*domain.
 	return user, nil
 }
 
-func (s *UserService) DeactivateUser(id int) error {
+
+// DeactivateUser sets a user's status to inactive. ID type changed to uint.
+func (s *UserService) DeactivateUser(id uint) error {
 	user, err := s.UserRepo.GetByID(id)
 	if err != nil {
-		return errors.New("user not found")
+		return errors.New("user not found for deactivation")
+
 	}
 	user.Status = 0 // Assuming 0 means inactive
 	return s.UserRepo.Update(user)
 }
 
-func (s *UserService) ActivateUser(id int) error {
+
+// ActivateUser sets a user's status to active. ID type changed to uint.
+func (s *UserService) ActivateUser(id uint) error {
 	user, err := s.UserRepo.GetByID(id)
 	if err != nil {
-		return errors.New("user not found")
+		return errors.New("user not found for activation")
+
 	}
 	user.Status = 1 // Assuming 1 means active
 	return s.UserRepo.Update(user)
 }
+
+
+// GetUserPermissions retrieves all permissions for a specific user.
+func (s *UserService) GetUserPermissions(userID uint) ([]*domain.Permission, error) {
+	// Ensure user exists first (optional, FindPermissionsForUser might do this)
+	_, err := s.UserRepo.GetByID(userID)
+	if err != nil {
+		return nil, errors.New("user not found when fetching permissions")
+	}
+	return s.UserRepo.FindPermissionsForUser(userID)
+}
+
+// AssignPermissionsToUser assigns a list of permissions (by ID) to a user.
+// It replaces any existing permissions.
+func (s *UserService) AssignPermissionsToUser(userID uint, permissionIDs []uint) error {
+	// 1. Check if user exists
+	_, err := s.UserRepo.GetByID(userID)
+	if err != nil {
+		return errors.New("user not found for assigning permissions")
+	}
+
+	// 2. Fetch domain.Permission objects for the given IDs
+	var permissionsToAssign []*domain.Permission
+	if len(permissionIDs) > 0 {
+		fetchedPermissions, err := s.PermissionRepo.GetByIDs(permissionIDs)
+		if err != nil {
+			// This error handling assumes GetByIDs returns ErrPermissionNotFound if *any* ID is not found.
+			// Or, it might return partial results and no error. The logic below handles partial results.
+			if errors.Is(err, domain.ErrPermissionNotFound) {
+                 return errors.New("one or more permission IDs are invalid")
+            }
+			return err // Other unexpected error from repository
+		}
+		// Ensure all requested permissions were found
+		if len(fetchedPermissions) != len(permissionIDs) {
+			return errors.New("one or more permission IDs are invalid or not found")
+		}
+		for i := range fetchedPermissions {
+			permissionsToAssign = append(permissionsToAssign, &fetchedPermissions[i])
+		}
+	}
+	// If permissionIDs is empty, permissionsToAssign will be an empty slice,
+	// effectively clearing all permissions for the user via SetUserPermissions.
+
+	// 3. Set the user's permissions
+	return s.UserRepo.SetUserPermissions(userID, permissionsToAssign)
+}
+
