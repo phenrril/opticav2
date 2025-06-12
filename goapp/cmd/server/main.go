@@ -9,6 +9,7 @@ import (
 	infraMySQL "opticav2/internal/infra/mysql" // Alias for clarity
 
 	gormMySQL "gorm.io/driver/mysql" // Alias for clarity
+
 	"gorm.io/gorm"
 )
 
@@ -57,7 +58,6 @@ func main() {
 	mux.HandleFunc("/api/sales", saleHandler.HandleSaleRoutes)
 	mux.HandleFunc("/api/sales/", saleHandler.HandleSaleRoutes)
 
-	// Static file serving (should be last or specific to a subpath if not root)
 	log.Println("Serving static files from current working directory (expected to be project root).")
 	mux.Handle("/", http.FileServer(http.Dir(".")))
 
