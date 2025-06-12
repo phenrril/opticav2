@@ -6,10 +6,12 @@ import (
 
 	"opticav2/internal/application"
 	"opticav2/internal/handler"
+
 	"opticav2/internal/middleware"            // Import middleware package
 	infraMySQL "opticav2/internal/infra/mysql" // Alias for clarity
 
 	gormMySQL "gorm.io/driver/mysql" // Alias for clarity
+
 	"gorm.io/gorm"
 )
 
@@ -27,16 +29,20 @@ func main() {
 	clientRepo := infraMySQL.NewClientRepository(gormDB)
 	saleRepo := infraMySQL.NewSaleRepository(gormDB, productRepo)
 	paymentRepo := infraMySQL.NewPaymentRepository(gormDB)
+
 	permissionRepo := infraMySQL.NewPermissionRepository(gormDB) // Instantiate PermissionRepository
+
 
 	// Services
 	// Assuming AuthService might not have a New... constructor or it's a simple struct
 	authService := application.AuthService{Repo: userRepo}
 	productService := application.NewProductService(productRepo)
+
 	userService := application.NewUserService(userRepo, permissionRepo) // Update UserService instantiation
 	clientService := application.NewClientService(clientRepo)
 	saleService := application.NewSaleService(saleRepo, paymentRepo, productRepo, clientRepo, gormDB)
 	permissionService := application.NewPermissionService(permissionRepo) // Instantiate PermissionService
+
 
 	// Handlers
 	// Assuming AuthHandler might not have a New... constructor or it's a simple struct
@@ -45,15 +51,18 @@ func main() {
 	clientHandler := handler.NewClientHandler(clientService)
 	productHandler := handler.NewProductHandler(productService)
 	saleHandler := handler.NewSaleHandler(saleService)
+
 	permissionHandler := handler.NewPermissionHandler(permissionService)
 
 	// Middleware
 	authzMiddleware := middleware.NewAuthorizationMiddleware(userService)
 
+
 	// Router & Routes
 	mux := http.NewServeMux()
 
 	// API routes
+
 	mux.HandleFunc("/api/login", authHandler.Login) // Login usually doesn't need authz
 
 	// Protected User Routes

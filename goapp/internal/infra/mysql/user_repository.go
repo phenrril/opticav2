@@ -49,12 +49,14 @@ func (r UserRepository) FindByUsername(username string) (*domain.User, error) {
 
 // GetByID retrieves a user by their ID.
 // It uses the primary key `idusuario` as defined in the User struct GORM tags.
+
 // Changed id type from int to uint.
 func (r UserRepository) GetByID(id uint) (*domain.User, error) {
 	var user domain.User
 	err := r.DB.First(&user, id).Error // GORM uses primary key here
 	if err != nil {
 		return nil, err // Consider returning domain.ErrUserNotFound on gorm.ErrRecordNotFound
+
 	}
 	return &user, nil
 }
@@ -75,6 +77,7 @@ func (r UserRepository) GetAll() ([]domain.User, error) {
 func (r UserRepository) Update(user *domain.User) error {
 	return r.DB.Save(user).Error
 }
+
 
 // FindPermissionsForUser retrieves all permissions associated with a user.
 func (r UserRepository) FindPermissionsForUser(userID uint) ([]*domain.Permission, error) {
@@ -111,3 +114,4 @@ func (r UserRepository) SetUserPermissions(userID uint, permissions []*domain.Pe
 	}
 	return nil
 }
+

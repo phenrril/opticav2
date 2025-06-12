@@ -8,12 +8,14 @@ import (
 )
 
 type UserService struct {
+
 	UserRepo       domain.UserRepository
 	PermissionRepo domain.PermissionRepository // Added PermissionRepo
 }
 
 func NewUserService(userRepo domain.UserRepository, permissionRepo domain.PermissionRepository) *UserService {
 	return &UserService{UserRepo: userRepo, PermissionRepo: permissionRepo} // Updated constructor
+
 }
 
 func (s *UserService) md5Hash(text string) string {
@@ -67,8 +69,10 @@ func (s *UserService) CreateUser(req domain.UserCreateRequest) (*domain.User, er
 	return user, nil
 }
 
+
 // GetUser retrieves a user by ID. ID type changed to uint.
 func (s *UserService) GetUser(id uint) (*domain.User, error) {
+
 	return s.UserRepo.GetByID(id)
 }
 
@@ -76,12 +80,14 @@ func (s *UserService) ListUsers() ([]domain.User, error) {
 	return s.UserRepo.GetAll()
 }
 
+
 // UpdateUser updates a user's details. ID type changed to uint.
 func (s *UserService) UpdateUser(id uint, req domain.UserUpdateRequest) (*domain.User, error) {
 	user, err := s.UserRepo.GetByID(id)
 	if err != nil {
 		// Consider returning domain.ErrUserNotFound or similar specific error
 		return nil, errors.New("user not found for update")
+r
 	}
 
 	// Check for email conflicts if email is being changed
@@ -116,25 +122,30 @@ func (s *UserService) UpdateUser(id uint, req domain.UserUpdateRequest) (*domain
 	return user, nil
 }
 
+
 // DeactivateUser sets a user's status to inactive. ID type changed to uint.
 func (s *UserService) DeactivateUser(id uint) error {
 	user, err := s.UserRepo.GetByID(id)
 	if err != nil {
 		return errors.New("user not found for deactivation")
+
 	}
 	user.Status = 0 // Assuming 0 means inactive
 	return s.UserRepo.Update(user)
 }
+
 
 // ActivateUser sets a user's status to active. ID type changed to uint.
 func (s *UserService) ActivateUser(id uint) error {
 	user, err := s.UserRepo.GetByID(id)
 	if err != nil {
 		return errors.New("user not found for activation")
+
 	}
 	user.Status = 1 // Assuming 1 means active
 	return s.UserRepo.Update(user)
 }
+
 
 // GetUserPermissions retrieves all permissions for a specific user.
 func (s *UserService) GetUserPermissions(userID uint) ([]*domain.Permission, error) {
@@ -181,3 +192,4 @@ func (s *UserService) AssignPermissionsToUser(userID uint, permissionIDs []uint)
 	// 3. Set the user's permissions
 	return s.UserRepo.SetUserPermissions(userID, permissionsToAssign)
 }
+
