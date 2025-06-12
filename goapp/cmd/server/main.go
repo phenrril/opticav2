@@ -6,9 +6,9 @@ import (
 
 	"opticav2/internal/application"
 	"opticav2/internal/handler"
-	infraMySQL "opticav2/internal/infra/mysql"
+	infraMySQL "opticav2/internal/infra/mysql" // Alias for clarity
 
-	gormMySQL "gorm.io/driver/mysql"
+	gormMySQL "gorm.io/driver/mysql" // Alias for clarity
 	"gorm.io/gorm"
 )
 
@@ -19,34 +19,45 @@ func main() {
 		log.Fatalf("failed to connect database: %v", err)
 	}
 
-	userRepo := infraMySQL.UserRepository{DB: gormDB} // Assuming direct struct instantiation or use constructor if available
-	productRepo := infraMySQL.NewProductRepository(gormDB) // Use constructor
-	clientRepo := infraMySQL.NewClientRepository(gormDB)   // Instantiated ClientRepository
-	saleRepo := infraMySQL.NewSaleRepository(gormDB, productRepo) // Instantiate SaleRepository
-	paymentRepo := infraMySQL.NewPaymentRepository(gormDB)     // Instantiate PaymentRepository
+	// Repositories
+	// Assuming UserRepository might not have a New... constructor or it's a simple struct
+	userRepo := infraMySQL.UserRepository{DB: gormDB}
+	productRepo := infraMySQL.NewProductRepository(gormDB)
+	clientRepo := infraMySQL.NewClientRepository(gormDB)
+	saleRepo := infraMySQL.NewSaleRepository(gormDB, productRepo)
+	paymentRepo := infraMySQL.NewPaymentRepository(gormDB)
 
-	authService := application.AuthService{Repo: userRepo}    // Assuming direct struct instantiation or use constructor
-	productService := application.NewProductService(productRepo) // Use constructor
-	userService := application.NewUserService(userRepo)       // Instantiated UserService
-	clientService := application.NewClientService(clientRepo)   // Instantiated ClientService
-	saleService := application.NewSaleService(saleRepo, paymentRepo, productRepo, clientRepo, gormDB) // Instantiate SaleService
+	// Services
+	// Assuming AuthService might not have a New... constructor or it's a simple struct
+	authService := application.AuthService{Repo: userRepo}
+	productService := application.NewProductService(productRepo)
+	userService := application.NewUserService(userRepo)
+	clientService := application.NewClientService(clientRepo)
+	saleService := application.NewSaleService(saleRepo, paymentRepo, productRepo, clientRepo, gormDB)
 
-	authHandler := handler.AuthHandler{Service: &authService} // Assuming direct struct instantiation or use constructor
-	userHandler := handler.NewUserHandler(userService)           // UserHandler is now created
-	clientHandler := handler.NewClientHandler(clientService)     // ClientHandler is now created
-	productHandler := handler.NewProductHandler(productService)  // Use constructor for ProductHandler
-	saleHandler := handler.NewSaleHandler(saleService)        // SaleHandler is now created
+	// Handlers
+	// Assuming AuthHandler might not have a New... constructor or it's a simple struct
+	authHandler := handler.AuthHandler{Service: &authService}
+	userHandler := handler.NewUserHandler(userService)
+	clientHandler := handler.NewClientHandler(clientService)
+	productHandler := handler.NewProductHandler(productService)
+	saleHandler := handler.NewSaleHandler(saleService)
 
+	// Router & Routes
 	mux := http.NewServeMux()
-	mux.HandleFunc("/api/users", userHandler.HandleUserRoutes)    // Handles POST for create, GET for list
-	mux.HandleFunc("/api/users/", userHandler.HandleUserRoutes)   // Handles GET /id, PUT /id, DELETE /id, PUT /id/activate
-	mux.HandleFunc("/api/clients", clientHandler.HandleClientRoutes)  // Handles POST for create, GET for list
-	mux.HandleFunc("/api/clients/", clientHandler.HandleClientRoutes) // Handles GET /id, PUT /id, DELETE /id, PUT /id/activate
-	mux.HandleFunc("/api/products", productHandler.HandleProductRoutes)  // Handles all product routes
-	mux.HandleFunc("/api/products/", productHandler.HandleProductRoutes) // Handles all product routes including /id/*
-	mux.HandleFunc("/api/sales", saleHandler.HandleSaleRoutes)    // Handles POST for create, GET for list
-	mux.HandleFunc("/api/sales/", saleHandler.HandleSaleRoutes)   // Handles GET /id, POST /id/payments, DELETE /id
+
+	// API routes
 	mux.HandleFunc("/api/login", authHandler.Login)
+	mux.HandleFunc("/api/users", userHandler.HandleUserRoutes)
+	mux.HandleFunc("/api/users/", userHandler.HandleUserRoutes)
+	mux.HandleFunc("/api/clients", clientHandler.HandleClientRoutes)
+	mux.HandleFunc("/api/clients/", clientHandler.HandleClientRoutes)
+	mux.HandleFunc("/api/products", productHandler.HandleProductRoutes)
+	mux.HandleFunc("/api/products/", productHandler.HandleProductRoutes)
+	mux.HandleFunc("/api/sales", saleHandler.HandleSaleRoutes)
+	mux.HandleFunc("/api/sales/", saleHandler.HandleSaleRoutes)
+
+	// Static file serving (should be last or specific to a subpath if not root)
 	log.Println("Serving static files from current working directory (expected to be project root).")
 	mux.Handle("/", http.FileServer(http.Dir(".")))
 
