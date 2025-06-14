@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"opticav2/internal/application"
-	"opticav2/internal/domain"
 	"strconv" // For parsing ID from URL
 	"strings" // For routing logic
+
+	"opticav2/internal/application"
+	"opticav2/internal/domain"
 )
 
 type SaleHandler struct {
@@ -18,24 +19,6 @@ func NewSaleHandler(ss *application.SaleService) *SaleHandler {
 	return &SaleHandler{SaleService: ss}
 }
 
-// Helper to respond with JSON - Copied
-func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
-	response, err := json.Marshal(payload)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	w.Write(response)
-}
-
-// Helper to respond with an error - Copied
-func respondError(w http.ResponseWriter, code int, message string) {
-	respondJSON(w, code, map[string]string{"error": message})
-}
-
 func (h *SaleHandler) CreateSale(w http.ResponseWriter, r *http.Request) {
 	var req domain.CreateSaleRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -44,7 +27,7 @@ func (h *SaleHandler) CreateSale(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	userIDPlaceholder := uint(1) // Simulate authenticated user ID
+	userIDPlaceholder := int(1) // Simulate authenticated user ID
 
 	sale, err := h.SaleService.CreateSale(req, userIDPlaceholder)
 	if err != nil {
@@ -61,7 +44,7 @@ func (h *SaleHandler) CreateSale(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *SaleHandler) ListSales(w http.ResponseWriter, r *http.Request) {
-	userIDPlaceholder := uint(1) // Simulate authenticated user ID for filtering or context
+	userIDPlaceholder := int(1) // Simulate authenticated user ID for filtering or context
 
 	// Basic filter parsing from query parameters (example)
 	filters := make(map[string]interface{})
@@ -90,7 +73,7 @@ func (h *SaleHandler) ListSales(w http.ResponseWriter, r *http.Request) {
 	respondJSON(w, http.StatusOK, sales)
 }
 
-func (h *SaleHandler) GetSale(w http.ResponseWriter, r *http.Request, id uint) {
+func (h *SaleHandler) GetSale(w http.ResponseWriter, r *http.Request, id int) {
 	userIDPlaceholder := uint(1) // Simulate authenticated user ID for context/auth check in service
 
 	sale, err := h.SaleService.GetSale(id, userIDPlaceholder)
@@ -105,7 +88,7 @@ func (h *SaleHandler) GetSale(w http.ResponseWriter, r *http.Request, id uint) {
 	respondJSON(w, http.StatusOK, sale)
 }
 
-func (h *SaleHandler) AddPaymentToSale(w http.ResponseWriter, r *http.Request, id uint) {
+func (h *SaleHandler) AddPaymentToSale(w http.ResponseWriter, r *http.Request, id int) {
 	var req domain.AddPaymentRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		respondError(w, http.StatusBadRequest, "Invalid request payload: "+err.Error())
@@ -113,7 +96,7 @@ func (h *SaleHandler) AddPaymentToSale(w http.ResponseWriter, r *http.Request, i
 	}
 	defer r.Body.Close()
 
-	processedByUserIDPlaceholder := uint(1) // Simulate authenticated user ID
+	processedByUserIDPlaceholder := int(1) // Simulate authenticated user ID
 
 	req.SaleID = id // Ensure SaleID from path is used
 
@@ -131,8 +114,8 @@ func (h *SaleHandler) AddPaymentToSale(w http.ResponseWriter, r *http.Request, i
 	respondJSON(w, http.StatusOK, sale)
 }
 
-func (h *SaleHandler) CancelSale(w http.ResponseWriter, r *http.Request, id uint) {
-	cancelledByUserIDPlaceholder := uint(1) // Simulate authenticated user ID
+func (h *SaleHandler) CancelSale(w http.ResponseWriter, r *http.Request, id int) {
+	cancelledByUserIDPlaceholder := int(1) // Simulate authenticated user ID
 
 	sale, err := h.SaleService.CancelSale(id, cancelledByUserIDPlaceholder)
 	if err != nil {
@@ -177,7 +160,7 @@ func (h *SaleHandler) HandleSaleRoutes(w http.ResponseWriter, r *http.Request) {
 			respondError(w, http.StatusBadRequest, "Invalid sale ID format")
 			return
 		}
-		id := uint(id64)
+		id := int(id64)
 
 		if len(pathParts) == 3 { // Path is /api/sales/{id}
 			switch r.Method {

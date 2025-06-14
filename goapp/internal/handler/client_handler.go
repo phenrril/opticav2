@@ -2,12 +2,13 @@ package handler
 
 import (
 	"encoding/json"
+	"errors" // For domain error checking
 	"net/http"
-	"opticav2/internal/application"
-	"opticav2/internal/domain"
 	"strconv" // For parsing ID from URL
 	"strings" // For routing logic
-	"errors"  // For domain error checking
+
+	"opticav2/internal/application"
+	"opticav2/internal/domain"
 )
 
 type ClientHandler struct {
@@ -16,24 +17,6 @@ type ClientHandler struct {
 
 func NewClientHandler(cs *application.ClientService) *ClientHandler {
 	return &ClientHandler{ClientService: cs}
-}
-
-// Helper to respond with JSON - Duplicated from user_handler.go for now
-func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
-	response, err := json.Marshal(payload)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	w.Write(response)
-}
-
-// Helper to respond with an error - Duplicated from user_handler.go for now
-func respondError(w http.ResponseWriter, code int, message string) {
-	respondJSON(w, code, map[string]string{"error": message})
 }
 
 func (h *ClientHandler) CreateClient(w http.ResponseWriter, r *http.Request) {

@@ -2,7 +2,6 @@ package domain
 
 import "errors"
 
-// Custom errors for product domain
 var ErrProductNotFound = errors.New("product not found")
 var ErrProductCodeTaken = errors.New("product code already exists")
 
@@ -11,11 +10,11 @@ type Product struct {
 	Code        string  `json:"codigo" gorm:"column:codigo;uniqueIndex"`
 	Description string  `json:"descripcion" gorm:"column:descripcion"`
 	Brand       string  `json:"marca" gorm:"column:marca"`
-	Price       float64 `json:"precio" gorm:"column:precio"` // Selling price
+	Price       float64 `json:"precio" gorm:"column:precio"`
 	Stock       int     `json:"existencia" gorm:"column:existencia"`
-	UserID      int     `json:"-" gorm:"column:usuario_id"`    // ID of user who registered/last updated
-	GrossPrice  float64 `json:"precio_bruto" gorm:"column:precio_bruto"` // Cost price
-	Status      int     `json:"estado" gorm:"column:estado"`     // 0 for inactive, 1 for active
+	UserID      int     `json:"-" gorm:"column:usuario_id"`
+	GrossPrice  float64 `json:"precio_bruto" gorm:"column:precio_bruto"`
+	Status      int     `json:"estado" gorm:"column:estado"`
 }
 
 type ProductCreateRequest struct {
@@ -27,18 +26,18 @@ type ProductCreateRequest struct {
 	GrossPrice  float64 `json:"precio_bruto"`
 }
 
-type ProductUpdateRequest struct { // For general info, not stock quantity or status
-	Code        string  `json:"codigo"` // Allow updating code, must check for uniqueness
+type ProductUpdateRequest struct {
+	Code        string  `json:"codigo"`
 	Description string  `json:"descripcion"`
 	Brand       string  `json:"marca"`
 	Price       float64 `json:"precio"`
 	GrossPrice  float64 `json:"precio_bruto"`
 }
 
-type ProductStockUpdateRequest struct { // For adjusting stock and optionally price
-	AddStock    int     `json:"add_stock"` // Can be negative to reduce stock
-	Price       float64 `json:"precio,omitempty"`        // New selling price, if changed during stock update
-	GrossPrice  float64 `json:"precio_bruto,omitempty"` // New gross price, if changed
+type ProductStockUpdateRequest struct {
+	AddStock   int     `json:"add_stock"`
+	Price      float64 `json:"precio,omitempty"`
+	GrossPrice float64 `json:"precio_bruto,omitempty"`
 }
 
 type ProductRepository interface {
@@ -47,5 +46,6 @@ type ProductRepository interface {
 	GetByID(id int) (*Product, error)
 	GetAll() ([]Product, error)
 	Update(product *Product) error
-	// Delete (soft delete) is an update to Status field, so Update method can cover it.
+	GetLowStockProducts(threshold int, limit int) ([]Product, error)
+	Count() (int64, error)
 }

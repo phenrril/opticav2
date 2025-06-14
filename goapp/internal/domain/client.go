@@ -2,11 +2,9 @@ package domain
 
 import "errors" // Added import for errors package
 
-// It's good practice to define error variables for common errors
 var ErrClientNotFound = errors.New("client not found")
 var ErrClientDNITaken = errors.New("client DNI already exists")
 var ErrClientNameTaken = errors.New("client name already exists (DNI not provided or also taken)")
-
 
 type Client struct {
 	ID         int    `json:"id" gorm:"column:idcliente;primaryKey"`
@@ -19,7 +17,6 @@ type Client struct {
 	UserID     int    `json:"-" gorm:"column:usuario_id"` // ID of user who registered
 	Status     int    `json:"estado" gorm:"column:estado"`
 	HC         string `json:"hc" gorm:"column:HC"`
-	// User    User   `json:"user,omitempty" gorm:"foreignKey:UserID;references:idusuario"` // Corrected reference if User table PK is idusuario
 }
 
 type ClientCreateRequest struct {
@@ -45,10 +42,10 @@ type ClientUpdateRequest struct {
 
 type ClientRepository interface {
 	Create(client *Client) error
-	FindByName(name string) (*Client, error) // Consider if this should return a list if names aren't unique
+	FindByName(name string) (*Client, error)
 	FindByDNI(dni string) (*Client, error)
 	GetByID(id int) (*Client, error)
 	GetAll() ([]Client, error)
 	Update(client *Client) error
-	// Delete is typically an update to Status (soft delete)
+	Count() (int64, error)
 }

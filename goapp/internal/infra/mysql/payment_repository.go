@@ -3,6 +3,7 @@ package mysql
 import (
 	// "errors"
 	"opticav2/internal/domain"
+
 	"gorm.io/gorm"
 	// "gorm.io/gorm/clause" // If needed for specific clauses like OnConflict
 )
@@ -23,7 +24,7 @@ func (r *PaymentRepository) Create(payment *domain.Payment) error {
 }
 
 // GetBySaleID retrieves all payments associated with a given SaleID.
-func (r *PaymentRepository) GetBySaleID(saleID uint) ([]domain.Payment, error) {
+func (r *PaymentRepository) GetBySaleID(saleID int) ([]domain.Payment, error) {
 	var payments []domain.Payment
 	// Optionally preload user who processed payment if that's needed in the list.
 	err := r.DB.Preload("User").Where("id_venta = ?", saleID).Order("fecha_pago ASC").Find(&payments).Error

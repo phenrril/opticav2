@@ -2,12 +2,13 @@ package handler
 
 import (
 	"encoding/json"
+	"errors" // For domain error checking
 	"net/http"
-	"opticav2/internal/application"
-	"opticav2/internal/domain"
 	"strconv" // For parsing ID from URL
 	"strings" // For routing logic
-	"errors"  // For domain error checking
+
+	"opticav2/internal/application"
+	"opticav2/internal/domain"
 )
 
 type ProductHandler struct {
@@ -16,24 +17,6 @@ type ProductHandler struct {
 
 func NewProductHandler(ps *application.ProductService) *ProductHandler {
 	return &ProductHandler{ProductService: ps}
-}
-
-// Helper to respond with JSON - Copied for now
-func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
-	response, err := json.Marshal(payload)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	w.Write(response)
-}
-
-// Helper to respond with an error - Copied for now
-func respondError(w http.ResponseWriter, code int, message string) {
-	respondJSON(w, code, map[string]string{"error": message})
 }
 
 // Create handles POST requests to /api/products
