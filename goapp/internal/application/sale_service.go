@@ -3,8 +3,9 @@ package application
 import (
 	"errors"
 	"fmt"
-	"opticav2/internal/domain"
 	"time"
+
+	"opticav2/internal/domain"
 
 	"gorm.io/gorm" // For transaction management if needed at service level
 )
@@ -33,7 +34,7 @@ func NewSaleService(
 	}
 }
 
-func (s *SaleService) CreateSale(req domain.CreateSaleRequest, userID uint) (*domain.Sale, error) {
+func (s *SaleService) CreateSale(req domain.CreateSaleRequest, userID int) (*domain.Sale, error) {
 	// 1. Validate ClientID
 	_, err := s.ClientRepo.GetByID(int(req.ClientID)) // Assuming Client ID is int
 	if err != nil {
@@ -101,14 +102,12 @@ func (s *SaleService) CreateSale(req domain.CreateSaleRequest, userID uint) (*do
 		// balanceDue = finalAmount - amountPaid
 	}
 
-
 	status := "Pending" // Default status
 	if balanceDue <= 0 {
 		status = "Completed"
 	} else if amountPaid > 0 && balanceDue > 0 {
 		status = "Partial"
 	}
-
 
 	// 4. Prepare Sale object
 	saleDate := time.Now()
@@ -117,11 +116,11 @@ func (s *SaleService) CreateSale(req domain.CreateSaleRequest, userID uint) (*do
 		if err == nil {
 			saleDate = parsedDate
 		} else {
-            parsedDate, err = time.Parse("2006-01-02", req.SaleDate)
-            if err == nil {
-                saleDate = parsedDate
-            }
-        }
+			parsedDate, err = time.Parse("2006-01-02", req.SaleDate)
+			if err == nil {
+				saleDate = parsedDate
+			}
+		}
 	}
 
 	sale := &domain.Sale{
@@ -164,7 +163,7 @@ func (s *SaleService) CreateSale(req domain.CreateSaleRequest, userID uint) (*do
 	return s.SaleRepo.GetByID(sale.ID) // Fetch fresh record with all associations
 }
 
-func (s *SaleService) GetSale(saleID uint, _ uint) (*domain.Sale, error) {
+func (s *SaleService) GetSale(saleID int, _ uint) (*domain.Sale, error) {
 	// TODO: Add authorization check: userID (second param) against sale.UserID or user role
 	sale, err := s.SaleRepo.GetByID(saleID)
 	if err != nil {
@@ -173,7 +172,7 @@ func (s *SaleService) GetSale(saleID uint, _ uint) (*domain.Sale, error) {
 	return sale, nil
 }
 
-func (s *SaleService) ListSales(userID uint, filters map[string]interface{}) ([]domain.Sale, error) {
+func (s *SaleService) ListSales(userID int, filters map[string]interface{}) ([]domain.Sale, error) {
 	// TODO: Implement proper filtering logic, possibly based on user role.
 	// If user is not admin, restrict filters to their own sales:
 	// if !isUserAdmin(userID) { // isUserAdmin would check user role
@@ -182,135 +181,124 @@ func (s *SaleService) ListSales(userID uint, filters map[string]interface{}) ([]
 	return s.SaleRepo.GetAll(filters)
 }
 
-func (s *SaleService) AddPaymentToSale(saleID uint, req domain.AddPaymentRequest, processedByUserID uint) (*domain.Sale, error) {
-    return s.DB.Transaction(func(tx *gorm.DB) error {
-        // Use a transactional version of repositories if they are not already transaction-aware
-        // For simplicity, assume repositories here can work with `tx` if needed,
-        // or methods are called that don't need explicit tx passing because they are simple ops.
-        // Better: saleRepoTx := s.SaleRepo.WithTx(tx) etc.
+func (s *SaleService) AddPaymentToSale(saleID int, req domain.AddPaymentRequest, processedByUserID int) (*domain.Sale, error) {
+	err := s.DB.Transaction(func(tx *gorm.DB) error {
+		sale, err := s.SaleRepo.GetByID(saleID)
+		if err != nil {
+			return err
+		}
 
-        sale, err := s.SaleRepo.GetByID(saleID) // Fetch with original DB context or tx context
-        if err != nil {
-            return err
-        }
+		if sale.Status == "Completed" || sale.Status == "Cancelled" {
+			return fmt.Errorf("cannot add payment to sale with status: %s", sale.Status)
+		}
 
-        if sale.Status == "Completed" || sale.Status == "Cancelled" {
-            return fmt.Errorf("cannot add payment to sale with status: %s", sale.Status)
-        }
+		if req.Amount <= 0 {
+			return errors.New("payment amount must be positive")
+		}
 
-        if req.Amount <= 0 {
-            return errors.New("payment amount must be positive")
-        }
-        // Potential check: if req.Amount > sale.BalanceDue (handle overpayment?)
+		paymentDate := time.Now()
+		if req.PaymentDate != "" {
+			parsedDate, err := time.Parse("2006-01-02 15:04:05", req.PaymentDate)
+			if err == nil {
+				paymentDate = parsedDate
+			} else {
+				parsedDate, err = time.Parse("2006-01-02", req.PaymentDate)
+				if err == nil {
+					paymentDate = parsedDate
+				}
+			}
+		}
 
-        paymentDate := time.Now()
-        if req.PaymentDate != "" {
-            parsedDate, err := time.Parse("2006-01-02 15:04:05", req.PaymentDate)
-            if err == nil {
-                paymentDate = parsedDate
-            } else {
-                 parsedDate, err = time.Parse("2006-01-02", req.PaymentDate)
-                 if err == nil {
-                    paymentDate = parsedDate
-                }
-            }
-        }
+		payment := &domain.Payment{
+			SaleID:            saleID,
+			PaymentDate:       paymentDate,
+			Amount:            req.Amount,
+			PaymentMethodID:   req.PaymentMethodID,
+			ProcessedByUserID: processedByUserID,
+		}
 
-        payment := &domain.Payment{
-            SaleID:            saleID,
-            PaymentDate:       paymentDate,
-            Amount:            req.Amount,
-            PaymentMethodID:   req.PaymentMethodID,
-            ProcessedByUserID: processedByUserID,
-        }
+		if err := s.PaymentRepo.Create(payment); err != nil {
+			return fmt.Errorf("failed to create payment record: %w", err)
+		}
 
-        if err := s.PaymentRepo.Create(payment); err != nil { // Assume PaymentRepo.Create uses its own DB instance or is tx-aware
-            return fmt.Errorf("failed to create payment record: %w", err)
-        }
+		sale.AmountPaid += req.Amount
+		sale.BalanceDue = sale.FinalAmount - sale.AmountPaid
 
-        // Recalculate sale's payment fields
-        sale.AmountPaid += req.Amount
-        sale.BalanceDue = sale.FinalAmount - sale.AmountPaid // Ensure FinalAmount is correct
+		if sale.BalanceDue <= 0 {
+			sale.Status = "Completed"
+		} else {
+			sale.Status = "Partial"
+		}
 
-        if sale.BalanceDue <= 0 {
-            sale.Status = "Completed"
-            // If balanceDue is negative, it implies overpayment/change. Business rule needed.
-        } else {
-            sale.Status = "Partial" // If previously "Pending" or still "Partial"
-        }
-
-        // Update sale within the transaction
-        if err := s.SaleRepo.Update(sale); err != nil { // Assume SaleRepo.Update uses its own DB or is tx-aware
-            return fmt.Errorf("failed to update sale after payment: %w", err)
-        }
-        return nil // Commit transaction
-    }).Error // Return the error from the transaction block
-    // After successful transaction, fetch and return the updated sale
-    if err != nil {
-        return nil, err
-    }
-    return s.SaleRepo.GetByID(saleID)
+		if err := s.SaleRepo.Update(sale); err != nil {
+			return fmt.Errorf("failed to update sale after payment: %w", err)
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return s.SaleRepo.GetByID(saleID)
 }
 
+func (s *SaleService) CancelSale(saleID int, _ int) (*domain.Sale, error) {
+	// The `cancelledByUserID` (second param) would be used for logging or authorization checks.
 
-func (s *SaleService) CancelSale(saleID uint, _ uint) (*domain.Sale, error) {
-    // The `cancelledByUserID` (second param) would be used for logging or authorization checks.
+	// For cancelling a sale, especially with stock restoration, it's critical to use a transaction.
+	// The SaleRepository's Create method already handles stock *decrement* transactionally with sale items.
+	// A symmetric operation is needed for cancellation.
+	// Option 1: Service layer manages the transaction.
+	// Option 2: Repository has a specific `CancelSale(saleID uint) error` method that handles it all.
 
-    // For cancelling a sale, especially with stock restoration, it's critical to use a transaction.
-    // The SaleRepository's Create method already handles stock *decrement* transactionally with sale items.
-    // A symmetric operation is needed for cancellation.
-    // Option 1: Service layer manages the transaction.
-    // Option 2: Repository has a specific `CancelSale(saleID uint) error` method that handles it all.
+	// Let's proceed with Option 1: Service layer transaction.
+	err := s.DB.Transaction(func(tx *gorm.DB) error {
+		// It's better if repository methods can accept a `*gorm.DB` to participate in caller's transaction.
+		// e.g., s.SaleRepo.GetByIDWithTx(tx, saleID), s.ProductRepo.UpdateWithTx(tx, product)
+		// Assuming current repo methods use their own DB instance, this transaction won't cover their internal operations.
+		// This is a common architectural challenge.
+		// For this example, let's assume we modify repo methods or use direct tx operations for critical parts.
 
-    // Let's proceed with Option 1: Service layer transaction.
-    err := s.DB.Transaction(func(tx *gorm.DB) error {
-        // It's better if repository methods can accept a `*gorm.DB` to participate in caller's transaction.
-        // e.g., s.SaleRepo.GetByIDWithTx(tx, saleID), s.ProductRepo.UpdateWithTx(tx, product)
-        // Assuming current repo methods use their own DB instance, this transaction won't cover their internal operations.
-        // This is a common architectural challenge.
-        // For this example, let's assume we modify repo methods or use direct tx operations for critical parts.
+		sale, err := s.SaleRepo.GetByID(saleID) // Fetch outside tx or make GetByID tx-aware
+		if err != nil {
+			return err
+		}
 
-        sale, err := s.SaleRepo.GetByID(saleID) // Fetch outside tx or make GetByID tx-aware
-        if err != nil {
-            return err
-        }
+		if sale.Status == "Cancelled" {
+			return errors.New("sale is already cancelled")
+		}
+		// Add other checks, e.g., if sale is too old to be cancelled based on policy.
 
-        if sale.Status == "Cancelled" {
-            return errors.New("sale is already cancelled")
-        }
-        // Add other checks, e.g., if sale is too old to be cancelled based on policy.
+		// Restore stock for each item
+		for _, item := range sale.SaleItems {
+			// This should ideally use ProductRepo method that accepts `tx`
+			// err := s.ProductRepo.IncreaseStock(tx, item.ProductID, item.Quantity)
+			// Direct update with `tx` for now:
+			if errStock := tx.Model(&domain.Product{}).Where("codproducto = ?", item.ProductID).
+				UpdateColumn("existencia", gorm.Expr("existencia + ?", item.Quantity)).Error; errStock != nil {
+				return fmt.Errorf("failed to restore stock for product ID %d: %w", item.ProductID, errStock)
+			}
+		}
 
-        // Restore stock for each item
-        for _, item := range sale.SaleItems {
-            // This should ideally use ProductRepo method that accepts `tx`
-            // err := s.ProductRepo.IncreaseStock(tx, item.ProductID, item.Quantity)
-            // Direct update with `tx` for now:
-            if errStock := tx.Model(&domain.Product{}).Where("codproducto = ?", item.ProductID).
-                UpdateColumn("existencia", gorm.Expr("existencia + ?", item.Quantity)).Error; errStock != nil {
-                return fmt.Errorf("failed to restore stock for product ID %d: %w", item.ProductID, errStock)
-            }
-        }
+		sale.Status = "Cancelled"
+		// sale.BalanceDue = sale.FinalAmount - sale.AmountPaid // Recalculate if refunds are part of this, complex.
+		// For now, assume cancellation just marks as cancelled and restores stock. Refunds are separate.
 
-        sale.Status = "Cancelled"
-        // sale.BalanceDue = sale.FinalAmount - sale.AmountPaid // Recalculate if refunds are part of this, complex.
-        // For now, assume cancellation just marks as cancelled and restores stock. Refunds are separate.
+		// Update sale status using `tx`
+		// err = s.SaleRepo.UpdateWithTx(tx, sale)
+		// Direct update with `tx` for now:
+		if errUpdate := tx.Save(sale).Error; errUpdate != nil {
+			return fmt.Errorf("failed to update sale status to cancelled: %w", errUpdate)
+		}
 
-        // Update sale status using `tx`
-        // err = s.SaleRepo.UpdateWithTx(tx, sale)
-        // Direct update with `tx` for now:
-        if errUpdate := tx.Save(sale).Error; errUpdate != nil {
-            return fmt.Errorf("failed to update sale status to cancelled: %w", errUpdate)
-        }
+		// TODO: Handle refunds or voiding payments if necessary. This is complex.
+		// For now, payments remain as they were, sale is just marked "Cancelled".
 
-        // TODO: Handle refunds or voiding payments if necessary. This is complex.
-        // For now, payments remain as they were, sale is just marked "Cancelled".
+		return nil // Commit transaction
+	})
 
-        return nil // Commit transaction
-    })
+	if err != nil {
+		return nil, err
+	}
 
-    if err != nil {
-        return nil, err
-    }
-
-    return s.SaleRepo.GetByID(saleID) // Return updated sale
+	return s.SaleRepo.GetByID(saleID) // Return updated sale
 }

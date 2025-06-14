@@ -7,7 +7,7 @@ import (
 
 // PrescriptionService defines the interface for accessing prescription data.
 type PrescriptionService interface {
-	GetPrescriptionForSale(saleID uint) (*domain.EyePrescriptionPDFDetails, error)
+	GetPrescriptionForSale(saleID int) (*domain.EyePrescriptionPDFDetails, error)
 	// GetPrescriptionFromJSON(jsonData string) (*domain.EyePrescriptionPDFDetails, error) // Alternative
 }
 
@@ -27,7 +27,7 @@ func NewPrescriptionService(prescriptionRepo domain.PrescriptionRepository /*, s
 
 // GetPrescriptionForSale retrieves prescription details for a given sale ID.
 // This implementation assumes a dedicated 'graduaciones' table.
-func (s *PrescriptionServiceImpl) GetPrescriptionForSale(saleID uint) (*domain.EyePrescriptionPDFDetails, error) {
+func (s *PrescriptionServiceImpl) GetPrescriptionForSale(saleID int) (*domain.EyePrescriptionPDFDetails, error) {
 	prescription, err := s.PrescriptionRepo.GetBySaleID(saleID)
 	if err != nil {
 		// The repository returns nil, nil if not found, so actual errors are DB issues.

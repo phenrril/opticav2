@@ -2,7 +2,9 @@ package mysql
 
 import (
 	"errors"
+
 	"opticav2/internal/domain"
+
 	"gorm.io/gorm"
 )
 
@@ -30,7 +32,7 @@ func (r *ProductRepository) FindByCode(code string) (*domain.Product, error) {
 	return &product, nil
 }
 
-func (r *ProductRepository) GetByID(id uint) (*domain.Product, error) {
+func (r *ProductRepository) GetByID(id int) (*domain.Product, error) {
 	var product domain.Product
 	err := r.DB.Table("producto").First(&product, id).Error
 	if err != nil {

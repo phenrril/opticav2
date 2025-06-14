@@ -2,12 +2,13 @@ package handler
 
 import (
 	"encoding/json"
+	"errors" // For domain error checking
 	"net/http"
-	"opticav2/internal/application"
-	"opticav2/internal/domain"
 	"strconv" // For parsing ID from URL
 	"strings" // For routing logic
-	"errors"  // For domain error checking
+
+	"opticav2/internal/application"
+	"opticav2/internal/domain"
 )
 
 type ProductHandler struct {

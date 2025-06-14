@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"encoding/json"
-	"net/http"
 	"opticav2/internal/application"
 	// "strconv" // For parsing query params later if needed
 	// "opticav2/internal/domain" // Not strictly needed if service returns concrete types
@@ -16,24 +14,7 @@ func NewStatisticHandler(ss *application.StatisticService) *StatisticHandler {
 	return &StatisticHandler{StatisticService: ss}
 }
 
-// Helper to respond with JSON - Copied
-func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
-	response, err := json.Marshal(payload)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	w.Write(response)
-}
-
-// Helper to respond with an error - Copied
-func respondError(w http.ResponseWriter, code int, message string) {
-	respondJSON(w, code, map[string]string{"error": message})
-}
-
+/*
 // GetDashboardSummary handles GET /api/statistics/summary
 func (h *StatisticHandler) GetDashboardSummary(w http.ResponseWriter, r *http.Request) {
 	summary, err := h.StatisticService.GetDashboardSummaryCounts()
@@ -43,6 +24,7 @@ func (h *StatisticHandler) GetDashboardSummary(w http.ResponseWriter, r *http.Re
 	}
 	respondJSON(w, http.StatusOK, summary)
 }
+
 
 // GetLowStockProducts handles GET /api/statistics/low-stock-products
 func (h *StatisticHandler) GetLowStockProducts(w http.ResponseWriter, r *http.Request) {

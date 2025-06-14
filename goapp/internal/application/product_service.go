@@ -2,17 +2,20 @@ package application
 
 import (
 	"errors"
+
 	"opticav2/internal/domain"
-	// "gorm.io/gorm" // Not directly needed here, but good for error checking if repo returns gorm errors
 )
 
 type ProductService struct {
 	ProductRepo domain.ProductRepository
-	// UserRepo domain.UserRepository // If needed for validating UserID in the future
+	UserRepo    domain.UserRepository
 }
 
-func NewProductService(productRepo domain.ProductRepository) *ProductService {
-	return &ProductService{ProductRepo: productRepo}
+func NewProductService(productRepo domain.ProductRepository, UserRepo domain.UserRepository) *ProductService {
+	return &ProductService{
+		ProductRepo: productRepo,
+		UserRepo:    UserRepo,
+	}
 }
 
 func (s *ProductService) CreateProduct(req domain.ProductCreateRequest, userID int) (*domain.Product, error) {
@@ -126,25 +129,24 @@ func (s *ProductService) UpdateProductStock(id int, req domain.ProductStockUpdat
 	// Given current struct: if req.Price is not the zero value for float64 (0.0), then update.
 	// This logic needs clarification or struct change for production.
 	// For now, we'll update if the request struct's Price field is not its zero value.
-    // The task says "if req.Price is provided", and omitempty means it might not be.
-    // Let's assume client sends it if it intends to change.
-    // If req.Price is 0 and current product.Price is 10, it will update to 0.
-    // This is often desired. If not, use a pointer or a flag.
+	// The task says "if req.Price is provided", and omitempty means it might not be.
+	// Let's assume client sends it if it intends to change.
+	// If req.Price is 0 and current product.Price is 10, it will update to 0.
+	// This is often desired. If not, use a pointer or a flag.
 
-    // Simplified: if the request carries a value for Price, update it.
-    // The JSON unmarshalling with omitempty means if "price" is not in JSON, req.Price remains 0.
-    // If "price": 0 is in JSON, req.Price becomes 0.
-    // If "price": 10.5 is in JSON, req.Price becomes 10.5.
-    // So, simply assigning is okay if this behavior is understood.
-    // Let's refine to only update if explicitly set (e.g. using a different mechanism or pointer for optional fields)
-    // For now, the task says "if req.Price is provided", which `omitempty` handles at unmarshal time.
-    // So, if req.Price has a value (even 0 if sent by client), we update.
-    // This is a common point of confusion. Let's assume for now that if the client sends the field, it's an intended update.
+	// Simplified: if the request carries a value for Price, update it.
+	// The JSON unmarshalling with omitempty means if "price" is not in JSON, req.Price remains 0.
+	// If "price": 0 is in JSON, req.Price becomes 0.
+	// If "price": 10.5 is in JSON, req.Price becomes 10.5.
+	// So, simply assigning is okay if this behavior is understood.
+	// Let's refine to only update if explicitly set (e.g. using a different mechanism or pointer for optional fields)
+	// For now, the task says "if req.Price is provided", which `omitempty` handles at unmarshal time.
+	// So, if req.Price has a value (even 0 if sent by client), we update.
+	// This is a common point of confusion. Let's assume for now that if the client sends the field, it's an intended update.
 	product.Price = req.Price
-    if req.GrossPrice != 0 { // Example of only updating if non-zero, may not be desired for all fields
-        product.GrossPrice = req.GrossPrice
-    }
-
+	if req.GrossPrice != 0 { // Example of only updating if non-zero, may not be desired for all fields
+		product.GrossPrice = req.GrossPrice
+	}
 
 	if errUpdate := s.ProductRepo.Update(product); errUpdate != nil {
 		return nil, errUpdate

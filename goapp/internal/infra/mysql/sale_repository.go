@@ -3,13 +3,15 @@ package mysql
 import (
 	"errors"
 	"fmt"
-	"opticav2/internal/domain"
 	"time"
+
+	"opticav2/internal/domain"
+
 	"gorm.io/gorm"
 )
 
 type SaleRepository struct {
-	DB         *gorm.DB
+	DB          *gorm.DB
 	ProductRepo domain.ProductRepository
 }
 
@@ -33,7 +35,7 @@ func (r *SaleRepository) Create(sale *domain.Sale, items []domain.SaleItem, init
 			// Fetch current stock first to ensure atomicity of check-then-decrement
 			var currentProduct domain.Product
 			if err := tx.Table("producto").Where("codproducto = ?", items[i].ProductID).First(&currentProduct).Error; err != nil {
-			    return fmt.Errorf("product with ID %d not found for stock check: %w", items[i].ProductID, err)
+				return fmt.Errorf("product with ID %d not found for stock check: %w", items[i].ProductID, err)
 			}
 
 			if currentProduct.Stock < items[i].Quantity {
@@ -58,7 +60,7 @@ func (r *SaleRepository) Create(sale *domain.Sale, items []domain.SaleItem, init
 	})
 }
 
-func (r *SaleRepository) GetByID(id uint) (*domain.Sale, error) {
+func (r *SaleRepository) GetByID(id int) (*domain.Sale, error) {
 	var sale domain.Sale
 	err := r.DB.Preload("SaleItems.Product").Preload("Client").Preload("User").Preload("Payments").First(&sale, id).Error
 	if err != nil {

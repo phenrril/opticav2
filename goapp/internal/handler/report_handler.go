@@ -1,11 +1,11 @@
 package handler
 
 import (
-	"encoding/json"
 	"net/http"
-	"opticav2/internal/application"
 	// "opticav2/internal/domain" // Not strictly needed for this handler if service returns concrete types
 	"time"
+
+	"opticav2/internal/application"
 	// "strconv" // Not needed for this specific handler's current requirements
 	// "strings" // Not needed for this specific handler's current requirements
 )
@@ -16,24 +16,6 @@ type ReportHandler struct {
 
 func NewReportHandler(rs *application.ReportService) *ReportHandler {
 	return &ReportHandler{ReportService: rs}
-}
-
-// Helper to respond with JSON - Copied
-func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
-	response, err := json.Marshal(payload)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	w.Write(response)
-}
-
-// Helper to respond with an error - Copied
-func respondError(w http.ResponseWriter, code int, message string) {
-	respondJSON(w, code, map[string]string{"error": message})
 }
 
 // GetSalesReport handles GET /api/reports/sales
@@ -64,7 +46,7 @@ func (h *ReportHandler) GetSalesReport(w http.ResponseWriter, r *http.Request) {
 	// For this report, the PHP version seems system-wide beyond permission check.
 	// So, userID for filtering might be 0 or a special value if service expects it.
 	// The service method `GenerateSalesReport` has a userID param.
-	userIDPlaceholder := uint(0) // 0 could mean "all users" or "system context" for the report
+	userIDPlaceholder := int(0) // 0 could mean "all users" or "system context" for the report
 	// If a specific user context is absolutely required from middleware, fetch it here.
 	// For now, assuming the report itself is not filtered by the requesting user unless specified in `otherFilters`.
 

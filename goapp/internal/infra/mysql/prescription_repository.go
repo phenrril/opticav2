@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"errors"
+
 	"opticav2/internal/domain"
 
 	"gorm.io/gorm"
@@ -17,7 +18,7 @@ func NewPrescriptionRepository(db *gorm.DB) domain.PrescriptionRepository {
 
 // GetBySaleID fetches prescription details from the 'graduaciones' table
 // based on the associated sale ID.
-func (r *PrescriptionRepository) GetBySaleID(saleID uint) (*domain.EyePrescriptionPDFDetails, error) {
+func (r *PrescriptionRepository) GetBySaleID(saleID int) (*domain.EyePrescriptionPDFDetails, error) {
 	var prescription domain.EyePrescriptionPDFDetails
 	// The GORM tags in domain.EyePrescriptionPDFDetails should map to column names in 'graduaciones'.
 	// We are querying by 'id_venta'.

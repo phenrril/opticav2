@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"opticav2/internal/domain"
+
 	"gorm.io/gorm"
 )
 
@@ -41,7 +42,7 @@ func (r *ClientRepository) FindByDNI(dni string) (*domain.Client, error) {
 	return &client, nil
 }
 
-func (r *ClientRepository) GetByID(id uint) (*domain.Client, error) {
+func (r *ClientRepository) GetByID(id int) (*domain.Client, error) {
 	var client domain.Client
 	err := r.DB.First(&client, id).Error
 	if err != nil {

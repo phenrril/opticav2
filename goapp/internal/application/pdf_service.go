@@ -34,7 +34,7 @@ func NewPDFService(
 
 // GenerateSaleReceiptPDF fetches all necessary data and (eventually) generates a PDF.
 // For now, it gathers data and returns a placeholder or error.
-func (s *PDFServiceImpl) GenerateSaleReceiptPDF(saleID uint) ([]byte, error) {
+func (s *PDFServiceImpl) GenerateSaleReceiptPDF(saleID int) ([]byte, error) {
 	// 1. Fetch Business Configuration
 	config, err := s.ConfigService.GetBusinessDetails()
 	if err != nil {
@@ -81,7 +81,6 @@ func (s *PDFServiceImpl) GenerateSaleReceiptPDF(saleID uint) ([]byte, error) {
 	}
 	prescription = presc // This will be nil if no prescription is associated with the sale.
 
-
 	// 4. Aggregate data for PDF generation
 	_ = domain.SaleReceiptData{ // Underscore to avoid "unused" error for now
 		Config:       config,
@@ -108,40 +107,40 @@ func (s *PDFServiceImpl) GenerateSaleReceiptPDF(saleID uint) ([]byte, error) {
 
 // Helper function to generate PDF (example structure)
 func generatePDF(data domain.SaleReceiptData) (*bytes.Buffer, error) {
-    // pdf := gofpdf.New("P", "mm", "A4", "")
-    // pdf.AddPage()
-    // pdf.SetFont("Arial", "B", 16)
+	// pdf := gofpdf.New("P", "mm", "A4", "")
+	// pdf.AddPage()
+	// pdf.SetFont("Arial", "B", 16)
 
-    // // Header
-    // if data.Config.LogoPath != "" {
-    //     // pdf.Image(data.Config.LogoPath, 10, 10, 30, 0, false, "", 0, "")
-    // }
-    // pdf.Cell(40, 10, data.Config.Name)
-    // pdf.Ln(5)
-    // // ... more config details ...
+	// // Header
+	// if data.Config.LogoPath != "" {
+	//     // pdf.Image(data.Config.LogoPath, 10, 10, 30, 0, false, "", 0, "")
+	// }
+	// pdf.Cell(40, 10, data.Config.Name)
+	// pdf.Ln(5)
+	// // ... more config details ...
 
-    // // Sale Info
-    // pdf.SetFont("Arial", "", 12)
-    // pdf.Cell(40, 10, fmt.Sprintf("Sale ID: %d", data.Sale.ID))
-    // pdf.Ln(5)
-    // // ... client details, sale date ...
+	// // Sale Info
+	// pdf.SetFont("Arial", "", 12)
+	// pdf.Cell(40, 10, fmt.Sprintf("Sale ID: %d", data.Sale.ID))
+	// pdf.Ln(5)
+	// // ... client details, sale date ...
 
-    // // Items table
-    // // ...
+	// // Items table
+	// // ...
 
-    // // Prescription details
-    // if data.Prescription != nil {
-    //     // ...
-    // }
+	// // Prescription details
+	// if data.Prescription != nil {
+	//     // ...
+	// }
 
-    // // Totals
-    // // ...
+	// // Totals
+	// // ...
 
-    var buf bytes.Buffer
-    // err := pdf.Output(&buf)
-    // if err != nil {
-    //     return nil, err
-    // }
-    buf.WriteString(fmt.Sprintf("Dummy PDF for Sale ID: %d\n", data.Sale.ID)) // Placeholder
-    return &buf, nil
+	var buf bytes.Buffer
+	// err := pdf.Output(&buf)
+	// if err != nil {
+	//     return nil, err
+	// }
+	buf.WriteString(fmt.Sprintf("Dummy PDF for Sale ID: %d\n", data.Sale.ID)) // Placeholder
+	return &buf, nil
 }

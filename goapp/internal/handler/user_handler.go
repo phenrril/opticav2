@@ -3,11 +3,11 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
-	"opticav2/internal/application"
-	"opticav2/internal/domain"
 	"strconv"
 	"strings"
-	"errors"
+
+	"opticav2/internal/application"
+	"opticav2/internal/domain"
 )
 
 type AssignPermissionsRequest struct {
@@ -20,22 +20,6 @@ type UserHandler struct {
 
 func NewUserHandler(us *application.UserService) *UserHandler {
 	return &UserHandler{UserService: us}
-}
-
-func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
-	response, err := json.Marshal(payload)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	w.Write(response)
-}
-
-func respondError(w http.ResponseWriter, code int, message string) {
-	respondJSON(w, code, map[string]string{"error": message})
 }
 
 func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {

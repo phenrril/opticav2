@@ -1,9 +1,9 @@
 package application
 
 import (
-	"errors" // Using standard errors for now
+	"errors"
+
 	"opticav2/internal/domain"
-	"gorm.io/gorm" // For gorm.ErrRecordNotFound
 )
 
 type ClientService struct {

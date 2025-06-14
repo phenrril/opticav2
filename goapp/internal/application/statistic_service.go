@@ -2,9 +2,10 @@ package application
 
 import (
 	"fmt"
-	"opticav2/internal/domain"
 	"strconv"
 	"time"
+
+	"opticav2/internal/domain"
 	// "gorm.io/gorm" // May be needed for StatisticServiceImpl
 )
 
@@ -20,8 +21,8 @@ type StatisticService interface {
 // It will require access to various repositories.
 type StatisticServiceImpl struct {
 	ProductRepo domain.ProductRepository
-	SaleRepo    domain.SaleRepository // For top selling products, sale counts
-	UserRepo    domain.UserRepository // For user counts
+	SaleRepo    domain.SaleRepository   // For top selling products, sale counts
+	UserRepo    domain.UserRepository   // For user counts
 	ClientRepo  domain.ClientRepository // For client counts
 	// DB *gorm.DB // For complex custom queries if needed
 }
@@ -32,7 +33,7 @@ func NewStatisticService(
 	saleRepo domain.SaleRepository,
 	userRepo domain.UserRepository,
 	clientRepo domain.ClientRepository,
-	// db *gorm.DB,
+// db *gorm.DB,
 ) StatisticService {
 	return &StatisticServiceImpl{
 		ProductRepo: productRepo,
@@ -96,10 +97,10 @@ func (s *StatisticServiceImpl) GetTopSellingProducts(limit int, fromDateStr, toD
 		stat := domain.TopSellingProductStat{}
 		if id, ok := res["codproducto"]; ok {
 			if idFloat, ok := id.(float64); ok { // SUM often returns float64 from DB
-				stat.ProductID = uint(idFloat)
-			} else if idInt, ok := id.(int64); ok { // Or int64
-                 stat.ProductID = uint(idInt)
-            }
+				stat.ProductID = int(idFloat)
+			} else if idInt, ok := id.(int64); ok {
+				stat.ProductID = int(idInt)
+			}
 		}
 		if name, ok := res["descripcion"].(string); ok {
 			stat.ProductName = name
@@ -107,25 +108,29 @@ func (s *StatisticServiceImpl) GetTopSellingProducts(limit int, fromDateStr, toD
 		if code, ok := res["codigo"].(string); ok {
 			stat.ProductCode = code
 		}
+		var qtyStr []byte
 		if qty, ok := res["total_cantidad_vendida"]; ok {
 			// SUM usually returns a type that can be float64 or int64 from DB drivers
 			if qtyFloat, ok := qty.(float64); ok {
 				stat.TotalSoldQuantity = int(qtyFloat)
 			} else if qtyInt, ok := qty.(int64); ok {
 				stat.TotalSoldQuantity = int(qtyInt)
-			} else if qtyStr, ok := qty.([]byte); ok) { // Some drivers might return []byte for SUM
-                qtyInt, _ := strconv.Atoi(string(qtyStr))
-                stat.TotalSoldQuantity = qtyInt
-            }
+			} else if tmp, ok := qty.([]byte); ok {
+				qtyStr = tmp
+				qtyInt, _ := strconv.Atoi(string(qtyStr))
+				stat.TotalSoldQuantity = qtyInt
+			}
 		}
-        if revenue, ok := res["total_revenue"]; ok {
-            if revFloat, ok := revenue.(float64); ok {
-                stat.TotalRevenue = revFloat
-            } else if revStr, ok := revenue.([]byte); ok) {
-                revFloat, _ := strconv.ParseFloat(string(revStr), 64)
-                stat.TotalRevenue = revFloat
-            }
-        }
+		var revStr []byte
+		if revenue, ok := res["total_revenue"]; ok {
+			if revFloat, ok := revenue.(float64); ok {
+				stat.TotalRevenue = revFloat
+			} else if tmp, ok := revenue.([]byte); ok {
+				revStr = tmp
+				revFloat, _ := strconv.ParseFloat(string(revStr), 64)
+				stat.TotalRevenue = revFloat
+			}
+		}
 		stats[i] = stat
 	}
 	return stats, nil

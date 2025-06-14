@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"encoding/json"
 	"net/http"
+
 	"opticav2/internal/application"
 	// "opticav2/internal/domain" // Not strictly needed for this handler if only listing all
 	// "strconv" // Not needed for just /api/permissions
@@ -15,24 +15,6 @@ type PermissionHandler struct {
 
 func NewPermissionHandler(ps *application.PermissionService) *PermissionHandler {
 	return &PermissionHandler{PermissionService: ps}
-}
-
-// Helper to respond with JSON - Copied
-func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
-	response, err := json.Marshal(payload)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	w.Write(response)
-}
-
-// Helper to respond with an error - Copied
-func respondError(w http.ResponseWriter, code int, message string) {
-	respondJSON(w, code, map[string]string{"error": message})
 }
 
 func (h *PermissionHandler) ListPermissions(w http.ResponseWriter, r *http.Request) {

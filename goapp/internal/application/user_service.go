@@ -4,7 +4,9 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"errors"
+
 	"opticav2/internal/domain"
+
 	"gorm.io/gorm"
 )
 
@@ -72,8 +74,8 @@ func (s *UserService) UpdateUser(id uint, req domain.UserUpdateRequest) (*domain
 		if errFindByEmail == nil && existingUser.ID != id {
 			return nil, errors.New("email already in use by another account")
 		} else if errFindByEmail != nil && !errors.Is(errFindByEmail, domain.ErrRecordNotFound) && !errors.Is(errFindByEmail, gorm.ErrRecordNotFound) {
-            return nil, errors.New("error checking email for update: " + errFindByEmail.Error())
-        }
+			return nil, errors.New("error checking email for update: " + errFindByEmail.Error())
+		}
 	}
 
 	if req.Username != "" && req.Username != user.Username {
@@ -81,8 +83,8 @@ func (s *UserService) UpdateUser(id uint, req domain.UserUpdateRequest) (*domain
 		if errFindByUsername == nil && existingUser.ID != id {
 			return nil, errors.New("username already in use by another account")
 		} else if errFindByUsername != nil && !errors.Is(errFindByUsername, domain.ErrRecordNotFound) && !errors.Is(errFindByUsername, gorm.ErrRecordNotFound) {
-            return nil, errors.New("error checking username for update: " + errFindByUsername.Error())
-        }
+			return nil, errors.New("error checking username for update: " + errFindByUsername.Error())
+		}
 	}
 
 	user.Name = req.Name
@@ -138,8 +140,8 @@ func (s *UserService) AssignPermissionsToUser(userID uint, permissionIDs []uint)
 			return errors.New("error fetching permissions by IDs: " + errFetchPerms.Error())
 		}
 		if len(fetchedPermissionsDomain) != len(permissionIDs) {
-            return errors.New("one or more permission IDs are invalid or not found")
-        }
+			return errors.New("one or more permission IDs are invalid or not found")
+		}
 		for i := range fetchedPermissionsDomain {
 			permissionsToAssign = append(permissionsToAssign, &fetchedPermissionsDomain[i])
 		}

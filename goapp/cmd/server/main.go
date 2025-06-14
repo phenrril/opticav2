@@ -6,8 +6,8 @@ import (
 
 	"opticav2/internal/application"
 	"opticav2/internal/handler"
-	"opticav2/internal/middleware"
 	infraMySQL "opticav2/internal/infra/mysql"
+	"opticav2/internal/middleware"
 
 	gormMySQL "gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -40,9 +40,9 @@ func main() {
 	permissionService := application.NewPermissionService(permissionRepo)
 	reportService := application.NewReportService(saleRepo, productRepo, generalLedgerRepo)
 	statisticService := application.NewStatisticService(productRepo, saleRepo, userRepo, clientRepo)
-	configService := application.NewConfigService(configRepo)                         // Instantiate ConfigService
-	prescriptionService := application.NewPrescriptionService(prescriptionRepo)       // Instantiate PrescriptionService
-	pdfService := application.NewPDFService(saleService, configService, prescriptionService) // Instantiate PDFService
+	_ = application.NewConfigService(configRepo)
+	_ = application.NewPrescriptionService(prescriptionRepo)
+	// _ = application.NewPDFService(*saleService, *configService, *prescriptionService) // PDFService deshabilitado temporalmente
 
 	// Handlers
 	authHandler := handler.AuthHandler{Service: &authService}
@@ -51,8 +51,8 @@ func main() {
 	productHandler := handler.NewProductHandler(productService)
 	saleHandler := handler.NewSaleHandler(saleService)
 	permissionHandler := handler.NewPermissionHandler(permissionService)
-	reportHandler := handler.NewReportHandler(reportService)
-	statisticHandler := handler.NewStatisticHandler(statisticService)
+	reportHandler := handler.NewReportHandler(&reportService)
+	statisticHandler := handler.NewStatisticHandler(&statisticService)
 	// pdfHandler := handler.NewPDFHandler(pdfService) // Placeholder for PDFHandler
 
 	// Middleware
@@ -96,7 +96,6 @@ func main() {
 
 	// Placeholder for PDF routes
 	// mux.Handle("/api/sales/{id}/receipt-pdf", authzMiddleware.RequirePermission("ventas")(http.HandlerFunc(pdfHandler.GenerateSaleReceipt)))
-
 
 	log.Println("Serving static files from current working directory (expected to be project root).")
 	mux.Handle("/", http.FileServer(http.Dir(".")))

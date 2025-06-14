@@ -2,15 +2,16 @@ package application
 
 import (
 	"fmt"
-	"opticav2/internal/domain"
 	"sort"
 	"time"
+
+	"opticav2/internal/domain"
 	// "gorm.io/gorm" // May be needed for ReportServiceImpl
 )
 
 // ReportService defines the interface for generating reports.
 type ReportService interface {
-	GenerateSalesReport(fromDate, toDate time.Time, userID uint, otherFilters map[string]interface{}) (*domain.FullSalesReport, error)
+	GenerateSalesReport(fromDate, toDate time.Time, userID int, otherFilters map[string]interface{}) (*domain.FullSalesReport, error)
 	// Add other report types if needed, e.g., InventoryReport, ClientActivityReport
 }
 
@@ -37,7 +38,7 @@ func NewReportService(
 }
 
 // GenerateSalesReport generates a sales report based on the provided date range and filters.
-func (s *ReportServiceImpl) GenerateSalesReport(fromDate, toDate time.Time, userID uint, otherFilters map[string]interface{}) (*domain.FullSalesReport, error) {
+func (s *ReportServiceImpl) GenerateSalesReport(fromDate, toDate time.Time, userID int, otherFilters map[string]interface{}) (*domain.FullSalesReport, error) {
 	var reportItems []domain.SalesReportItem
 	var summary domain.SalesReportSummary
 
@@ -88,8 +89,8 @@ func (s *ReportServiceImpl) GenerateSalesReport(fromDate, toDate time.Time, user
 				TransactionDate:   sale.SaleDate.Format("2006-01-02"),
 				TransactionType:   "VentaItem",
 				ProductGrossPrice: productGrossPrice,
-				ProductNetPrice:   item.UnitPrice, // UnitPrice from SaleItem is the net price at time of sale
-				SaleItemTotal:     item.TotalPrice,  // UnitPrice * Quantity
+				ProductNetPrice:   item.UnitPrice,  // UnitPrice from SaleItem is the net price at time of sale
+				SaleItemTotal:     item.TotalPrice, // UnitPrice * Quantity
 				OriginalSaleTotal: sale.TotalAmount,
 				SaleDiscount:      sale.DiscountAmount,
 				SaleFinalAmount:   sale.FinalAmount,
@@ -101,16 +102,15 @@ func (s *ReportServiceImpl) GenerateSalesReport(fromDate, toDate time.Time, user
 			summary.TotalDiscountsGiven += sale.DiscountAmount // This will sum discount for each item, needs to be sum of unique sale discounts
 		}
 	}
-    // Correcting TotalDiscountsGiven: Sum unique sale discounts
-    summary.TotalDiscountsGiven = 0 // Reset
-    processedSaleDiscounts := make(map[uint]bool)
-    for _, sale := range sales {
-        if !processedSaleDiscounts[sale.ID] {
-            summary.TotalDiscountsGiven += sale.DiscountAmount
-            processedSaleDiscounts[sale.ID] = true
-        }
-    }
-
+	// Correcting TotalDiscountsGiven: Sum unique sale discounts
+	summary.TotalDiscountsGiven = 0 // Reset
+	processedSaleDiscounts := make(map[uint]bool)
+	for _, sale := range sales {
+		if !processedSaleDiscounts[uint(sale.ID)] {
+			summary.TotalDiscountsGiven += sale.DiscountAmount
+			processedSaleDiscounts[uint(sale.ID)] = true
+		}
+	}
 
 	// 2. Fetch General Income (ingresos)
 	generalIncomeEntries, err := s.GeneralLedgerRepo.GetEntriesByDateRange("ingreso", fromDate, toDate)
@@ -133,8 +133,8 @@ func (s *ReportServiceImpl) GenerateSalesReport(fromDate, toDate time.Time, user
 	// Note: reporte.php adds sale payments to total_ingresos. Here, TotalIncome is from 'ingresos' table.
 	// If sales payments should be included, that logic needs to be added (e.g., sum payments from PaymentRepo or from Sale.AmountPaid).
 	// For this subtask, matching reporte.php's direct query on 'ingresos' table:
-    // $query4=mysqli_query($con,"select sum(ingresos) as total_ingresos from ingresos where fecha between '$from_date' and '$to_date'");
-    // This is covered by GeneralLedgerRepo.GetSumByDateRange("ingreso", ...)
+	// $query4=mysqli_query($con,"select sum(ingresos) as total_ingresos from ingresos where fecha between '$from_date' and '$to_date'");
+	// This is covered by GeneralLedgerRepo.GetSumByDateRange("ingreso", ...)
 
 	// 3. Fetch General Expenses (egresos)
 	generalExpenseEntries, err := s.GeneralLedgerRepo.GetEntriesByDateRange("egreso", fromDate, toDate)
