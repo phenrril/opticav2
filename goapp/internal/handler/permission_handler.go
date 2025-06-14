@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-
 	"opticav2/internal/application"
 	// "opticav2/internal/domain" // Not strictly needed for this handler if only listing all
 	// "strconv" // Not needed for just /api/permissions

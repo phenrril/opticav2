@@ -19,24 +19,6 @@ func NewProductHandler(ps *application.ProductService) *ProductHandler {
 	return &ProductHandler{ProductService: ps}
 }
 
-// Helper to respond with JSON - Copied for now
-func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
-	response, err := json.Marshal(payload)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	w.Write(response)
-}
-
-// Helper to respond with an error - Copied for now
-func respondError(w http.ResponseWriter, code int, message string) {
-	respondJSON(w, code, map[string]string{"error": message})
-}
-
 // Create handles POST requests to /api/products
 func (h *ProductHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var req domain.ProductCreateRequest

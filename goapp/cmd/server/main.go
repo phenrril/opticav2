@@ -1,15 +1,16 @@
 package main
 
 import (
+	"database/sql"
 	"log"
 	"net/http"
-
+	infraMySQL "opticav2/internal/infra/mysql"
 	"opticav2/internal/application"
 	"opticav2/internal/handler"
-	infraMySQL "opticav2/internal/infra/mysql"
+
 	"opticav2/internal/middleware"
 
-	gormMySQL "gorm.io/driver/mysql"
+	gormMySQL "gorm.io/driver/mysql" // Alias for clarity
 	"gorm.io/gorm"
 )
 
@@ -30,6 +31,7 @@ func main() {
 	generalLedgerRepo := infraMySQL.NewGeneralLedgerRepository(gormDB)
 	configRepo := infraMySQL.NewConfigRepository(gormDB)             // Instantiate ConfigRepository
 	prescriptionRepo := infraMySQL.NewPrescriptionRepository(gormDB) // Instantiate PrescriptionRepository
+	permissionRepo := infraMySQL.NewPermissionRepository(gormDB) // Instantiate PermissionRepository
 
 	// Services
 	authService := application.AuthService{Repo: userRepo}

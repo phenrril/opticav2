@@ -2,7 +2,6 @@ package mysql
 
 import (
 	"opticav2/internal/domain"
-
 	"gorm.io/gorm"
 )
 

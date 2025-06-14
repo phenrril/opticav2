@@ -1,8 +1,7 @@
 package application
 
 import (
-	"errors"
-
+	"errors" // Using standard errors for now
 	"opticav2/internal/domain"
 )
 

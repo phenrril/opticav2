@@ -1,6 +1,6 @@
 package domain
 
-import "errors"
+import "errors" // Added import for errors package
 
 var ErrClientNotFound = errors.New("client not found")
 var ErrClientDNITaken = errors.New("client DNI already exists")
@@ -14,7 +14,7 @@ type Client struct {
 	DNI        string `json:"dni" gorm:"column:dni;uniqueIndex"`
 	ObraSocial string `json:"obrasocial" gorm:"column:obrasocial"`
 	Medico     string `json:"medico" gorm:"column:medico"`
-	UserID     int    `json:"-" gorm:"column:usuario_id"`
+	UserID     int    `json:"-" gorm:"column:usuario_id"` // ID of user who registered
 	Status     int    `json:"estado" gorm:"column:estado"`
 	HC         string `json:"hc" gorm:"column:HC"`
 }
@@ -36,7 +36,7 @@ type ClientUpdateRequest struct {
 	DNI        string `json:"dni"`
 	ObraSocial string `json:"obrasocial"`
 	Medico     string `json:"medico"`
-	Status     *int   `json:"estado"`
+	Status     *int   `json:"estado"` // Pointer for explicit update to distinguish 0 from not provided
 	HC         string `json:"hc"`
 }
 
